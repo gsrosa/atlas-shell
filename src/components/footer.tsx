@@ -1,8 +1,10 @@
+import { memo } from 'react';
+
 const currentYear = new Date().getFullYear();
 
 const LINKS = ['Privacy', 'Terms', 'Docs', 'Support'] as const;
 
-export function Footer() {
+export const Footer = memo(function Footer() {
   return (
     <footer
       role="contentinfo"
@@ -15,7 +17,7 @@ export function Footer() {
             alt=""
             width={120}
             height={32}
-            className="h-8 w-auto max-w-[min(42vw,140px)] object-contain object-left md:h-12 md:max-w-none"
+            className="h-8 w-auto max-w-[min(42vw,140px)] object-contain object-left md:h-9 md:max-w-none"
             decoding="async"
           />
           <span className="text-xs text-neutral-500 font-sans">
@@ -45,4 +47,4 @@ export function Footer() {
       </div>
     </footer>
   );
-}
+});

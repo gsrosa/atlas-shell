@@ -8,47 +8,47 @@ export function FinalCtaSection() {
   return (
     <section
       aria-labelledby="final-cta-heading"
-      className="relative py-24 md:py-36 px-5 md:px-10 flex flex-col items-center justify-center text-center overflow-hidden min-h-[420px] md:min-h-[520px]"
+      className="relative flex min-h-[380px] flex-col items-center justify-center overflow-hidden px-4 py-20 text-center sm:min-h-[420px] sm:px-5 sm:py-24 md:min-h-[520px] md:px-10 md:py-36"
     >
       <div className="absolute inset-0 z-0">
         <img
           src={STITCH_CTA_NIGHT}
           alt=""
-          className="w-full h-full object-cover brightness-[0.35]"
+          className="size-full object-cover brightness-[0.35]"
         />
         <div className="absolute inset-0 bg-[#111317]/65" />
       </div>
 
-      <div className="relative z-10 max-w-3xl mx-auto">
+      <div className="relative z-10 mx-auto max-w-3xl">
         <FadeUp>
-          <div className="text-3xl md:text-5xl mb-4 text-primary-400" aria-hidden="true">
+          <div className="mb-4 text-3xl text-primary-400 md:text-5xl" aria-hidden="true">
             ✦
           </div>
           <h2
             id="final-cta-heading"
-            className="font-display italic text-3xl md:text-5xl lg:text-6xl text-white m-0 mb-4 tracking-tight leading-tight"
+            className="m-0 mb-4 font-display text-3xl italic leading-tight tracking-tight text-white md:text-5xl lg:text-6xl"
           >
             Redefine wandering.
           </h2>
-          <p className="text-base md:text-lg text-neutral-600 mt-0 mb-8 md:mb-10 leading-relaxed max-w-xl mx-auto font-light">
+          <p className="mx-auto mb-8 mt-0 max-w-xl text-base font-light leading-relaxed text-neutral-600 md:mb-10 md:text-lg">
             Step into travel planning that respects both the machine and the explorer. One message is enough
             to start.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               to={ROUTES.ASSISTANT}
-              className="inline-flex items-center gap-2.5 hero-gradient-cta text-[#541100] border-none rounded-full px-10 md:px-14 py-4 font-extrabold text-sm tracking-[0.12em] uppercase no-underline hover:brightness-110 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_40px_rgba(255,87,34,0.35)]"
+              className="inline-flex items-center gap-2.5 rounded-full border-none bg-primary-500 px-10 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white no-underline md:px-14"
             >
               <Plane className="size-4 shrink-0" aria-hidden /> Initialize Atlas
             </Link>
             <a
               href="#how-it-works"
-              className="inline-flex items-center justify-center px-10 md:px-12 py-4 border border-white/20 text-white rounded-full font-bold text-sm tracking-[0.12em] uppercase hover:bg-white/10 transition-colors no-underline"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 px-10 py-4 text-sm font-bold uppercase tracking-[0.12em] text-white no-underline hover:bg-white/10 md:px-12"
             >
               How it works
             </a>
           </div>
-          <span className="block text-[11px] md:text-xs text-neutral-500 mt-6">
+          <span className="mt-6 block text-[11px] text-neutral-500 md:text-xs">
             Beta access · No credit card · Cancel anytime
           </span>
         </FadeUp>

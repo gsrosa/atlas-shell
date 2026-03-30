@@ -8,17 +8,14 @@ import {
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { HomePage } from '@/features/home';
 
-/**
- * Child routes under ShellLayout:
- * - Index (/) → HomePage
- * - /search/* → searchApp (Search MFE)
- * - /assistant/* → aiAssistant (AI Assistant MFE)
- * - /user/* → userApp (atlas-user MFE)
- */
+function toRelativeSplat(absolutePath: string): string {
+  return absolutePath.startsWith('/') ? absolutePath.slice(1) : absolutePath;
+}
+
 const shellChildren = [
   { index: true, element: <HomePage /> },
   ...getEnabledMicrofrontends().map((mfe) => ({
-    path: mfe.routePath,
+    path: toRelativeSplat(mfe.routePath),
     element: (
       <RemoteRoute
         name={mfe.name}

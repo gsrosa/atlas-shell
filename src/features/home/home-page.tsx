@@ -9,7 +9,7 @@ import { SocialProofSection } from './components/social-proof-section';
 
 export function HomePage() {
   return (
-    <div className="bg-neutral-50">
+    <div className="flex min-h-0 flex-1 flex-col bg-neutral-50">
       <HeroSection />
       <FeaturesSection />
       <HowItWorksSection />

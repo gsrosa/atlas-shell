@@ -1,22 +1,30 @@
+import { Map, Plane, Sparkles } from 'lucide-react';
 import { HOW_IT_WORKS_STEPS } from '../data/how-it-works-steps';
+import type { HowItWorksIconKey } from '../types';
 import { FadeUp } from './fade-up';
+
+const STEP_ICONS: Record<HowItWorksIconKey, typeof Map> = {
+  map: Map,
+  sparkles: Sparkles,
+  plane: Plane,
+};
 
 export function HowItWorksSection() {
   return (
     <section
       id="how-it-works"
       aria-labelledby="hiw-heading"
-      className="px-5 py-20 md:py-28 md:px-10 bg-neutral-100 border-y border-white/[0.04]"
+      className="border-y border-white/[0.04] bg-neutral-100 px-4 py-16 sm:px-5 sm:py-20 md:px-10 md:py-28"
     >
-      <div className="max-w-[1200px] mx-auto">
+      <div className="mx-auto max-w-[1200px]">
         <FadeUp>
-          <div className="text-center mb-12 md:mb-16">
-            <span className="block text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] uppercase text-primary-400 mb-3">
+          <div className="mb-10 text-center sm:mb-12 md:mb-16">
+            <span className="mb-3 block text-[10px] font-extrabold uppercase tracking-[0.2em] text-primary-400 sm:text-[11px]">
               How it works
             </span>
             <h2
               id="hiw-heading"
-              className="font-display italic text-3xl md:text-4xl text-neutral-700 m-0 tracking-tight leading-[1.15]"
+              className="m-0 font-display text-2xl italic leading-[1.15] tracking-tight text-neutral-700 sm:text-3xl md:text-4xl"
             >
               From idea to itinerary
               <br />
@@ -25,39 +33,35 @@ export function HowItWorksSection() {
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-8 relative">
+        <div className="relative grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3 lg:gap-8">
           <div
-            className="hidden lg:block absolute top-10 left-[18%] right-[18%] h-px z-0 opacity-40"
-            style={{
-              background:
-                'linear-gradient(to right, rgba(255,181,160,0.2), rgba(0,227,253,0.5), rgba(255,181,160,0.2))',
-            }}
+            className="pointer-events-none absolute left-[18%] right-[18%] top-10 z-0 hidden h-px border-t border-dashed border-primary-400/25 lg:block"
             aria-hidden="true"
           />
-          {HOW_IT_WORKS_STEPS.map((s, i) => (
-            <FadeUp key={s.num} delay={i * 120}>
-              <article className="relative z-[1] bg-neutral-200 border border-white/[0.05] rounded-2xl p-6 md:p-7 h-full">
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="w-12 h-12 md:w-14 md:h-14 rounded-[14px] flex items-center justify-center text-xl md:text-2xl shrink-0 border border-primary-400/25"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(255,181,160,0.18), rgba(0,227,253,0.12))',
-                    }}
-                    aria-hidden="true"
-                  >
-                    {s.icon}
+          {HOW_IT_WORKS_STEPS.map((s, i) => {
+            const Icon = STEP_ICONS[s.iconKey];
+            return (
+              <FadeUp key={s.num} delay={i * 120}>
+                <article className="relative z-[1] h-full rounded-2xl border border-white/[0.06] bg-neutral-200 p-5 sm:p-6 md:p-7">
+                  <div className="mb-4 flex items-center gap-3">
+                    <div
+                      className="flex size-12 shrink-0 items-center justify-center rounded-[14px] border border-primary-400/30 bg-primary-500/15 sm:size-14"
+                      aria-hidden="true"
+                    >
+                      <Icon className="size-6 text-primary-400 sm:size-7" strokeWidth={1.75} />
+                    </div>
+                    <span className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary-400">
+                      Step {s.num}
+                    </span>
                   </div>
-                  <span className="text-[11px] font-extrabold text-primary-400 tracking-[0.12em] uppercase">
-                    Step {s.num}
-                  </span>
-                </div>
-                <h3 className="text-lg md:text-xl font-extrabold text-neutral-700 m-0 mb-2 tracking-tight font-display">
-                  {s.title}
-                </h3>
-                <p className="text-sm text-neutral-600 leading-relaxed m-0">{s.body}</p>
-              </article>
-            </FadeUp>
-          ))}
+                  <h3 className="m-0 mb-2 font-display text-lg font-extrabold tracking-tight text-neutral-700 sm:text-xl">
+                    {s.title}
+                  </h3>
+                  <p className="m-0 text-sm leading-relaxed text-neutral-600">{s.body}</p>
+                </article>
+              </FadeUp>
+            );
+          })}
         </div>
       </div>
     </section>

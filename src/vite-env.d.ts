@@ -12,6 +12,8 @@ interface ImportMeta {
 }
 
 declare module '@gsrosa/atlas-ui/styles';
+declare module '@gsrosa/atlas-ui/tokens';
+declare module '@gsrosa/atlas-ui/theme';
 
 declare module 'searchApp/App' {
   import type { ComponentType } from 'react';

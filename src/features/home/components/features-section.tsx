@@ -6,43 +6,45 @@ export function FeaturesSection() {
   return (
     <section
       aria-labelledby="features-heading"
-      className="relative z-[1] bg-neutral-50 pt-20 pb-24 md:pt-28 md:pb-32 px-5 md:px-10"
+      className="relative z-[1] bg-neutral-50 px-4 pb-20 pt-16 sm:px-5 sm:pb-24 sm:pt-20 md:px-10 md:pb-32 md:pt-28"
     >
-      <div className="max-w-[1200px] mx-auto">
+      <div className="mx-auto max-w-[1200px]">
         <FadeUp>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14 md:mb-20">
+          <div className="mb-12 flex flex-col gap-8 md:mb-20 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <h2
                 id="features-heading"
-                className="font-display italic text-3xl md:text-4xl lg:text-[2.75rem] text-neutral-700 m-0 mb-4 leading-tight"
+                className="m-0 mb-4 font-display text-2xl leading-tight text-neutral-700 italic sm:text-3xl md:text-4xl lg:text-[2.75rem]"
               >
                 Cognitive exploration,
                 <br />
                 not just coordination.
               </h2>
-              <p className="text-neutral-600 text-base md:text-lg font-light leading-relaxed max-w-md m-0">
+              <p className="m-0 max-w-md text-base font-light leading-relaxed text-neutral-600 md:text-lg">
                 We move beyond static lists to living plans. Atlas learns your pace, then adapts when the
                 weather — or your curiosity — shifts.
               </p>
             </div>
-            <div className="font-sans text-auxiliary-400 text-xs tracking-widest uppercase shrink-0">
+            <div className="shrink-0 font-sans text-xs tracking-widest text-auxiliary-400 uppercase">
               01 / The advantage
             </div>
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
           {HOME_FEATURE_ITEMS.map((f, i) => (
             <FadeUp key={f.title} delay={i * 80}>
-              <article className="group bg-neutral-100 p-8 md:p-10 rounded-xl transition-all duration-500 hover:bg-neutral-200 hover:-translate-y-1 border border-transparent hover:border-white/[0.06] h-full flex flex-col">
-                <div className="w-12 h-12 flex items-center justify-center mb-6 text-primary-400">
+              <article className="group flex h-full flex-col rounded-xl border border-transparent bg-neutral-100 p-6 sm:p-8 md:p-10 hover:border-white/[0.06] hover:bg-neutral-200">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center text-primary-400">
                   <span className="scale-125">
                     <FeatureIcon index={i} />
                   </span>
                 </div>
-                <h3 className="font-display text-xl md:text-2xl text-neutral-700 m-0 mb-3">{f.title}</h3>
-                <p className="text-neutral-600 font-sans text-sm leading-relaxed m-0 mb-4 flex-1">{f.body}</p>
-                <div className="font-sans text-[10px] text-neutral-500 tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">
+                <h3 className="m-0 mb-3 font-display text-lg text-neutral-700 md:text-2xl">
+                  {f.title}
+                </h3>
+                <p className="m-0 mb-4 flex-1 font-sans text-sm leading-relaxed text-neutral-600">{f.body}</p>
+                <div className="font-sans text-[10px] tracking-widest text-neutral-500 uppercase opacity-0 group-hover:opacity-100">
                   Atlas intelligence
                 </div>
               </article>

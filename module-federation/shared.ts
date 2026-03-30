@@ -1,4 +1,8 @@
 export const shared = {
+  '@gsrosa/atlas-ui': {
+    singleton: true,
+    requiredVersion: false as const,
+  },
   react: {
     singleton: true,
     requiredVersion: '^19.0.0',
@@ -6,6 +10,10 @@ export const shared = {
   'react-dom': {
     singleton: true,
     requiredVersion: '^19.0.0',
+  },
+  'lucide-react': {
+    singleton: true,
+    requiredVersion: '^1.7.0',
   },
   'react-router-dom': {
     singleton: true,

@@ -11,9 +11,11 @@ export interface HomeDestination {
   badges?: string[];
 }
 
+export type HowItWorksIconKey = 'map' | 'sparkles' | 'plane';
+
 export interface HowItWorksStep {
   num: string;
-  icon: string;
+  iconKey: HowItWorksIconKey;
   title: string;
   body: string;
 }

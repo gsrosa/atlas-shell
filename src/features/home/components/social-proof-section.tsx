@@ -5,15 +5,17 @@ import { FadeUp } from './fade-up';
 
 export function SocialProofSection() {
   return (
-    <section aria-labelledby="proof-heading" className="px-5 py-20 md:py-28 md:px-10 bg-neutral-50">
-      <div className="max-w-[1200px] mx-auto">
+    <section aria-labelledby="proof-heading" className="bg-neutral-50 px-4 py-16 sm:px-5 sm:py-20 md:px-10 md:py-28">
+      <div className="mx-auto max-w-[1200px]">
         <FadeUp>
           <div
             role="note"
-            className="rounded-2xl px-5 py-6 md:px-8 md:py-8 text-center mb-10 md:mb-14 border border-primary-400/20 bg-neutral-100"
+            className="mb-10 rounded-2xl border border-primary-400/20 bg-neutral-100 px-5 py-6 text-center sm:mb-14 md:px-8 md:py-8"
           >
-            <p className="text-[11px] font-bold text-primary-400 mb-2 tracking-wide">🌿 Atlas is in private beta</p>
-            <p className="text-sm md:text-base text-neutral-600 leading-relaxed m-0">
+            <p className="mb-2 text-[11px] font-bold tracking-wide text-primary-400">
+              🌿 Atlas is in private beta
+            </p>
+            <p className="m-0 text-sm leading-relaxed text-neutral-600 md:text-base">
               1,200 solo travelers have already planned trips to 47 countries.
               <br />
               We&apos;re opening early access in waves.
@@ -25,17 +27,17 @@ export function SocialProofSection() {
           By the numbers
         </h2>
 
-        <div className="grid grid-cols-3 gap-2 md:gap-5 mb-10 md:mb-14">
+        <div className="mb-10 grid grid-cols-3 gap-2 sm:mb-14 md:gap-5">
           {HOME_STATS.map((s, i) => (
             <FadeUp key={s.label} delay={i * 100}>
               <div
-                className="text-center bg-neutral-100 border border-white/[0.06] rounded-2xl px-2 py-5 md:px-4 md:py-7"
+                className="rounded-2xl border border-white/[0.06] bg-neutral-100 px-2 py-5 text-center md:px-4 md:py-7"
                 style={{ boxShadow: '0 16px 40px rgba(0,0,0,0.28)' }}
               >
-                <span className="block text-2xl md:text-4xl font-black text-primary-400 tracking-tight leading-none">
+                <span className="block text-2xl font-black leading-none tracking-tight text-primary-400 md:text-4xl">
                   <AnimatedCounter to={s.to} suffix={s.suffix} />
                 </span>
-                <span className="block text-[10px] md:text-xs text-neutral-600 mt-2 font-medium">
+                <span className="mt-2 block text-[10px] font-medium text-neutral-600 md:text-xs">
                   {s.label}
                 </span>
               </div>
@@ -43,19 +45,19 @@ export function SocialProofSection() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
           {HOME_TESTIMONIALS.map((t, i) => (
             <FadeUp key={t.name} delay={i * 130}>
               <figure
-                className="bg-neutral-100 border border-white/[0.06] rounded-2xl px-5 py-6 md:px-7 md:py-7 m-0"
+                className="m-0 rounded-2xl border border-white/[0.06] bg-neutral-100 px-5 py-6 md:px-7 md:py-7"
                 style={{ boxShadow: '0 16px 40px rgba(0,0,0,0.28)' }}
               >
-                <blockquote className="text-sm md:text-[15px] text-neutral-600 leading-relaxed italic m-0 mb-4">
+                <blockquote className="m-0 mb-4 text-sm italic leading-relaxed text-neutral-600 md:text-[15px]">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <figcaption className="flex items-center gap-3">
                   <div
-                    className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-sm font-extrabold text-[#5f1500] shrink-0 hero-gradient-cta"
+                    className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-500 text-sm font-extrabold text-white md:size-10"
                     aria-hidden="true"
                   >
                     {t.name[0]}

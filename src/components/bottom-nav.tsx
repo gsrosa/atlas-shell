@@ -56,8 +56,7 @@ export function BottomNav() {
             to={item.to}
             end={item.end ?? false}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-[3px] flex-1 pt-2.5 pb-2 text-[10px] no-underline transition-colors
-              ${
+              `flex flex-col items-center gap-[3px] flex-1 pt-2.5 pb-2 text-[10px] no-underline ${
                 isActive
                   ? 'bottom-nav-active font-bold text-primary-400'
                   : 'font-medium text-neutral-400'

@@ -1,5 +1,6 @@
 import { Settings } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { memo } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { isFeatureEnabled } from '@/config/feature-flags';
 import { ROUTES } from '@/shared/constants/shell-routes';
 
@@ -23,99 +24,101 @@ function buildNavItems(): NavItem[] {
   ];
 }
 
-export function TopNav() {
+/** Logo — no route-active styling; memoized so it does not re-render on path changes. */
+const TopNavBrand = memo(function TopNavBrand() {
+  return (
+    <Link
+      to="/"
+      aria-label="Atlas home"
+      className="flex shrink-0 items-center no-underline"
+    >
+      <img
+        src="/atlas-logo.svg"
+        alt=""
+        width={120}
+        height={32}
+        className="h-8 w-auto max-w-[min(42vw,140px)] object-contain object-left sm:h-9 sm:max-w-none"
+        decoding="async"
+      />
+    </Link>
+  );
+});
+
+/** Same chrome on all breakpoints: desktop row + compact account on small screens (CSS only). */
+function TopNavActions() {
   const NAV_ITEMS = buildNavItems();
   const userApp = isFeatureEnabled('enableUserApp');
 
   return (
+    <div className="flex min-w-0 flex-1 items-center justify-end gap-2 sm:gap-3">
+      <nav
+        aria-label="Main navigation"
+        className="hidden min-w-0 items-center justify-end gap-0.5 overflow-x-auto py-0.5 no-scrollbar md:flex lg:gap-1"
+      >
+        {NAV_ITEMS.map((item) =>
+          item.disabled ? (
+            <span
+              key={item.to}
+              aria-disabled="true"
+              className="inline-flex shrink-0 cursor-not-allowed select-none items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium whitespace-nowrap text-neutral-600 opacity-50 lg:px-3 lg:text-sm"
+            >
+              {item.label}
+              <span className="inline-flex items-center rounded-full bg-neutral-200 px-1.5 py-px text-[10px] font-semibold tracking-widest text-neutral-500 uppercase">
+                Soon
+              </span>
+            </span>
+          ) : (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end ?? false}
+              className={({ isActive }) =>
+                `inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs whitespace-nowrap no-underline lg:px-3 lg:text-sm ${
+                  isActive
+                    ? 'bg-primary-50 font-semibold text-primary-400'
+                    : 'font-medium text-neutral-600 hover:bg-neutral-200 hover:text-neutral-700'
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ),
+        )}
+      </nav>
+
+      {userApp ? (
+        <NavLink
+          to={ROUTES.USER}
+          aria-label="Open account"
+          className="flex shrink-0 items-center justify-center gap-2 no-underline md:max-w-[min(200px,28vw)] md:rounded-[10px] md:border md:border-neutral-200 md:bg-neutral-50 md:px-2.5 md:py-1.5 md:hover:border-primary-200 md:hover:bg-primary-50/80 [&_svg]:shrink-0"
+        >
+          <span className="flex size-[34px] items-center justify-center rounded-full border-2 border-primary-200 bg-primary-50 text-[13px] font-bold text-primary-400 md:hidden">
+            G
+          </span>
+          <span className="hidden size-7 shrink-0 items-center justify-center rounded-full border-2 border-primary-200 bg-primary-50 text-[11px] font-bold text-primary-400 md:flex">
+            G
+          </span>
+          <span className="hidden min-w-0 flex-col overflow-hidden text-left md:flex">
+            <span className="truncate text-[12px] font-bold leading-tight text-neutral-700">Account</span>
+            <span className="truncate text-[10px] leading-tight text-neutral-500">Plans & profile</span>
+          </span>
+          <Settings aria-hidden className="hidden size-[18px] shrink-0 text-neutral-500 md:block" strokeWidth={2} />
+        </NavLink>
+      ) : null}
+    </div>
+  );
+}
+
+export const TopNav = memo(function TopNav() {
+  return (
     <header
       role="banner"
-      className="sticky top-0 z-30 shrink-0 min-h-[52px] md:min-h-[60px] lg:min-h-[64px] bg-[#111317]/75 backdrop-blur-xl backdrop-saturate-150 border-b border-white/6 shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
+      className="sticky top-0 z-30 shrink-0 border-b border-white/6 bg-[#111317] shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
     >
-      <div className="flex w-full min-w-0 items-center gap-3 px-3 sm:px-4 md:px-6 lg:px-10 py-1.5 md:py-0 min-h-[52px] md:min-h-[60px] lg:min-h-[64px]">
-        <NavLink
-          to="/"
-          aria-label="Atlas home"
-          className="flex shrink-0 items-center no-underline"
-        >
-          <img
-            src="/atlas-logo.svg"
-            alt=""
-            width={120}
-            height={32}
-            className="h-8 w-auto max-w-[min(42vw,140px)] object-contain object-left md:h-16 md:max-w-none"
-            decoding="async"
-          />
-        </NavLink>
-
-        <div className="flex min-w-0 flex-1 items-center justify-end gap-2 sm:gap-3">
-          <nav
-            aria-label="Main navigation"
-            className="hidden md:flex items-center justify-end gap-0.5 lg:gap-1 overflow-x-auto no-scrollbar py-0.5"
-          >
-            {NAV_ITEMS.map((item) =>
-              item.disabled ? (
-                <span
-                  key={item.to}
-                  aria-disabled="true"
-                  className="inline-flex items-center gap-1.5 shrink-0 px-2 lg:px-3 py-1.5 rounded-lg text-xs lg:text-sm font-medium text-neutral-600 opacity-50 cursor-not-allowed select-none whitespace-nowrap"
-                >
-                  {item.label}
-                  <span className="inline-flex items-center px-1.5 py-px rounded-full bg-neutral-200 text-[10px] font-semibold tracking-widest uppercase text-neutral-500">
-                    Soon
-                  </span>
-                </span>
-              ) : (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.end ?? false}
-                  className={({ isActive }) =>
-                    `inline-flex items-center gap-1.5 shrink-0 px-2 lg:px-3 py-1.5 rounded-lg text-xs lg:text-sm no-underline transition-colors whitespace-nowrap
-                  ${
-                    isActive
-                      ? 'bg-primary-50 text-primary-400 font-semibold'
-                      : 'font-medium text-neutral-600 hover:bg-neutral-200 hover:text-neutral-700'
-                  }`
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ),
-            )}
-          </nav>
-
-          {userApp ? (
-            <NavLink
-              to={ROUTES.USER}
-              aria-label="Open account"
-              className="flex shrink-0 items-center justify-center no-underline lg:max-w-[min(200px,28vw)] lg:items-stretch lg:justify-start lg:gap-2 lg:rounded-[10px] lg:border lg:border-neutral-200 lg:bg-neutral-50 lg:px-2.5 lg:py-1.5 lg:transition-colors lg:hover:border-primary-200 lg:hover:bg-primary-50/80 [&_svg]:shrink-0"
-            >
-              <span className="flex size-[34px] items-center justify-center rounded-full border-2 border-primary-200 bg-primary-50 text-[13px] font-bold text-primary-400 lg:hidden">
-                G
-              </span>
-              <span className="hidden min-w-0 flex-1 items-center gap-2 lg:flex">
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full border-2 border-primary-200 bg-primary-50 text-[11px] font-bold text-primary-400">
-                  G
-                </span>
-                <span className="flex min-w-0 flex-col overflow-hidden text-left">
-                  <span className="truncate text-[12px] font-bold leading-tight text-neutral-700">
-                    Account
-                  </span>
-                  <span className="truncate text-[10px] leading-tight text-neutral-500">
-                    Plans & profile
-                  </span>
-                </span>
-                <Settings
-                  aria-hidden
-                  className="size-[18px] text-neutral-500"
-                  strokeWidth={2}
-                />
-              </span>
-            </NavLink>
-          ) : null}
-        </div>
+      <div className="flex min-h-[52px] w-full min-w-0 items-center gap-2 px-3 py-1.5 sm:gap-3 sm:px-4 md:min-h-[60px] md:px-6 lg:min-h-16 lg:px-10 lg:py-0">
+        <TopNavBrand />
+        <TopNavActions />
       </div>
     </header>
   );
-}
+});

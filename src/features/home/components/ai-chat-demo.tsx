@@ -1,3 +1,4 @@
+import { Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import {
   CHAT_ROUTE_STOPS,
@@ -37,11 +38,10 @@ export function AiChatDemo() {
     >
       <div className="flex items-center gap-2 mb-3.5">
         <div
-          className="w-[30px] h-[30px] rounded-full flex items-center justify-center text-[13px] shrink-0"
-          style={{ background: 'linear-gradient(135deg, #ffb5a0, #00e3fd)' }}
+          className="flex size-[30px] shrink-0 items-center justify-center rounded-full bg-primary-500 text-white"
           aria-hidden="true"
         >
-          ✦
+          <Sparkles className="size-4" strokeWidth={2} />
         </div>
         <div>
           <div className="font-bold text-[12px] text-white">Atlas AI</div>
