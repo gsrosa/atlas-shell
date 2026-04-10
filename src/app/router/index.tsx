@@ -20,6 +20,7 @@ const shellChildren = [
       <RemoteRoute
         name={mfe.name}
         module={getMicrofrontendComponent(mfe.remoteName)}
+        requireAuth={mfe.requireAuth}
       />
     ),
   })),

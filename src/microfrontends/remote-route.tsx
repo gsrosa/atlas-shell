@@ -1,10 +1,12 @@
 import { Suspense } from 'react';
 import type { ComponentType, LazyExoticComponent } from 'react';
+import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
 import { RemoteErrorBoundary } from './remote-error-boundary';
 
 interface RemoteRouteProps {
   name: string;
   module: LazyExoticComponent<ComponentType>;
+  requireAuth?: boolean;
 }
 
 function LoadingFallback() {
@@ -16,12 +18,15 @@ function LoadingFallback() {
   );
 }
 
-export function RemoteRoute({ name, module: Module }: RemoteRouteProps) {
+export function RemoteRoute({ name, module: Module, requireAuth }: RemoteRouteProps) {
+  const remote = (
+    <Suspense fallback={<LoadingFallback />}>
+      <Module />
+    </Suspense>
+  );
   return (
     <RemoteErrorBoundary remoteName={name}>
-      <Suspense fallback={<LoadingFallback />}>
-        <Module />
-      </Suspense>
+      {requireAuth ? <AuthRemoteGate remoteLabel={name}>{remote}</AuthRemoteGate> : remote}
     </RemoteErrorBoundary>
   );
 }

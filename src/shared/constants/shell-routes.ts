@@ -11,8 +11,8 @@ export const ROUTES = {
   TASKS: '/tasks',
   ANALYTICS: '/analytics',
   SETTINGS: '/settings',
-  USER: '/user',
-  USER_SPLAT: '/user/*',
+  USER: '/trips',
+  USER_SPLAT: '/trips/*',
 } as const;
 
 export type ShellRoutePath = (typeof ROUTES)[keyof typeof ROUTES];

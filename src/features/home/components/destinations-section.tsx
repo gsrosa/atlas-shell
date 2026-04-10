@@ -1,10 +1,25 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useAuthUiStore } from '@/features/auth/auth-ui-store';
+import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { HOME_DESTINATIONS } from '../data/destinations';
 import { FadeUp } from './fade-up';
 
 export function DestinationsSection() {
+  const navigate = useNavigate();
+  const openLogin = useAuthUiStore((s) => s.openLogin);
+  const { isAuthenticated, isLoading } = useSession();
+
+  function goAssistant() {
+    if (isLoading) return;
+    if (!isAuthenticated) {
+      openLogin();
+      return;
+    }
+    navigate(ROUTES.ASSISTANT);
+  }
+
   return (
     <section
       aria-labelledby="dest-heading"
@@ -95,12 +110,13 @@ export function DestinationsSection() {
                 <p className="m-0 mb-5 line-clamp-2 text-sm leading-relaxed text-white/80 sm:mb-6">
                   {d.hook}
                 </p>
-                <Link
-                  to={ROUTES.ASSISTANT}
-                  className="block w-full rounded-full border border-primary-400/60 bg-primary-500 py-3.5 text-center text-[11px] font-bold uppercase tracking-widest text-white no-underline transition-colors hover:bg-primary-600 hover:text-white"
+                <button
+                  type="button"
+                  onClick={goAssistant}
+                  className="block w-full cursor-pointer rounded-full border border-primary-400/60 bg-primary-500 py-3.5 text-center text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-primary-600 hover:text-white"
                 >
                   Initialize trip
-                </Link>
+                </button>
               </div>
             </article>
           </FadeUp>

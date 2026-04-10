@@ -1,10 +1,25 @@
 import { Plane } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useAuthUiStore } from '@/features/auth/auth-ui-store';
+import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { STITCH_CTA_NIGHT } from '../data/stitch-assets';
 import { FadeUp } from './fade-up';
 
 export function FinalCtaSection() {
+  const navigate = useNavigate();
+  const openLogin = useAuthUiStore((s) => s.openLogin);
+  const { isAuthenticated, isLoading } = useSession();
+
+  function goAssistant() {
+    if (isLoading) return;
+    if (!isAuthenticated) {
+      openLogin();
+      return;
+    }
+    navigate(ROUTES.ASSISTANT);
+  }
+
   return (
     <section
       aria-labelledby="final-cta-heading"
@@ -35,12 +50,13 @@ export function FinalCtaSection() {
             to start.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              to={ROUTES.ASSISTANT}
-              className="inline-flex items-center gap-2.5 rounded-full border-none bg-primary-500 px-10 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white no-underline md:px-14"
+            <button
+              type="button"
+              onClick={goAssistant}
+              className="inline-flex cursor-pointer items-center gap-2.5 rounded-full border-none bg-primary-500 px-10 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white md:px-14"
             >
               <Plane className="size-4 shrink-0" aria-hidden /> Initialize Atlas
-            </Link>
+            </button>
             <a
               href="#how-it-works"
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-10 py-4 text-sm font-bold uppercase tracking-[0.12em] text-white no-underline hover:bg-white/10 md:px-12"

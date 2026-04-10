@@ -16,6 +16,10 @@
   "dependencies": {
     "@gsrosa/atlas-ui": "file:../atlas-ui",
     "@tanstack/react-query": "^5.90.21",
+    "@trpc/client": "^11.15.1",
+    "@trpc/react-query": "^11.15.1",
+    "atlas-bff": "file:../atlas-bff",
+    "superjson": "^2.2.6",
     "lucide-react": "^1.7.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -1,15 +1,24 @@
 import { Plane, Sparkles } from 'lucide-react';
 import { useState, type KeyboardEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuthUiStore } from '@/features/auth/auth-ui-store';
+import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { STITCH_HERO_IMAGE } from '../data/stitch-assets';
 import { AiChatDemo } from './ai-chat-demo';
 
 export function HeroSection() {
   const navigate = useNavigate();
+  const openLogin = useAuthUiStore((s) => s.openLogin);
+  const { isAuthenticated, isLoading } = useSession();
   const [prompt, setPrompt] = useState('');
 
   function goPlan() {
+    if (isLoading) return;
+    if (!isAuthenticated) {
+      openLogin();
+      return;
+    }
     navigate(ROUTES.ASSISTANT);
   }
 

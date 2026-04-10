@@ -12,6 +12,8 @@ interface MicrofrontendConfig {
   navPath: string;
   navigationLabel: string;
   featureFlag: FeatureFlagKey;
+  /** When true, shell shows the remote only if the user has a valid session (tRPC users.me). */
+  requireAuth?: boolean;
 }
 
 export const microfrontendRegistry: Record<string, MicrofrontendConfig> = {
@@ -32,6 +34,7 @@ export const microfrontendRegistry: Record<string, MicrofrontendConfig> = {
     navPath: ROUTES.ASSISTANT,
     navigationLabel: 'AI Assistant',
     featureFlag: 'enableAIAssistant',
+    requireAuth: true,
   },
   userApp: {
     name: 'User',
@@ -41,6 +44,7 @@ export const microfrontendRegistry: Record<string, MicrofrontendConfig> = {
     navPath: ROUTES.USER,
     navigationLabel: 'Account',
     featureFlag: 'enableUserApp',
+    requireAuth: true,
   },
 };
 
