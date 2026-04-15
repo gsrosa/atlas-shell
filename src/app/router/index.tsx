@@ -1,13 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { ShellLayout } from '@/components/shell-layout';
 import { RemoteRoute } from '@/microfrontends/remote-route';
-import {
-  getEnabledMicrofrontends,
-  getMicrofrontendComponent,
-  getMicrofrontendSkeleton,
-} from '@/microfrontends/registry';
+import { getEnabledMicrofrontends } from '@/microfrontends/registry';
+import { loadRemoteModule } from '@/microfrontends/load-remote-module';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { HomePage } from '@/features/home';
+import { NotFoundPage } from '@/features/not-found/not-found-page';
 
 function toRelativeSplat(absolutePath: string): string {
   return absolutePath.startsWith('/') ? absolutePath.slice(1) : absolutePath;
@@ -20,12 +18,13 @@ const shellChildren = [
     element: (
       <RemoteRoute
         name={mfe.name}
-        module={getMicrofrontendComponent(mfe.remoteName)}
-        skeleton={getMicrofrontendSkeleton(mfe.remoteName)}
+        module={loadRemoteModule(mfe.remoteName, mfe.exposedModule)}
+        skeleton={mfe.skeletonModule ? loadRemoteModule(mfe.remoteName, mfe.skeletonModule) : undefined}
         requireAuth={mfe.requireAuth}
       />
     ),
   })),
+  { path: '*', element: <NotFoundPage /> },
 ];
 
 export const router = createBrowserRouter([

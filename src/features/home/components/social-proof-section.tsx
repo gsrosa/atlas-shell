@@ -5,7 +5,7 @@ export function SocialProofSection() {
   return (
     <section
       aria-labelledby="social-heading"
-      className="bg-neutral-50 px-6 py-24 md:px-12 md:py-32 lg:px-20"
+      className="bg-neutral-900 px-6 py-24 md:px-12 md:py-32 lg:px-20"
     >
       <div className="mx-auto max-w-[1200px]">
         <FadeUp>
@@ -15,10 +15,10 @@ export function SocialProofSection() {
             </p>
             <h2
               id="social-heading"
-              className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-700"
+              className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-100"
             >
               Trusted by travelers who plan{' '}
-              <span className="bg-gradient-to-r from-primary-500 to-auxiliary-400 bg-clip-text font-display font-bold not-italic text-transparent">
+              <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
                 differently
               </span>
               .
@@ -29,11 +29,11 @@ export function SocialProofSection() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {HOME_TESTIMONIALS_MARKETING.map((t, i) => (
             <FadeUp key={t.name} delay={i * 100}>
-              <figure className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200/80 bg-neutral-50/80 p-8 shadow-sm">
+              <figure className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-700/80 bg-neutral-900/80 p-8 shadow-sm">
                 <span className="pointer-events-none absolute -top-2 left-4 select-none font-display text-[100px] font-bold leading-none text-primary-500/[0.07]">
                   &ldquo;
                 </span>
-                <blockquote className="relative z-10 mb-6 flex-1 font-display text-[clamp(14px,1.4vw,16px)] italic leading-[1.65] text-neutral-700">
+                <blockquote className="relative z-10 mb-6 flex-1 font-display text-[clamp(14px,1.4vw,16px)] italic leading-[1.65] text-neutral-100">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <figcaption className="flex items-center gap-3">
@@ -41,8 +41,8 @@ export function SocialProofSection() {
                     {t.name[0]}
                   </div>
                   <div>
-                    <div className="font-sans text-[13px] font-bold text-neutral-700">{t.name}</div>
-                    <div className="font-sans text-[11px] text-neutral-500">{t.city}</div>
+                    <div className="font-sans text-[13px] font-bold text-neutral-100">{t.name}</div>
+                    <div className="font-sans text-[11px] text-neutral-400">{t.city}</div>
                   </div>
                 </figcaption>
               </figure>

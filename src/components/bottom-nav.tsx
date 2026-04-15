@@ -20,13 +20,13 @@ const ITEMS: BottomNavItem[] = [
   { to: ROUTES.HOME, label: 'Home', icon: <Home className={iconClass} aria-hidden />, end: true },
   { to: ROUTES.ASSISTANT, label: 'Plan Trip', icon: <Map className={iconClass} aria-hidden /> },
   {
-    to: ROUTES.USER,
-    label: 'My Plans',
+    to: ROUTES.MY_TRIPS,
+    label: 'My Trips',
     icon: <Bookmark className={iconClass} aria-hidden />,
     disabled: !userApp,
   },
   {
-    to: ROUTES.ACCOUNT,
+    to: ROUTES.PROFILE,
     label: 'Profile',
     icon: <User className={iconClass} aria-hidden />,
     disabled: !userApp,

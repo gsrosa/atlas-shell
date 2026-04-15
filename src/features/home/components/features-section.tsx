@@ -6,7 +6,7 @@ export function FeaturesSection() {
   return (
     <section
       aria-labelledby="features-heading"
-      className="bg-neutral-50 px-6 py-24 md:px-12 md:py-32 lg:px-20"
+      className="bg-neutral-900 px-6 py-24 md:px-12 md:py-32 lg:px-20"
     >
       <div className="mx-auto max-w-[1200px]">
         <FadeUp>
@@ -17,15 +17,15 @@ export function FeaturesSection() {
               </p>
               <h2
                 id="features-heading"
-                className="mb-4 font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic leading-[1.12] text-neutral-700"
+                className="mb-4 font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic leading-[1.12] text-neutral-100"
               >
                 Not another trip planner.
                 <br />
-                <span className="bg-gradient-to-r from-primary-500 to-auxiliary-400 bg-clip-text font-display font-bold not-italic text-transparent">
+                <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
                   A trip intelligence engine.
                 </span>
               </h2>
-              <p className="font-sans text-[15px] font-light leading-[1.75] text-neutral-600">
+              <p className="font-sans text-[15px] font-light leading-[1.75] text-neutral-300">
                 Atlas processes terrain, weather, local safety data, and your personal travel profile to build
                 plans that actually work on the ground.
               </p>
@@ -38,8 +38,8 @@ export function FeaturesSection() {
             <FadeUp key={f.title} delay={i * 80}>
               <div
                 className={cn(
-                  'group relative h-full overflow-hidden rounded-2xl border border-neutral-200/80 bg-neutral-100/80 p-8 transition-all duration-300 md:p-10',
-                  'hover:border-neutral-400 hover:bg-neutral-200 hover:shadow-[0_24px_70px_rgba(0,0,0,0.35)]',
+                  'group relative h-full overflow-hidden rounded-2xl border border-neutral-700/80 bg-neutral-800/80 p-8 transition-all duration-300 md:p-10',
+                  'hover:border-neutral-500 hover:bg-neutral-700 hover:shadow-[0_24px_70px_rgba(0,0,0,0.35)]',
                 )}
               >
                 <div
@@ -65,10 +65,10 @@ export function FeaturesSection() {
                     strokeWidth={2}
                   />
                 </div>
-                <h3 className="mb-3 font-display text-lg font-semibold leading-tight text-neutral-700">
+                <h3 className="mb-3 font-display text-lg font-semibold leading-tight text-neutral-100">
                   {f.title}
                 </h3>
-                <p className="font-sans text-[14px] font-light leading-[1.7] text-neutral-600">{f.body}</p>
+                <p className="font-sans text-[14px] font-light leading-[1.7] text-neutral-300">{f.body}</p>
               </div>
             </FadeUp>
           ))}

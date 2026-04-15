@@ -6,7 +6,6 @@ import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { HOME_FINAL_CTA_BG } from '../data/home-hero';
 import { FadeUp } from './fade-up';
-import { HomePrimaryButton } from './home-primary-button';
 
 export function FinalCtaSection() {
   const navigate = useNavigate();
@@ -50,22 +49,28 @@ export function FinalCtaSection() {
           </p>
           <h2
             id="final-cta-heading"
-            className="mb-5 font-display text-[clamp(2rem,5vw,3.4rem)] font-bold italic leading-[1.08] tracking-tight text-neutral-700"
+            className="mb-5 font-display text-[clamp(2rem,5vw,3.4rem)] font-bold italic leading-[1.08] tracking-tight text-neutral-100"
           >
             Your next trip starts
             <br />
             with{' '}
-            <span className="bg-gradient-to-r from-primary-500 to-auxiliary-400 bg-clip-text font-display font-bold not-italic text-transparent">
+            <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
               one message
             </span>
             .
           </h2>
-          <p className="mb-10 font-sans text-[clamp(15px,1.6vw,17px)] font-light leading-[1.75] text-neutral-600">
+          <p className="mb-10 font-sans text-[clamp(15px,1.6vw,17px)] font-light leading-[1.75] text-neutral-300">
             Describe where you want to go. Atlas handles the rest.
           </p>
 
           <div className="mb-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <HomePrimaryButton type="button" className="group px-8 py-4" onClick={goPlan}>
+            <Button
+              type="button"
+              variant="primary"
+              size="lg"
+              className="group"
+              onClick={goPlan}
+            >
               <Sparkles className="size-4" aria-hidden strokeWidth={2} />
               Start planning free
               <ArrowRight
@@ -73,13 +78,13 @@ export function FinalCtaSection() {
                 aria-hidden
                 strokeWidth={2}
               />
-            </HomePrimaryButton>
-            <Button variant="secondary" size="lg" className="rounded-full border border-neutral-200/90 shadow-sm" asChild>
+            </Button>
+            <Button variant="secondary" size="lg" asChild>
               <a href="#how-it-works">See how it works</a>
             </Button>
           </div>
 
-          <p className="font-sans text-xs tracking-wide text-neutral-400">
+          <p className="font-sans text-xs tracking-wide text-neutral-500">
             Beta access · No credit card · Cancel anytime
           </p>
         </FadeUp>

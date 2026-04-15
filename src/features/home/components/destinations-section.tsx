@@ -18,7 +18,7 @@ function DestinationCard({
     <button
       type="button"
       onClick={() => onPlan(d.name)}
-      className="group relative aspect-[3/4] w-[clamp(220px,24vw,276px)] shrink-0 cursor-pointer overflow-hidden rounded-2xl border border-neutral-200/80 text-left transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_70px_rgba(17,19,23,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+      className="group relative aspect-[3/4] w-[clamp(220px,24vw,276px)] shrink-0 cursor-pointer overflow-hidden rounded-2xl border border-neutral-700/80 text-left transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_70px_rgba(17,19,23,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
     >
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.07]"
@@ -38,15 +38,15 @@ function DestinationCard({
           {d.tags.map((t) => (
             <span
               key={t}
-              className="rounded px-1.5 py-0.5 font-sans text-[9px] font-bold uppercase tracking-wide text-neutral-600 bg-neutral-300/20"
+              className="rounded px-1.5 py-0.5 font-sans text-[9px] font-bold uppercase tracking-wide text-neutral-300 bg-neutral-600/20"
             >
               {t}
             </span>
           ))}
         </div>
-        <div className="mb-1 font-display text-lg font-bold leading-tight text-neutral-700">{d.name}</div>
-        <div className="mb-2 font-sans text-[10px] uppercase tracking-[0.1em] text-neutral-500">{d.country}</div>
-        <div className="mb-3 font-display text-xs italic leading-relaxed text-neutral-600/90">&ldquo;{d.hook}&rdquo;</div>
+        <div className="mb-1 font-display text-lg font-bold leading-tight text-neutral-100">{d.name}</div>
+        <div className="mb-2 font-sans text-[10px] uppercase tracking-[0.1em] text-neutral-400">{d.country}</div>
+        <div className="mb-3 font-display text-xs italic leading-relaxed text-neutral-300/90">&ldquo;{d.hook}&rdquo;</div>
         <div className="translate-y-1 font-sans text-[11px] font-bold tracking-wide text-primary-600 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
           Plan this trip →
         </div>
@@ -95,7 +95,7 @@ export function DestinationsSection() {
   return (
     <section
       aria-labelledby="dest-heading"
-      className="overflow-hidden border-y border-neutral-200/80 bg-neutral-100 py-24 md:py-32"
+      className="overflow-hidden border-y border-neutral-700/80 bg-neutral-800 py-24 md:py-32"
     >
       <FadeUp>
         <div className="mb-10 px-6 md:px-12 lg:px-20">
@@ -106,16 +106,16 @@ export function DestinationsSection() {
               </p>
               <h2
                 id="dest-heading"
-                className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-700"
+                className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-100"
               >
                 Where travelers go{' '}
-                <span className="bg-gradient-to-r from-primary-500 to-auxiliary-400 bg-clip-text font-display font-bold not-italic text-transparent">
+                <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
                   next
                 </span>
                 .
               </h2>
             </div>
-            <span className="font-sans text-xs tracking-wide text-neutral-500">Drag to explore →</span>
+            <span className="font-sans text-xs tracking-wide text-neutral-400">Drag to explore →</span>
           </div>
         </div>
       </FadeUp>

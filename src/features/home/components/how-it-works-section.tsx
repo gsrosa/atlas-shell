@@ -25,7 +25,7 @@ export function HowItWorksSection() {
     <section
       id="how-it-works"
       aria-labelledby="how-heading"
-      className="border-y border-neutral-200/80 bg-neutral-100 px-6 py-24 md:px-12 md:py-32 lg:px-20"
+      className="border-y border-neutral-700/80 bg-neutral-800 px-6 py-24 md:px-12 md:py-32 lg:px-20"
     >
       <div className="mx-auto max-w-[1200px]">
         <FadeUp>
@@ -35,10 +35,10 @@ export function HowItWorksSection() {
             </p>
             <h2
               id="how-heading"
-              className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-700"
+              className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-100"
             >
               From idea to itinerary in{' '}
-              <span className="bg-gradient-to-r from-primary-500 to-auxiliary-400 bg-clip-text font-display font-bold not-italic text-transparent">
+              <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
                 seconds
               </span>
               .
@@ -47,10 +47,10 @@ export function HowItWorksSection() {
         </FadeUp>
 
         <div className="relative">
-          <div className="absolute left-[17%] right-[17%] top-16 hidden h-px bg-neutral-200 md:block">
+          <div className="absolute left-[17%] right-[17%] top-16 hidden h-px bg-neutral-700 md:block">
             <div
               ref={lineRef}
-              className="h-full rounded-full bg-gradient-to-r from-primary-500 to-auxiliary-400"
+              className="h-full rounded-full bg-gradient-to-r from-primary-600 to-primary-300"
               style={{ width: 0, transition: 'width 1.2s ease 0.3s' }}
             />
           </div>
@@ -60,15 +60,15 @@ export function HowItWorksSection() {
               <FadeUp key={s.n} delay={i * 140}>
                 <div className="flex flex-col items-center px-4 text-center">
                   <div className="relative mb-6">
-                    <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-display text-7xl font-bold leading-none text-neutral-700/[0.04]">
+                    <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-display text-7xl font-bold leading-none text-neutral-100/[0.04]">
                       {s.n}
                     </span>
-                    <div className="relative z-10 flex size-14 items-center justify-center rounded-full border border-neutral-300/60 bg-neutral-200 shadow-sm">
+                    <div className="relative z-10 flex size-14 items-center justify-center rounded-full border border-neutral-600/60 bg-neutral-700 shadow-sm">
                       <s.icon className="size-5 text-primary-600" aria-hidden strokeWidth={2} />
                     </div>
                   </div>
-                  <h3 className="mb-3 font-sans text-[15px] font-bold text-neutral-700">{s.title}</h3>
-                  <p className="font-sans text-[13px] font-light leading-[1.7] text-neutral-600">{s.body}</p>
+                  <h3 className="mb-3 font-sans text-[15px] font-bold text-neutral-100">{s.title}</h3>
+                  <p className="font-sans text-[13px] font-light leading-[1.7] text-neutral-300">{s.body}</p>
                 </div>
               </FadeUp>
             ))}

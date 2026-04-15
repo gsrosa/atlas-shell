@@ -22,11 +22,11 @@ function MetricCell({
   return (
     <FadeUp delay={delay}>
       <div className="text-center">
-        <div className="font-display text-[clamp(2rem,4vw,3rem)] font-bold leading-none text-neutral-700">
+        <div className="font-display text-[clamp(2rem,4vw,3rem)] font-bold leading-none text-neutral-100">
           {v}
           {suffix}
         </div>
-        <div className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+        <div className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
           {label}
         </div>
       </div>
@@ -57,7 +57,7 @@ export function HomeMetricStrip() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden border-y border-neutral-200/80 bg-neutral-100 py-16"
+      className="relative overflow-hidden border-y border-neutral-700/80 bg-neutral-800 py-16"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.04]"

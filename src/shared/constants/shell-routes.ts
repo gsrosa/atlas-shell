@@ -7,13 +7,14 @@ export const ROUTES = {
   SEARCH_SPLAT: '/search/*',
   ASSISTANT: '/assistant',
   ASSISTANT_SPLAT: '/assistant/*',
-  PROJECTS: '/projects',
-  TASKS: '/tasks',
-  ANALYTICS: '/analytics',
-  SETTINGS: '/settings',
-  USER: '/trips',
-  USER_SPLAT: '/trips/*',
-  ACCOUNT: '/trips/account',
+  PROFILE: '/profile',
+  PROFILE_SPLAT: '/profile/*',
+  /** Full-screen traveler onboarding (no shell chrome). */
+  PROFILE_ONBOARDING: '/profile/onboarding',
+  /** Calm profile settings (same remote; chrome on). */
+  PROFILE_SETTINGS: '/profile/settings',
+  MY_TRIPS: '/my-trips',
+  MY_TRIPS_SPLAT: '/my-trips/*',
 } as const;
 
 export type ShellRoutePath = (typeof ROUTES)[keyof typeof ROUTES];

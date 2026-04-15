@@ -21,5 +21,13 @@ export function AuthShellEffects() {
     return () => window.removeEventListener('atlas:request-login', onRequest);
   }, []);
 
+  useEffect(() => {
+    const onTravelerProfileUpdated = () => {
+      void utils.travelerProfile.get.invalidate();
+    };
+    window.addEventListener('atlas:traveler-profile-updated', onTravelerProfileUpdated);
+    return () => window.removeEventListener('atlas:traveler-profile-updated', onTravelerProfileUpdated);
+  }, [utils]);
+
   return null;
 }

@@ -1,5 +1,11 @@
 import { Button } from '@gsrosa/atlas-ui';
-import { ArrowRight, ChevronDown, MessageSquare, Sparkles, Zap } from 'lucide-react';
+import {
+  ArrowRight,
+  ChevronDown,
+  MessageSquare,
+  Sparkles,
+  Zap,
+} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
@@ -8,7 +14,6 @@ import { HOME_HERO_BG } from '../data/home-hero';
 import { FadeUp } from './fade-up';
 import { GridBackground } from './grid-background';
 import { HomeChatDemo } from './home-chat-demo';
-import { HomePrimaryButton } from './home-primary-button';
 
 export function HeroSection() {
   const navigate = useNavigate();
@@ -27,7 +32,7 @@ export function HeroSection() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-neutral-50"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-neutral-900"
     >
       <div
         className="absolute inset-0 z-0 scale-[1.02] bg-cover bg-center"
@@ -50,10 +55,10 @@ export function HeroSection() {
           <FadeUp delay={80}>
             <h1
               id="hero-heading"
-              className="mb-6 font-display text-[clamp(2.2rem,5vw,3.8rem)] font-bold italic leading-[1.06] tracking-tight text-neutral-700"
+              className="mb-6 font-display text-[clamp(2.2rem,5vw,3.8rem)] font-bold italic leading-[1.06] tracking-tight text-neutral-200"
             >
               Your trips, planned by{' '}
-              <span className="bg-gradient-to-r from-primary-500 to-auxiliary-400 bg-clip-text font-display font-bold not-italic text-transparent">
+              <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
                 artificial intelligence
               </span>{' '}
               that understands you.
@@ -61,17 +66,20 @@ export function HeroSection() {
           </FadeUp>
 
           <FadeUp delay={160}>
-            <p className="mb-8 max-w-[480px] font-sans text-[clamp(15px,1.5vw,17px)] font-light leading-[1.75] text-neutral-600">
-              Atlas does not generate generic templates. It builds complete, day-by-day itineraries tailored to
-              your pace, budget, and travel personality — powered by deep contextual AI.
+            <p className="mb-8 max-w-[480px] font-sans text-[clamp(15px,1.5vw,17px)] font-light leading-[1.75] text-neutral-300">
+              Atlas does not generate generic templates. It builds complete,
+              day-by-day itineraries tailored to your pace, budget, and travel
+              personality — powered by deep contextual AI.
             </p>
           </FadeUp>
 
           <FadeUp delay={240}>
             <div className="mb-6 flex flex-wrap items-center gap-3">
-              <HomePrimaryButton
+              <Button
                 type="button"
-                className="group px-7 py-3.5"
+                variant="primary"
+                size="lg"
+                className="group px-6 py-3"
                 onClick={goPlan}
               >
                 <Sparkles className="size-4" aria-hidden strokeWidth={2} />
@@ -81,10 +89,19 @@ export function HeroSection() {
                   aria-hidden
                   strokeWidth={2}
                 />
-              </HomePrimaryButton>
-              <Button variant="secondary" size="lg" className="rounded-full border border-neutral-200/90 shadow-sm" asChild>
-                <a href="#how-it-works" className="inline-flex items-center gap-2">
-                  <MessageSquare className="size-4" aria-hidden strokeWidth={2} />
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                asChild
+                className="group px-6 py-3"
+              >
+                <a href="#how-it-works">
+                  <MessageSquare
+                    className="size-4"
+                    aria-hidden
+                    strokeWidth={2}
+                  />
                   How it works
                 </a>
               </Button>
@@ -92,9 +109,10 @@ export function HeroSection() {
           </FadeUp>
 
           <FadeUp delay={320}>
-            <div className="flex flex-wrap items-center gap-6 font-sans text-[11px] text-neutral-500">
+            <div className="flex flex-wrap items-center gap-6 font-sans text-[11px] text-neutral-400">
               <span className="flex items-center gap-1.5">
-                <span className="size-1.5 rounded-full bg-emerald-500" /> 1,200+ travelers
+                <span className="size-1.5 rounded-full bg-emerald-500" /> 1,200+
+                travelers
               </span>
               <span>47 countries</span>
               <span>Free beta</span>
@@ -102,14 +120,23 @@ export function HeroSection() {
           </FadeUp>
         </div>
 
-        <FadeUp delay={300} className="w-full shrink-0 md:w-[clamp(280px,35vw,420px)]">
+        <FadeUp
+          delay={300}
+          className="w-full shrink-0 md:w-[clamp(280px,35vw,420px)]"
+        >
           <HomeChatDemo onViewFullItinerary={goPlan} />
         </FadeUp>
       </div>
 
       <div className="pointer-events-none absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1.5 opacity-35">
-        <span className="font-sans text-[9px] uppercase tracking-[0.25em] text-neutral-700">Scroll</span>
-        <ChevronDown className="size-4 text-neutral-700 hp-bob" aria-hidden strokeWidth={2} />
+        <span className="font-sans text-[9px] uppercase tracking-[0.25em] text-neutral-200">
+          Scroll
+        </span>
+        <ChevronDown
+          className="size-4 text-neutral-200 hp-bob"
+          aria-hidden
+          strokeWidth={2}
+        />
       </div>
 
       <Link to={ROUTES.ASSISTANT} className="sr-only">
