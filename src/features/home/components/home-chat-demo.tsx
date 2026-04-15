@@ -1,19 +1,21 @@
+import React from 'react';
+
 import { Button } from '@gsrosa/atlas-ui';
-import { Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { SparklesIcon } from 'lucide-react';
+
 import { HOME_CHAT_AI_LINES, HOME_CHAT_USER_MSG } from '../data/home-chat-demo-copy';
 
-interface HomeChatDemoProps {
+type HomeChatDemoProps = {
   onViewFullItinerary: () => void;
-}
+};
 
-export function HomeChatDemo({ onViewFullItinerary }: HomeChatDemoProps) {
-  const [typed, setTyped] = useState('');
-  const [thinking, setThinking] = useState(false);
-  const [reply, setReply] = useState(false);
-  const [visLines, setVisLines] = useState(0);
+export const HomeChatDemo = ({ onViewFullItinerary }: HomeChatDemoProps) => {
+  const [typed, setTyped] = React.useState('');
+  const [thinking, setThinking] = React.useState(false);
+  const [reply, setReply] = React.useState(false);
+  const [visLines, setVisLines] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let i = 0;
     const iv = window.setInterval(() => {
       i += 1;
@@ -30,7 +32,7 @@ export function HomeChatDemo({ onViewFullItinerary }: HomeChatDemoProps) {
     return () => window.clearInterval(iv);
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!reply) return;
     let l = 0;
     const iv = window.setInterval(() => {
@@ -47,12 +49,12 @@ export function HomeChatDemo({ onViewFullItinerary }: HomeChatDemoProps) {
 
       <div className="mb-4 flex items-center gap-3 border-b border-neutral-600/20 pb-3">
         <div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-primary-600 shadow-md shadow-primary-500/25">
-          <Sparkles className="size-4 text-white" strokeWidth={2} />
+          <SparklesIcon className="size-4 text-white" strokeWidth={2} />
         </div>
         <div>
           <div className="font-sans text-xs font-bold text-neutral-100">Atlas AI</div>
           <div className="flex items-center gap-1.5">
-            <span className="size-1.5 rounded-full bg-emerald-500 hp-pulse-soft" />
+            <span className="size-1.5 rounded-full bg-(--atlas-color-success-500) hp-pulse-soft" />
             <span className="font-sans text-[10px] text-neutral-400">Active</span>
           </div>
         </div>
@@ -71,7 +73,7 @@ export function HomeChatDemo({ onViewFullItinerary }: HomeChatDemoProps) {
         <div className="mb-2 flex items-center gap-1.5 px-3 py-2">
           {[0, 1, 2].map((i) => (
             <span
-              key={i}
+              key={`thinking-${i}`}
               className="size-1.5 rounded-full bg-neutral-500 hp-thinking-dot"
               style={{ animationDelay: `${i * 180}ms` }}
             />
@@ -110,4 +112,4 @@ export function HomeChatDemo({ onViewFullItinerary }: HomeChatDemoProps) {
       )}
     </div>
   );
-}
+};

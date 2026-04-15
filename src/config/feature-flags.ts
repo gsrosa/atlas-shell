@@ -1,9 +1,9 @@
-interface FeatureFlags {
+type FeatureFlags = {
   enableSearchApp: boolean;
   enableAIAssistant: boolean;
   /** atlas-user MFE (Module Federation `userApp`) */
   enableUserApp: boolean;
-}
+};
 
 export type FeatureFlagKey = keyof FeatureFlags;
 
@@ -13,10 +13,10 @@ const flags: FeatureFlags = {
   enableUserApp: true,
 };
 
-export function isFeatureEnabled(flag: FeatureFlagKey): boolean {
+export const isFeatureEnabled = (flag: FeatureFlagKey): boolean => {
   return flags[flag];
-}
+};
 
-export function getFeatureFlags(): Readonly<FeatureFlags> {
+export const getFeatureFlags = (): Readonly<FeatureFlags> => {
   return Object.freeze({ ...flags });
-}
+};

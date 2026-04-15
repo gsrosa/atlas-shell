@@ -1,5 +1,7 @@
-import { Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import React from 'react';
+
+import { SparklesIcon } from 'lucide-react';
+
 import {
   CHAT_ROUTE_STOPS,
   CHAT_TAGS,
@@ -9,12 +11,12 @@ import { useInView } from '../hooks/use-in-view';
 
 type ChatStep = 0 | 1 | 2;
 
-export function AiChatDemo() {
-  const [step, setStep] = useState<ChatStep>(0);
-  const [charIdx, setCharIdx] = useState(0);
+export const AiChatDemo = () => {
+  const [step, setStep] = React.useState<ChatStep>(0);
+  const [charIdx, setCharIdx] = React.useState(0);
   const [ref, inView] = useInView(0.2);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!inView || step !== 0) return;
     if (charIdx < CHAT_USER_MESSAGE.length) {
       const id = setTimeout(() => setCharIdx((c) => c + 1), 26);
@@ -24,7 +26,7 @@ export function AiChatDemo() {
     return () => clearTimeout(id);
   }, [inView, step, charIdx]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (step !== 1) return;
     const id = setTimeout(() => setStep(2), 1400);
     return () => clearTimeout(id);
@@ -41,15 +43,15 @@ export function AiChatDemo() {
           className="flex size-[30px] shrink-0 items-center justify-center rounded-full bg-primary-500 text-white"
           aria-hidden="true"
         >
-          <Sparkles className="size-4" strokeWidth={2} />
+          <SparklesIcon className="size-4" strokeWidth={2} />
         </div>
         <div>
           <div className="font-bold text-[12px] text-white">Atlas AI</div>
           <div className="text-[10px] text-white/50">Travel Intelligence</div>
         </div>
         <div className="flex gap-1 ml-auto items-center" aria-hidden="true">
-          {(['#ffb5a0', '#00e3fd', '#4ade80'] as const).map((c, i) => (
-            <div key={i} className="w-1.5 h-1.5 rounded-full opacity-80" style={{ background: c }} />
+          {(['primary', 'auxiliary', 'success'] as const).map((color) => (
+            <div key={color} className={`w-1.5 h-1.5 rounded-full opacity-80 bg-${color}-500`} />
           ))}
         </div>
       </div>
@@ -77,7 +79,7 @@ export function AiChatDemo() {
           <div className="flex gap-1">
             {[0, 1, 2].map((i) => (
               <div
-                key={i}
+                key={`dot-${i}`}
                 className="w-[7px] h-[7px] rounded-full bg-primary-300"
                 style={{ animation: `hp-bounce 1s ${i * 0.2}s infinite` }}
               />
@@ -107,9 +109,9 @@ export function AiChatDemo() {
                     style={{
                       background:
                         i === 0
-                          ? '#ff5722'
+                          ? 'var(--atlas-color-primary-500)'
                           : i === CHAT_ROUTE_STOPS.length - 1
-                            ? '#00e3fd'
+                            ? 'var(--atlas-color-auxiliary-500)'
                             : 'rgba(255,255,255,0.5)',
                     }}
                   />
@@ -142,7 +144,7 @@ export function AiChatDemo() {
 
           <button
             type="button"
-            className="w-full bg-auxiliary-500 text-[#00363d] border-none rounded-lg py-2 px-3.5 text-[11px] font-bold cursor-pointer hover:bg-auxiliary-300 transition-colors"
+            className="w-full bg-auxiliary-500 text-neutral-900 border-none rounded-lg py-2 px-3.5 text-[11px] font-bold cursor-pointer hover:bg-auxiliary-300 transition-colors"
           >
             Build full itinerary →
           </button>
@@ -150,4 +152,4 @@ export function AiChatDemo() {
       )}
     </div>
   );
-}
+};

@@ -1,19 +1,20 @@
+import React from 'react';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
-import type { ReactNode } from 'react';
-import { useState } from 'react';
 import superjson from 'superjson';
+
 import type { AppRouter } from 'atlas-bff/trpc';
 
 export const trpc = createTRPCReact<AppRouter>();
 
 const defaultApi = 'http://127.0.0.1:4000';
 
-function trpcUrl(): string {
+const trpcUrl = (): string => {
   const base = (import.meta.env.VITE_API_URL ?? defaultApi).replace(/\/$/, '');
   return `${base}/trpc`;
-}
+};
 
 // Module-level singleton — survives React StrictMode double-mounts, HMR, and
 // error-boundary retries. Prevents auth/session cache from being wiped and
@@ -29,12 +30,12 @@ const queryClient = new QueryClient({
   },
 });
 
-interface Props {
-  children: ReactNode;
-}
+type Props = {
+  children: React.ReactNode;
+};
 
-export function QueryProvider({ children }: Props) {
-  const [trpcClient] = useState(() =>
+export const QueryProvider = ({ children }: Props) => {
+  const [trpcClient] = React.useState(() =>
     trpc.createClient({
       links: [
         httpBatchLink({
@@ -56,4 +57,4 @@ export function QueryProvider({ children }: Props) {
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </trpc.Provider>
   );
-}
+};

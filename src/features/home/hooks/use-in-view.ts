@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
-export function useInView(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
+export const useInView = (threshold = 0.15) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [inView, setInView] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
@@ -21,4 +21,4 @@ export function useInView(threshold = 0.15) {
   }, [threshold]);
 
   return [ref, inView] as const;
-}
+};

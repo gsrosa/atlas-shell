@@ -1,4 +1,4 @@
-interface EnvConfig {
+type EnvConfig = {
   MODE: string;
   DEV: boolean;
   PROD: boolean;
@@ -7,11 +7,11 @@ interface EnvConfig {
   REMOTE_SEARCH_APP_URL: string;
   REMOTE_AI_ASSISTANT_URL: string;
   REMOTE_USER_APP_URL: string;
-}
+};
 
-function getEnvVar(key: string, fallback: string): string {
+const getEnvVar = (key: string, fallback: string): string => {
   return (import.meta.env[key] as string | undefined) ?? fallback;
-}
+};
 
 export const env: EnvConfig = {
   MODE: import.meta.env.MODE,

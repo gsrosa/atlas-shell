@@ -1,9 +1,9 @@
-export function noop(): void {
+export const noop = (): void => {
   // intentional no-op
-}
+};
 
-export function classNames(
+export const classNames = (
   ...classes: (string | false | null | undefined)[]
-): string {
+): string => {
   return classes.filter(Boolean).join(' ');
-}
+};

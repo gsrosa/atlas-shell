@@ -1,8 +1,11 @@
+import React from 'react';
+
 import { cn } from '@gsrosa/atlas-ui';
+
 import { HOME_FEATURE_BLOCKS } from '../data/home-features';
 import { FadeUp } from './fade-up';
 
-export function FeaturesSection() {
+export const FeaturesSection = () => {
   return (
     <section
       aria-labelledby="features-heading"
@@ -76,4 +79,4 @@ export function FeaturesSection() {
       </div>
     </section>
   );
-}
+};

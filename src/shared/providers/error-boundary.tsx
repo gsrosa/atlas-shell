@@ -1,18 +1,19 @@
-import { Component } from 'react';
-import type { ErrorInfo, ReactNode } from 'react';
+import React from 'react';
+
 import { monitoring } from '@/shared/services/monitoring';
 
-interface Props {
-  children: ReactNode;
-  fallback?: ReactNode;
-}
+type Props = {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+};
 
-interface State {
+type State = {
   hasError: boolean;
   error: Error | null;
-}
+};
 
-export class ErrorBoundary extends Component<Props, State> {
+/** React requires class components for error boundaries — this is the one allowed exception. */
+export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -22,7 +23,7 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo): void {
+  componentDidCatch(error: Error, info: React.ErrorInfo): void {
     monitoring.captureException(error, {
       component: 'ErrorBoundary',
       metadata: { componentStack: info.componentStack },

@@ -1,33 +1,37 @@
+import React from 'react';
+
 import { Button } from '@gsrosa/atlas-ui';
 import {
-  ArrowRight,
-  ChevronDown,
-  MessageSquare,
-  Sparkles,
-  Zap,
+  ArrowRightIcon,
+  ChevronDownIcon,
+  MessageSquareIcon,
+  SparklesIcon,
+  ZapIcon,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
+
 import { HOME_HERO_BG } from '../data/home-hero';
 import { FadeUp } from './fade-up';
 import { GridBackground } from './grid-background';
 import { HomeChatDemo } from './home-chat-demo';
 
-export function HeroSection() {
+export const HeroSection = () => {
   const navigate = useNavigate();
   const openLogin = useAuthUiStore((s) => s.openLogin);
   const { isAuthenticated, isLoading } = useSession();
 
-  function goPlan() {
+  const handleGoPlan = () => {
     if (isLoading) return;
     if (!isAuthenticated) {
       openLogin();
       return;
     }
     navigate(ROUTES.ASSISTANT);
-  }
+  };
 
   return (
     <section
@@ -47,7 +51,7 @@ export function HeroSection() {
         <div className="min-w-[min(100%,320px)] flex-1">
           <FadeUp>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-400/25 bg-primary-500/10 px-3.5 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-primary-600">
-              <Zap className="size-3" aria-hidden strokeWidth={2.5} />
+              <ZapIcon className="size-3" aria-hidden strokeWidth={2.5} />
               AI-powered trip intelligence
             </div>
           </FadeUp>
@@ -80,11 +84,11 @@ export function HeroSection() {
                 variant="primary"
                 size="lg"
                 className="group px-6 py-3"
-                onClick={goPlan}
+                onClick={handleGoPlan}
               >
-                <Sparkles className="size-4" aria-hidden strokeWidth={2} />
+                <SparklesIcon className="size-4" aria-hidden strokeWidth={2} />
                 Start planning free
-                <ArrowRight
+                <ArrowRightIcon
                   className="size-4 transition-transform group-hover:translate-x-1"
                   aria-hidden
                   strokeWidth={2}
@@ -97,7 +101,7 @@ export function HeroSection() {
                 className="group px-6 py-3"
               >
                 <a href="#how-it-works">
-                  <MessageSquare
+                  <MessageSquareIcon
                     className="size-4"
                     aria-hidden
                     strokeWidth={2}
@@ -111,7 +115,7 @@ export function HeroSection() {
           <FadeUp delay={320}>
             <div className="flex flex-wrap items-center gap-6 font-sans text-[11px] text-neutral-400">
               <span className="flex items-center gap-1.5">
-                <span className="size-1.5 rounded-full bg-emerald-500" /> 1,200+
+                <span className="size-1.5 rounded-full bg-(--atlas-color-success-500)" /> 1,200+
                 travelers
               </span>
               <span>47 countries</span>
@@ -124,7 +128,7 @@ export function HeroSection() {
           delay={300}
           className="w-full shrink-0 md:w-[clamp(280px,35vw,420px)]"
         >
-          <HomeChatDemo onViewFullItinerary={goPlan} />
+          <HomeChatDemo onViewFullItinerary={handleGoPlan} />
         </FadeUp>
       </div>
 
@@ -132,7 +136,7 @@ export function HeroSection() {
         <span className="font-sans text-[9px] uppercase tracking-[0.25em] text-neutral-200">
           Scroll
         </span>
-        <ChevronDown
+        <ChevronDownIcon
           className="size-4 text-neutral-200 hp-bob"
           aria-hidden
           strokeWidth={2}
@@ -144,4 +148,4 @@ export function HeroSection() {
       </Link>
     </section>
   );
-}
+};

@@ -1,39 +1,42 @@
-import { Bookmark, Home, Map, User } from 'lucide-react';
-import type { ReactNode } from 'react';
+import React from 'react';
+
+import { cn } from '@gsrosa/atlas-ui';
+import { BookmarkIcon, HomeIcon, MapIcon, UserIcon } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+
 import { isFeatureEnabled } from '@/config/feature-flags';
 import { ROUTES } from '@/shared/constants/shell-routes';
 
-interface BottomNavItem {
+type BottomNavItem = {
   to: string;
   label: string;
-  icon: ReactNode;
+  icon: React.ReactNode;
   end?: boolean;
   disabled?: boolean;
-}
+};
 
 const userApp = isFeatureEnabled('enableUserApp');
 
 const iconClass = 'size-5';
 
 const ITEMS: BottomNavItem[] = [
-  { to: ROUTES.HOME, label: 'Home', icon: <Home className={iconClass} aria-hidden />, end: true },
-  { to: ROUTES.ASSISTANT, label: 'Plan Trip', icon: <Map className={iconClass} aria-hidden /> },
+  { to: ROUTES.HOME, label: 'Home', icon: <HomeIcon className={iconClass} aria-hidden />, end: true },
+  { to: ROUTES.ASSISTANT, label: 'Plan Trip', icon: <MapIcon className={iconClass} aria-hidden /> },
   {
     to: ROUTES.MY_TRIPS,
     label: 'My Trips',
-    icon: <Bookmark className={iconClass} aria-hidden />,
+    icon: <BookmarkIcon className={iconClass} aria-hidden />,
     disabled: !userApp,
   },
   {
     to: ROUTES.PROFILE,
     label: 'Profile',
-    icon: <User className={iconClass} aria-hidden />,
+    icon: <UserIcon className={iconClass} aria-hidden />,
     disabled: !userApp,
   },
 ];
 
-export function BottomNav() {
+export const BottomNav = () => {
   return (
     <nav
       aria-label="Mobile navigation"
@@ -56,11 +59,12 @@ export function BottomNav() {
             to={item.to}
             end={item.end ?? false}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-[3px] flex-1 pt-2.5 pb-2 text-[10px] no-underline ${
+              cn(
+                'flex flex-col items-center gap-[3px] flex-1 pt-2.5 pb-2 text-[10px] no-underline',
                 isActive
                   ? 'bottom-nav-active font-bold text-primary-400'
-                  : 'font-medium text-neutral-400'
-              }`
+                  : 'font-medium text-neutral-400',
+              )
             }
           >
             {item.icon}
@@ -70,4 +74,4 @@ export function BottomNav() {
       )}
     </nav>
   );
-}
+};

@@ -1,14 +1,18 @@
-import { Heart, User, Users } from 'lucide-react';
+import React from 'react';
+
+import { cn } from '@gsrosa/atlas-ui';
+import { HeartIcon, UserIcon, UsersIcon } from 'lucide-react';
+
 import { HOME_PRECISION_BULLETS, HOME_PRECISION_DAYS } from '../data/home-precision';
 import { FadeUp } from './fade-up';
 
 const MODES = [
-  { icon: User, label: 'Solo' as const },
-  { icon: Heart, label: 'Couple' as const },
-  { icon: Users, label: 'Family' as const },
+  { icon: UserIcon, label: 'Solo' as const },
+  { icon: HeartIcon, label: 'Couple' as const },
+  { icon: UsersIcon, label: 'Family' as const },
 ];
 
-export function PrecisionSection() {
+export const PrecisionSection = () => {
   return (
     <section
       aria-labelledby="precision-heading"
@@ -58,11 +62,12 @@ export function PrecisionSection() {
                 {MODES.map((mode, i) => (
                   <div
                     key={mode.label}
-                    className={
+                    className={cn(
+                      'flex cursor-default items-center gap-2 rounded-xl px-3.5 py-2 font-sans text-xs font-bold',
                       i === 0
-                        ? 'flex cursor-default items-center gap-2 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 px-3.5 py-2 font-sans text-xs font-bold text-white shadow-md shadow-primary-500/25'
-                        : 'flex cursor-default items-center gap-2 rounded-xl border border-neutral-700/90 bg-neutral-900 px-3.5 py-2 font-sans text-xs font-bold text-neutral-400'
-                    }
+                        ? 'bg-gradient-to-br from-primary-400 to-primary-600 text-white shadow-md shadow-primary-500/25'
+                        : 'border border-neutral-700/90 bg-neutral-900 text-neutral-400',
+                    )}
                   >
                     <mode.icon className="size-3.5" aria-hidden strokeWidth={2} />
                     {mode.label}
@@ -76,7 +81,7 @@ export function PrecisionSection() {
                     Iceland · Solo · September
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="size-1.5 rounded-full bg-emerald-500 hp-pulse-soft" />
+                    <span className="size-1.5 rounded-full bg-(--atlas-color-success-500) hp-pulse-soft" />
                     <span className="font-sans text-[10px] font-bold text-neutral-400">Live</span>
                   </div>
                 </div>
@@ -122,4 +127,4 @@ export function PrecisionSection() {
       </div>
     </section>
   );
-}
+};

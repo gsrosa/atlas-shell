@@ -1,10 +1,10 @@
-export interface HomeCarouselDestination {
+export type HomeCarouselDestination = {
   name: string;
   country: string;
   hook: string;
   tags: readonly string[];
   img: string;
-}
+};
 
 export const HOME_DESTINATIONS_CAROUSEL: HomeCarouselDestination[] = [
   {

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Alert,
   AlertDescription,
@@ -7,16 +9,15 @@ import {
   Label,
 } from '@gsrosa/atlas-ui';
 import { isTRPCClientError } from '@trpc/client';
-import { useState, type FormEvent } from 'react';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { trpc } from '@/shared/providers/query-provider';
 
-export function LoginForm() {
+export const LoginForm = () => {
   const closeLogin = useAuthUiStore((s) => s.closeLogin);
   const utils = trpc.useUtils();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   const signIn = trpc.auth.signIn.useMutation({
     onSuccess: async () => {
@@ -33,13 +34,13 @@ export function LoginForm() {
         ? 'Sign in failed'
         : null;
 
-  function onSubmit(e: FormEvent) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     signIn.mutate({ email: email.trim(), password });
-  }
+  };
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       {errorMessage ? (
         <Alert variant="danger">
           <AlertTitle>Could not sign in</AlertTitle>
@@ -80,4 +81,4 @@ export function LoginForm() {
       </Button>
     </form>
   );
-}
+};

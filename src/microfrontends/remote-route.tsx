@@ -1,33 +1,34 @@
-import { Component, Suspense } from 'react';
-import type { ComponentType, ErrorInfo, LazyExoticComponent, ReactNode } from 'react';
+import React from 'react';
+
 import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
+
 import { RemoteErrorBoundary } from './remote-error-boundary';
 
-interface RemoteRouteProps {
+type RemoteRouteProps = {
   name: string;
-  module: LazyExoticComponent<ComponentType>;
-  skeleton?: LazyExoticComponent<ComponentType>;
+  module: React.LazyExoticComponent<React.ComponentType>;
+  skeleton?: React.LazyExoticComponent<React.ComponentType>;
   requireAuth?: boolean;
-}
+};
 
-function PageShimmer() {
+const PageShimmer = () => {
   return (
     <div className="min-h-[calc(100dvh-60px)] animate-pulse bg-neutral-100 dark:bg-neutral-900 md:min-h-screen" />
   );
-}
+};
 
-function DefaultSpinner() {
+const DefaultSpinner = () => {
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-2 px-6 text-sm text-neutral-500">
       <span className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-neutral-200 border-t-primary-400" />
       Loading remote…
     </div>
   );
-}
+};
 
-/** Silently swallows skeleton load errors — falls back to the plain shimmer. */
-class SkeletonErrorBoundary extends Component<
-  { children: ReactNode },
+/** React requires class components for error boundaries — this is the one allowed exception. */
+class SkeletonErrorBoundary extends React.Component<
+  { children: React.ReactNode },
   { failed: boolean }
 > {
   state = { failed: false };
@@ -36,7 +37,7 @@ class SkeletonErrorBoundary extends Component<
     return { failed: true };
   }
 
-  componentDidCatch(_error: Error, _info: ErrorInfo): void {
+  componentDidCatch(_error: Error, _info: React.ErrorInfo): void {
     // intentionally silent — skeleton failures are non-critical
   }
 
@@ -46,24 +47,24 @@ class SkeletonErrorBoundary extends Component<
   }
 }
 
-function buildFallback(Skeleton?: LazyExoticComponent<ComponentType>): ReactNode {
+const buildFallback = (Skeleton?: React.LazyExoticComponent<React.ComponentType>): React.ReactNode => {
   if (!Skeleton) return <DefaultSpinner />;
   return (
     <SkeletonErrorBoundary>
-      <Suspense fallback={<PageShimmer />}>
+      <React.Suspense fallback={<PageShimmer />}>
         <Skeleton />
-      </Suspense>
+      </React.Suspense>
     </SkeletonErrorBoundary>
   );
-}
+};
 
-export function RemoteRoute({ name, module: Module, skeleton, requireAuth }: RemoteRouteProps) {
+export const RemoteRoute = ({ name, module: Module, skeleton, requireAuth }: RemoteRouteProps) => {
   const fallback = buildFallback(skeleton);
 
   const remote = (
-    <Suspense fallback={fallback}>
+    <React.Suspense fallback={fallback}>
       <Module />
-    </Suspense>
+    </React.Suspense>
   );
 
   return (
@@ -75,4 +76,4 @@ export function RemoteRoute({ name, module: Module, skeleton, requireAuth }: Rem
       ) : remote}
     </RemoteErrorBoundary>
   );
-}
+};

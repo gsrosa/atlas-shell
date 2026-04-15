@@ -1,7 +1,6 @@
-import { lazy } from 'react';
-import type { ComponentType, LazyExoticComponent } from 'react';
+import React from 'react';
 
-type ModuleImportFn = () => Promise<{ default: ComponentType }>;
+type ModuleImportFn = () => Promise<{ default: React.ComponentType }>;
 
 const remoteImportMap: Record<string, ModuleImportFn> = {
   'searchApp/App': () => import('searchApp/App'),
@@ -16,12 +15,12 @@ const remoteImportMap: Record<string, ModuleImportFn> = {
 // Module-level cache — lazy() must never be called twice for the same key.
 // A second lazy() call creates a NEW exotic component type, causing Suspense
 // to re-fire "Loading remote…" on every navigation.
-const lazyCache = new Map<string, LazyExoticComponent<ComponentType>>();
+const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>();
 
-export function loadRemoteModule(
+export const loadRemoteModule = (
   remoteName: string,
   exposedModule: string,
-): LazyExoticComponent<ComponentType> {
+): React.LazyExoticComponent<React.ComponentType> => {
   const key = `${remoteName}/${exposedModule}`;
 
   const cached = lazyCache.get(key);
@@ -35,7 +34,7 @@ export function loadRemoteModule(
     );
   }
 
-  const component = lazy(importFn);
+  const component = React.lazy(importFn);
   lazyCache.set(key, component);
   return component;
-}
+};

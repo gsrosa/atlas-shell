@@ -1,10 +1,11 @@
-import type { ComponentType, LazyExoticComponent } from 'react';
+import React from 'react';
+
 import type { FeatureFlagKey } from '@/config/feature-flags';
 import { isFeatureEnabled } from '@/config/feature-flags';
 import { loadRemoteModule } from '@/microfrontends/load-remote-module';
 import { ROUTES } from '@/shared/constants/shell-routes';
 
-interface MicrofrontendConfig {
+type MicrofrontendConfig = {
   name: string;
   remoteName: string;
   exposedModule: string;
@@ -15,7 +16,7 @@ interface MicrofrontendConfig {
   featureFlag: FeatureFlagKey;
   /** When true, shell shows the remote only if the user has a valid session (tRPC users.me). */
   requireAuth?: boolean;
-}
+};
 
 export const microfrontendRegistry: Record<string, MicrofrontendConfig> = {
   searchApp: {
@@ -62,32 +63,32 @@ export const microfrontendRegistry: Record<string, MicrofrontendConfig> = {
   },
 };
 
-export function getEnabledMicrofrontends(): MicrofrontendConfig[] {
+export const getEnabledMicrofrontends = (): MicrofrontendConfig[] => {
   return Object.values(microfrontendRegistry).filter((mfe) =>
     isFeatureEnabled(mfe.featureFlag),
   );
-}
+};
 
-export function getAllMicrofrontends(): MicrofrontendConfig[] {
+export const getAllMicrofrontends = (): MicrofrontendConfig[] => {
   return Object.values(microfrontendRegistry);
-}
+};
 
-export function getMicrofrontendComponent(
+export const getMicrofrontendComponent = (
   key: string,
-): LazyExoticComponent<ComponentType> {
+): React.LazyExoticComponent<React.ComponentType> => {
   const config = microfrontendRegistry[key];
   if (!config) {
     throw new Error(`[registry] Unknown microfrontend: "${key}"`);
   }
   return loadRemoteModule(config.remoteName, config.exposedModule);
-}
+};
 
-export function getMicrofrontendSkeleton(
+export const getMicrofrontendSkeleton = (
   key: string,
-): LazyExoticComponent<ComponentType> | undefined {
+): React.LazyExoticComponent<React.ComponentType> | undefined => {
   const config = microfrontendRegistry[key];
   if (!config?.skeletonModule) return undefined;
   return loadRemoteModule(config.remoteName, config.skeletonModule);
-}
+};
 
 export type { MicrofrontendConfig };

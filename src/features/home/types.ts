@@ -1,4 +1,4 @@
-export interface HomeDestination {
+export type HomeDestination = {
   name: string;
   country: string;
   hook: string;
@@ -9,30 +9,30 @@ export interface HomeDestination {
   imageUrl?: string;
   /** Small chips above title, e.g. duration / vibe */
   badges?: string[];
-}
+};
 
 export type HowItWorksIconKey = 'map' | 'sparkles' | 'plane';
 
-export interface HowItWorksStep {
+export type HowItWorksStep = {
   num: string;
   iconKey: HowItWorksIconKey;
   title: string;
   body: string;
-}
+};
 
-export interface HomeStat {
+export type HomeStat = {
   to: number;
   suffix: string;
   label: string;
-}
+};
 
-export interface HomeTestimonial {
+export type HomeTestimonial = {
   quote: string;
   name: string;
   city: string;
-}
+};
 
-export interface HomeFeatureItem {
+export type HomeFeatureItem = {
   title: string;
   body: string;
-}
+};

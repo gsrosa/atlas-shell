@@ -1,29 +1,29 @@
 import type { LucideIcon } from 'lucide-react';
-import { Brain, MessageSquare, RotateCcw } from 'lucide-react';
+import { BrainIcon, MessageSquareIcon, RotateCcwIcon } from 'lucide-react';
 
-export interface HomeHowStep {
+export type HomeHowStep = {
   n: string;
   icon: LucideIcon;
   title: string;
   body: string;
-}
+};
 
 export const HOME_HOW_STEPS: HomeHowStep[] = [
   {
     n: '01',
-    icon: MessageSquare,
+    icon: MessageSquareIcon,
     title: 'Describe your trip',
     body: 'Destination, travel dates, style. Rough ideas are fine — Atlas asks follow-up questions to build your profile.',
   },
   {
     n: '02',
-    icon: Brain,
+    icon: BrainIcon,
     title: 'AI builds your itinerary',
     body: 'Complete day-by-day plans with routes, accommodation, activities, and estimated costs — in seconds.',
   },
   {
     n: '03',
-    icon: RotateCcw,
+    icon: RotateCcwIcon,
     title: 'Edit anything, anytime',
     body: 'Change one element and Atlas reshuffles the rest. Your plan stays coherent even when your plans change.',
   },

@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import React from 'react';
+
 import { HOME_METRICS } from '../data/home-metrics';
 import { useAnimatedMetric } from '../hooks/use-animated-metric';
 import { FadeUp } from './fade-up';
 
-function MetricCell({
+const MetricCell = ({
   to,
   suffix,
   label,
@@ -17,7 +18,7 @@ function MetricCell({
   decimals: number;
   active: boolean;
   delay: number;
-}) {
+}) => {
   const v = useAnimatedMetric(to, active, decimals);
   return (
     <FadeUp delay={delay}>
@@ -32,13 +33,13 @@ function MetricCell({
       </div>
     </FadeUp>
   );
-}
+};
 
-export function HomeMetricStrip() {
-  const ref = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(false);
+export const HomeMetricStrip = () => {
+  const ref = React.useRef<HTMLElement>(null);
+  const [active, setActive] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const ob = new IntersectionObserver(
@@ -83,4 +84,4 @@ export function HomeMetricStrip() {
       </div>
     </section>
   );
-}
+};

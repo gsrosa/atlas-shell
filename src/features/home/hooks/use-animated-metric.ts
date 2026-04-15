@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 
-export function useAnimatedMetric(to: number, active: boolean, decimals = 0) {
-  const [val, setVal] = useState(0);
+export const useAnimatedMetric = (to: number, active: boolean, decimals = 0) => {
+  const [val, setVal] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!active) return;
     const dur = 2000;
     const start = performance.now();
@@ -19,4 +19,4 @@ export function useAnimatedMetric(to: number, active: boolean, decimals = 0) {
   }, [active, to, decimals]);
 
   return val;
-}
+};

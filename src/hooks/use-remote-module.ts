@@ -1,19 +1,19 @@
-import { useMemo } from 'react';
-import type { ComponentType, LazyExoticComponent } from 'react';
+import React from 'react';
+
 import { loadRemoteModule } from '@/microfrontends/load-remote-module';
 
-interface UseRemoteModuleResult {
-  Component: LazyExoticComponent<ComponentType>;
-}
+type UseRemoteModuleResult = {
+  Component: React.LazyExoticComponent<React.ComponentType>;
+};
 
-export function useRemoteModule(
+export const useRemoteModule = (
   remoteName: string,
   exposedModule: string,
-): UseRemoteModuleResult {
-  const Component = useMemo(
+): UseRemoteModuleResult => {
+  const Component = React.useMemo(
     () => loadRemoteModule(remoteName, exposedModule),
     [remoteName, exposedModule],
   );
 
   return { Component };
-}
+};

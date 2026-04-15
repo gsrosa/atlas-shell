@@ -1,8 +1,10 @@
-import { Brain, Map, RefreshCw, User } from 'lucide-react';
+import React from 'react';
 
-const FEATURE_ICONS = [Brain, User, Map, RefreshCw] as const;
+import { BrainIcon, MapIcon, RefreshCwIcon, UserIcon } from 'lucide-react';
 
-export function FeatureIcon({ index }: { index: number }) {
+const FEATURE_ICONS = [BrainIcon, UserIcon, MapIcon, RefreshCwIcon] as const;
+
+export const FeatureIcon = ({ index }: { index: number }) => {
   const Icon = FEATURE_ICONS[index % FEATURE_ICONS.length];
   return <Icon className="size-5" aria-hidden strokeWidth={1.75} />;
-}
+};

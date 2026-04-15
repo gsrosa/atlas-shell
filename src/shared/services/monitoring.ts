@@ -1,8 +1,8 @@
-interface ErrorContext {
+type ErrorContext = {
   component?: string;
   action?: string;
   metadata?: Record<string, unknown>;
-}
+};
 
 export const monitoring = {
   captureException(error: unknown, context?: ErrorContext): void {

@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 
-interface TravelerProfileUiState {
+type TravelerProfileUiState = {
   tier1Complete: boolean | null;
   setSnapshot: (snapshot: { tier1Complete: boolean } | null) => void;
-}
+};
 
 export const useTravelerProfileUiStore = create<TravelerProfileUiState>((set) => ({
   tier1Complete: null,

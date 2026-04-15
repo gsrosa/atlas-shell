@@ -1,6 +1,5 @@
-import { Compass, CreditCard, LogOut, Map, Sliders, Sparkles, User } from 'lucide-react';
-import { type ComponentType, memo } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import React from 'react';
+
 import {
   Button,
   DropdownMenu,
@@ -9,7 +8,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  cn,
 } from '@gsrosa/atlas-ui';
+import {
+  CompassIcon,
+  CreditCardIcon,
+  LogOutIcon,
+  MapIcon,
+  SlidersIcon,
+  SparklesIcon,
+  UserIcon,
+} from 'lucide-react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+
 import { isFeatureEnabled } from '@/config/feature-flags';
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { profileDisplayName } from '@/features/auth/profile-display-name';
@@ -17,43 +28,44 @@ import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { trpc } from '@/shared/providers/query-provider';
 
-interface NavItem {
+type NavItem = {
   to: string;
   label: string;
-  icon: ComponentType<{ className?: string; strokeWidth?: number }>;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   end?: boolean;
   disabled?: boolean;
   requiresAuth?: boolean;
-}
+};
 
-function buildNavItems(): NavItem[] {
+const buildNavItems = (): NavItem[] => {
   const userApp = isFeatureEnabled('enableUserApp');
   return [
-    { to: ROUTES.HOME, label: 'Explore', icon: Compass, end: true },
+    { to: ROUTES.HOME, label: 'Explore', icon: CompassIcon, end: true },
     {
       to: ROUTES.ASSISTANT,
       label: 'Plan Trip',
-      icon: Sparkles,
+      icon: SparklesIcon,
       requiresAuth: true,
     },
     {
       to: ROUTES.MY_TRIPS,
       label: 'My Trips',
-      icon: Map,
+      icon: MapIcon,
       requiresAuth: true,
       disabled: !userApp,
     },
   ];
-}
+};
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium no-underline whitespace-nowrap transition-all ${
+  cn(
+    'inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium no-underline whitespace-nowrap transition-all',
     isActive
       ? 'bg-primary-500 text-white'
-      : 'text-neutral-200 hover:text-neutral-100 hover:bg-white/6'
-  }`;
+      : 'text-neutral-200 hover:text-neutral-100 hover:bg-white/6',
+  );
 
-const TopNavBrand = memo(function TopNavBrand() {
+const TopNavBrand = React.memo(() => {
   return (
     <Link
       to="/"
@@ -70,7 +82,7 @@ const TopNavBrand = memo(function TopNavBrand() {
   );
 });
 
-function TopNavNav() {
+const TopNavNav = () => {
   const NAV_ITEMS = buildNavItems();
   const { isAuthenticated, isLoading } = useSession();
   const openLogin = useAuthUiStore((s) => s.openLogin);
@@ -137,9 +149,9 @@ function TopNavNav() {
       })}
     </nav>
   );
-}
+};
 
-function TopNavAuth() {
+const TopNavAuth = () => {
   const userApp = isFeatureEnabled('enableUserApp');
   const { isAuthenticated, isLoading, profile } = useSession();
   const openLogin = useAuthUiStore((s) => s.openLogin);
@@ -176,16 +188,16 @@ function TopNavAuth() {
           <DropdownMenuSeparator />
           {userApp && (
             <DropdownMenuItem onClick={() => navigate(ROUTES.PROFILE)}>
-              <User strokeWidth={2} />
+              <UserIcon strokeWidth={2} />
               Profile
             </DropdownMenuItem>
           )}
           <DropdownMenuItem onClick={() => navigate(ROUTES.PROFILE_SETTINGS)}>
-            <CreditCard strokeWidth={2} />
+            <CreditCardIcon strokeWidth={2} />
             Payments
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigate(ROUTES.PROFILE_SETTINGS)}>
-            <Sliders strokeWidth={2} />
+            <SlidersIcon strokeWidth={2} />
             Preferences
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -194,7 +206,7 @@ function TopNavAuth() {
             disabled={signOut.isPending}
             onClick={() => signOut.mutate()}
           >
-            <LogOut strokeWidth={2} />
+            <LogOutIcon strokeWidth={2} />
             Sign out
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -212,9 +224,9 @@ function TopNavAuth() {
       </Button>
     </div>
   );
-}
+};
 
-export const TopNav = memo(function TopNav() {
+export const TopNav = React.memo(() => {
   return (
     <header
       role="banner"

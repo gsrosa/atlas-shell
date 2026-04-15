@@ -1,25 +1,26 @@
+import React from 'react';
+
 import { Alert, AlertDescription, AlertTitle, Button } from '@gsrosa/atlas-ui';
-import { AlertTriangle } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { AlertTriangleIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 
-interface Props {
+type Props = {
   remoteLabel: string;
-  children: ReactNode;
-  loadingFallback?: ReactNode;
-}
+  children: React.ReactNode;
+  loadingFallback?: React.ReactNode;
+};
 
-function AuthErrorScreen({
+const AuthErrorScreen = ({
   title,
   description,
 }: {
   title: string;
   description: string;
-}) {
+}) => {
   const openLogin = useAuthUiStore((s) => s.openLogin);
 
   return (
@@ -30,15 +31,15 @@ function AuthErrorScreen({
     >
       <div className="w-full max-w-md">
         <Alert variant="danger" className="flex flex-col gap-3 border text-left sm:flex-row sm:items-start">
-          <AlertTriangle
-            className="size-10 shrink-0 text-[var(--atlas-color-danger-600)] sm:size-9"
+          <AlertTriangleIcon
+            className="size-10 shrink-0 text-(--atlas-color-danger-600) sm:size-9"
             aria-hidden
             strokeWidth={2}
           />
           <div className="min-w-0 flex-1 space-y-2">
-            <AlertTitle className="text-base text-[var(--atlas-color-danger-800)]">{title}</AlertTitle>
-            <AlertDescription className="text-[var(--atlas-color-danger-700)]">{description}</AlertDescription>
-            <p className="m-0 pt-1 font-mono text-xs text-[var(--atlas-color-danger-600)] opacity-90">
+            <AlertTitle className="text-base text-(--atlas-color-danger-800)">{title}</AlertTitle>
+            <AlertDescription className="text-(--atlas-color-danger-700)">{description}</AlertDescription>
+            <p className="m-0 pt-1 font-mono text-xs text-(--atlas-color-danger-600) opacity-90">
               Error · authentication required
             </p>
           </div>
@@ -57,9 +58,9 @@ function AuthErrorScreen({
       </div>
     </div>
   );
-}
+};
 
-export function AuthRemoteGate({ remoteLabel, children, loadingFallback }: Props) {
+export const AuthRemoteGate = ({ remoteLabel, children, loadingFallback }: Props) => {
   const { isAuthenticated, isLoading, isUnauthorized } = useSession();
 
   if (isLoading) {
@@ -90,4 +91,4 @@ export function AuthRemoteGate({ remoteLabel, children, loadingFallback }: Props
   }
 
   return children;
-}
+};

@@ -1,7 +1,9 @@
+import React from 'react';
+
 import { HOME_TESTIMONIALS_MARKETING } from '../data/home-testimonials-marketing';
 import { FadeUp } from './fade-up';
 
-export function SocialProofSection() {
+export const SocialProofSection = () => {
   return (
     <section
       aria-labelledby="social-heading"
@@ -52,4 +54,4 @@ export function SocialProofSection() {
       </div>
     </section>
   );
-}
+};

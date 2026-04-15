@@ -2,7 +2,7 @@ import { isTRPCClientError } from '@trpc/client';
 
 import { trpc } from '@/shared/providers/query-provider';
 
-export function useSession() {
+export const useSession = () => {
   const me = trpc.users.me.useQuery(undefined, {
     retry: false,
     staleTime: 5 * 60 * 1000,  // session doesn't change often; skip background refetches

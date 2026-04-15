@@ -1,6 +1,6 @@
-import { memo } from 'react';
+import React from 'react';
 
-export const GridBackground = memo(function GridBackground() {
+export const GridBackground = React.memo(() => {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <svg

@@ -13,6 +13,6 @@ export const useAuthUiStore = create<AuthUiState>((set) => ({
 }));
 
 /** Works across microfrontends: shell listens on `atlas:request-login`. */
-export function requestLogin(): void {
+export const requestLogin = (): void => {
   window.dispatchEvent(new CustomEvent('atlas:request-login'));
-}
+};

@@ -1,7 +1,7 @@
-interface AnalyticsEvent {
+type AnalyticsEvent = {
   name: string;
   properties?: Record<string, unknown>;
-}
+};
 
 export const analytics = {
   track(event: AnalyticsEvent): void {

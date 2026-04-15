@@ -1,14 +1,16 @@
-import { memo } from 'react';
+import React from 'react';
+
+import { cn } from '@gsrosa/atlas-ui';
 
 const currentYear = new Date().getFullYear();
 
 const LINKS = ['Privacy', 'Terms', 'Docs', 'Support'] as const;
 
-export const Footer = memo(function Footer() {
+export const Footer = React.memo(() => {
   return (
     <footer
       role="contentinfo"
-      className="shrink-0 border-t border-white/[0.06] bg-[#111317]"
+      className="shrink-0 border-t border-white/[0.06] bg-(--atlas-color-neutral-900)"
     >
       <div className="flex items-center justify-between flex-wrap gap-2 px-4 py-5 md:px-6 md:py-6 lg:px-10 lg:py-7">
         <div className="hidden md:flex items-center gap-3">
@@ -37,8 +39,10 @@ export const Footer = memo(function Footer() {
             <a
               key={label}
               href={`#${label.toLowerCase()}`}
-              className={`text-[10px] md:text-[11px] font-sans uppercase tracking-[0.15em] text-neutral-500 transition-colors hover:text-auxiliary-400
-                ${label === 'Docs' || label === 'Support' ? 'hidden md:inline' : ''}`}
+              className={cn(
+                'text-[10px] md:text-[11px] font-sans uppercase tracking-[0.15em] text-neutral-500 transition-colors hover:text-auxiliary-400',
+                (label === 'Docs' || label === 'Support') && 'hidden md:inline',
+              )}
             >
               {label}
             </a>

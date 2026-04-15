@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+import React from 'react';
+
 import { HOME_HOW_STEPS } from '../data/home-how-steps';
 import { FadeUp } from './fade-up';
 
-export function HowItWorksSection() {
-  const lineRef = useRef<HTMLDivElement>(null);
+export const HowItWorksSection = () => {
+  const lineRef = React.useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const el = lineRef.current;
     if (!el) return;
     const ob = new IntersectionObserver(
@@ -77,4 +78,4 @@ export function HowItWorksSection() {
       </div>
     </section>
   );
-}
+};

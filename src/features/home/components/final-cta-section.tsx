@@ -1,25 +1,29 @@
+import React from 'react';
+
 import { Button } from '@gsrosa/atlas-ui';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRightIcon, SparklesIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
+
 import { HOME_FINAL_CTA_BG } from '../data/home-hero';
 import { FadeUp } from './fade-up';
 
-export function FinalCtaSection() {
+export const FinalCtaSection = () => {
   const navigate = useNavigate();
   const openLogin = useAuthUiStore((s) => s.openLogin);
   const { isAuthenticated, isLoading } = useSession();
 
-  function goPlan() {
+  const handleGoPlan = () => {
     if (isLoading) return;
     if (!isAuthenticated) {
       openLogin();
       return;
     }
     navigate(ROUTES.ASSISTANT);
-  }
+  };
 
   return (
     <section
@@ -69,11 +73,11 @@ export function FinalCtaSection() {
               variant="primary"
               size="lg"
               className="group"
-              onClick={goPlan}
+              onClick={handleGoPlan}
             >
-              <Sparkles className="size-4" aria-hidden strokeWidth={2} />
+              <SparklesIcon className="size-4" aria-hidden strokeWidth={2} />
               Start planning free
-              <ArrowRight
+              <ArrowRightIcon
                 className="size-4 transition-transform group-hover:translate-x-1"
                 aria-hidden
                 strokeWidth={2}
@@ -91,4 +95,4 @@ export function FinalCtaSection() {
       </div>
     </section>
   );
-}
+};

@@ -1,33 +1,31 @@
-import { useEffect } from 'react';
+import React from 'react';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { trpc } from '@/shared/providers/query-provider';
 
 /** Listens for `atlas:request-login` and eagerly warms the session cache. */
-export function AuthShellEffects() {
+export const AuthShellEffects = () => {
   const utils = trpc.useUtils();
 
-  // Prefetch session on mount so auth-gated MFEs never show "Checking your
-  // session…" on first navigation — the cache will already be populated.
-  useEffect(() => {
+  React.useEffect(() => {
     void utils.users.me.prefetch(undefined, { retry: false });
   }, [utils]);
 
-  useEffect(() => {
-    const onRequest = () => {
+  React.useEffect(() => {
+    const handleRequestLogin = () => {
       useAuthUiStore.getState().openLogin();
     };
-    window.addEventListener('atlas:request-login', onRequest);
-    return () => window.removeEventListener('atlas:request-login', onRequest);
+    window.addEventListener('atlas:request-login', handleRequestLogin);
+    return () => window.removeEventListener('atlas:request-login', handleRequestLogin);
   }, []);
 
-  useEffect(() => {
-    const onTravelerProfileUpdated = () => {
+  React.useEffect(() => {
+    const handleTravelerProfileUpdated = () => {
       void utils.travelerProfile.get.invalidate();
     };
-    window.addEventListener('atlas:traveler-profile-updated', onTravelerProfileUpdated);
-    return () => window.removeEventListener('atlas:traveler-profile-updated', onTravelerProfileUpdated);
+    window.addEventListener('atlas:traveler-profile-updated', handleTravelerProfileUpdated);
+    return () => window.removeEventListener('atlas:traveler-profile-updated', handleTravelerProfileUpdated);
   }, [utils]);
 
   return null;
-}
+};

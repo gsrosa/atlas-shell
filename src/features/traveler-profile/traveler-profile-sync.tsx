@@ -1,10 +1,12 @@
-import { memo, useEffect } from 'react';
+import React from 'react';
+
 import { useSession } from '@/features/auth/use-session';
 import { trpc } from '@/shared/providers/query-provider';
+
 import { useTravelerProfileUiStore } from './traveler-profile-store';
 
 /** Keeps shell Zustand in sync with `travelerProfile.get` for nav awareness. */
-export const TravelerProfileSync = memo(function TravelerProfileSync() {
+export const TravelerProfileSync = React.memo(() => {
   const { isAuthenticated, isLoading } = useSession();
   const setSnapshot = useTravelerProfileUiStore((s) => s.setSnapshot);
 
@@ -14,7 +16,7 @@ export const TravelerProfileSync = memo(function TravelerProfileSync() {
     retry: 1,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isAuthenticated || isLoading) {
       setSnapshot(null);
       return;

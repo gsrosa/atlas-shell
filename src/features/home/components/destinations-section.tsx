@@ -1,19 +1,22 @@
-import { useCallback, useRef, useState, type MouseEvent } from 'react';
+import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
+
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
+
 import type { HomeCarouselDestination } from '../data/home-destinations-carousel';
 import { HOME_DESTINATIONS_CAROUSEL } from '../data/home-destinations-carousel';
 import { FadeUp } from './fade-up';
 
-function DestinationCard({
+const DestinationCard = ({
   d,
   onPlan,
 }: {
   d: HomeCarouselDestination;
   onPlan: (destination: string) => void;
-}) {
+}) => {
   return (
     <button
       type="button"
@@ -53,17 +56,17 @@ function DestinationCard({
       </div>
     </button>
   );
-}
+};
 
-export function DestinationsSection() {
+export const DestinationsSection = () => {
   const navigate = useNavigate();
   const openLogin = useAuthUiStore((s) => s.openLogin);
   const { isAuthenticated, isLoading } = useSession();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStart = useRef({ x: 0, scroll: 0 });
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = React.useState(false);
+  const dragStart = React.useRef({ x: 0, scroll: 0 });
 
-  function goAssistant(destination?: string) {
+  const handleGoAssistant = (destination?: string) => {
     if (isLoading) return;
     if (!isAuthenticated) {
       openLogin();
@@ -73,24 +76,24 @@ export function DestinationsSection() {
       ? `${ROUTES.ASSISTANT}?destination=${encodeURIComponent(destination)}`
       : ROUTES.ASSISTANT;
     navigate(path);
-  }
+  };
 
-  const onMouseDown = useCallback((e: MouseEvent) => {
+  const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
     const el = scrollRef.current;
     if (!el) return;
     setIsDragging(true);
     dragStart.current = { x: e.clientX, scroll: el.scrollLeft };
   }, []);
 
-  const onMouseMove = useCallback(
-    (e: MouseEvent) => {
+  const handleMouseMove = React.useCallback(
+    (e: React.MouseEvent) => {
       if (!isDragging || !scrollRef.current) return;
       scrollRef.current.scrollLeft = dragStart.current.scroll - (e.clientX - dragStart.current.x);
     },
     [isDragging],
   );
 
-  const onMouseUp = useCallback(() => setIsDragging(false), []);
+  const handleMouseUp = React.useCallback(() => setIsDragging(false), []);
 
   return (
     <section
@@ -123,10 +126,10 @@ export function DestinationsSection() {
         ref={scrollRef}
         role="list"
         aria-label="Destination ideas"
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
         className="no-scrollbar flex select-none gap-3.5 overflow-x-auto px-6 pb-6 md:px-12 lg:px-20"
         style={{
           scrollbarWidth: 'none',
@@ -136,10 +139,10 @@ export function DestinationsSection() {
       >
         {HOME_DESTINATIONS_CAROUSEL.map((d) => (
           <div key={d.name} role="listitem" className="shrink-0">
-            <DestinationCard d={d} onPlan={goAssistant} />
+            <DestinationCard d={d} onPlan={handleGoAssistant} />
           </div>
         ))}
       </div>
     </section>
   );
-}
+};

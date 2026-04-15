@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Dialog,
   DialogContent,
@@ -9,7 +11,7 @@ import {
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { LoginForm } from '@/features/auth/login-form';
 
-export function LoginModal() {
+export const LoginModal = () => {
   const open = useAuthUiStore((s) => s.loginOpen);
   const closeLogin = useAuthUiStore((s) => s.closeLogin);
 
@@ -32,4 +34,4 @@ export function LoginModal() {
       </DialogContent>
     </Dialog>
   );
-}
+};
