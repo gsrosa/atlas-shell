@@ -32,14 +32,14 @@ const AuthErrorScreen = ({
       <div className="w-full max-w-md">
         <Alert variant="danger" className="flex flex-col gap-3 border text-left sm:flex-row sm:items-start">
           <AlertTriangleIcon
-            className="size-10 shrink-0 text-(--atlas-color-danger-600) sm:size-9"
+            className="size-10 shrink-0 text-danger-600 sm:size-9"
             aria-hidden
             strokeWidth={2}
           />
           <div className="min-w-0 flex-1 space-y-2">
-            <AlertTitle className="text-base text-(--atlas-color-danger-800)">{title}</AlertTitle>
-            <AlertDescription className="text-(--atlas-color-danger-700)">{description}</AlertDescription>
-            <p className="m-0 pt-1 font-mono text-xs text-(--atlas-color-danger-600) opacity-90">
+            <AlertTitle className="text-base text-danger-800">{title}</AlertTitle>
+            <AlertDescription className="text-danger-700">{description}</AlertDescription>
+            <p className="m-0 pt-1 font-mono text-xs text-danger-600 opacity-90">
               Error · authentication required
             </p>
           </div>

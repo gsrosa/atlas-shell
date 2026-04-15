@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { cn } from '@gsrosa/atlas-ui';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
@@ -130,12 +131,11 @@ export const DestinationsSection = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className="no-scrollbar flex select-none gap-3.5 overflow-x-auto px-6 pb-6 md:px-12 lg:px-20"
-        style={{
-          scrollbarWidth: 'none',
-          cursor: isDragging ? 'grabbing' : 'grab',
-          touchAction: 'pan-x pan-y',
-        }}
+        className={cn(
+          'no-scrollbar flex select-none gap-3.5 overflow-x-auto px-6 pb-6 md:px-12 lg:px-20',
+          isDragging ? 'cursor-grabbing' : 'cursor-grab',
+        )}
+        style={{ touchAction: 'pan-x pan-y' }}
       >
         {HOME_DESTINATIONS_CAROUSEL.map((d) => (
           <div key={d.name} role="listitem" className="shrink-0">

@@ -12,12 +12,16 @@ type FadeUpProps = {
 };
 
 export const FadeUp = ({ children, delay = 0, className, role }: FadeUpProps) => {
-  const [ref, inView] = useInView(0.1);
+  const { ref, inView } = useInView(0.1);
   return (
     <div
       ref={ref}
       role={role}
-      className={cn('fade-up', inView && 'in-view', className)}
+      className={cn(
+        'opacity-0 translate-y-7 transition-all duration-[550ms] ease-out',
+        inView && 'opacity-100 translate-y-0',
+        className,
+      )}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}

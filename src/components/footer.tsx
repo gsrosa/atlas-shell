@@ -10,7 +10,7 @@ export const Footer = React.memo(() => {
   return (
     <footer
       role="contentinfo"
-      className="shrink-0 border-t border-white/[0.06] bg-(--atlas-color-neutral-900)"
+      className="shrink-0 border-t border-white/[0.06] bg-neutral-900"
     >
       <div className="flex items-center justify-between flex-wrap gap-2 px-4 py-5 md:px-6 md:py-6 lg:px-10 lg:py-7">
         <div className="hidden md:flex items-center gap-3">

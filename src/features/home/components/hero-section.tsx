@@ -115,7 +115,7 @@ export const HeroSection = () => {
           <FadeUp delay={320}>
             <div className="flex flex-wrap items-center gap-6 font-sans text-[11px] text-neutral-400">
               <span className="flex items-center gap-1.5">
-                <span className="size-1.5 rounded-full bg-(--atlas-color-success-500)" /> 1,200+
+                <span className="size-1.5 rounded-full bg-success-500" /> 1,200+
                 travelers
               </span>
               <span>47 countries</span>
@@ -137,7 +137,7 @@ export const HeroSection = () => {
           Scroll
         </span>
         <ChevronDownIcon
-          className="size-4 text-neutral-200 hp-bob"
+          className="size-4 text-neutral-200 animate-hp-bob"
           aria-hidden
           strokeWidth={2}
         />

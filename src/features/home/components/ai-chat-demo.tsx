@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { cn } from '@gsrosa/atlas-ui';
 import { SparklesIcon } from 'lucide-react';
 
 import {
@@ -14,7 +15,7 @@ type ChatStep = 0 | 1 | 2;
 export const AiChatDemo = () => {
   const [step, setStep] = React.useState<ChatStep>(0);
   const [charIdx, setCharIdx] = React.useState(0);
-  const [ref, inView] = useInView(0.2);
+  const { ref, inView } = useInView(0.2);
 
   React.useEffect(() => {
     if (!inView || step !== 0) return;
@@ -35,8 +36,7 @@ export const AiChatDemo = () => {
   return (
     <div
       ref={ref}
-      className="w-full rounded-[18px] p-[18px] lg:p-[22px] border border-white/15 backdrop-blur-md"
-      style={{ background: 'rgba(255,255,255,0.08)' }}
+      className="w-full rounded-[18px] p-[18px] lg:p-[22px] border border-white/15 bg-white/8 backdrop-blur-md"
     >
       <div className="flex items-center gap-2 mb-3.5">
         <div
@@ -50,24 +50,20 @@ export const AiChatDemo = () => {
           <div className="text-[10px] text-white/50">Travel Intelligence</div>
         </div>
         <div className="flex gap-1 ml-auto items-center" aria-hidden="true">
-          {(['primary', 'auxiliary', 'success'] as const).map((color) => (
-            <div key={color} className={`w-1.5 h-1.5 rounded-full opacity-80 bg-${color}-500`} />
-          ))}
+          <div className="w-1.5 h-1.5 rounded-full opacity-80 bg-primary-500" />
+          <div className="w-1.5 h-1.5 rounded-full opacity-80 bg-auxiliary-500" />
+          <div className="w-1.5 h-1.5 rounded-full opacity-80 bg-success-500" />
         </div>
       </div>
 
       {charIdx > 0 && (
         <div className="flex justify-end mb-3">
-          <div
-            className="rounded-[14px_14px_4px_14px] px-3 py-2.5 max-w-[88%] text-[12px] lg:text-[13px] text-white/90 leading-snug"
-            style={{ background: 'rgba(255,255,255,0.15)' }}
-          >
+          <div className="rounded-[14px_14px_4px_14px] px-3 py-2.5 max-w-[88%] text-[12px] lg:text-[13px] text-white/90 leading-snug bg-white/15">
             {CHAT_USER_MESSAGE.slice(0, charIdx)}
             {step === 0 && (
               <span
                 aria-hidden="true"
-                className="hp-cursor inline-block w-0.5 h-[1em] ml-0.5 align-text-bottom"
-                style={{ background: 'rgba(255,255,255,0.7)' }}
+                className="animate-hp-blink inline-block w-0.5 h-[1em] ml-0.5 align-text-bottom bg-white/70"
               />
             )}
           </div>
@@ -80,8 +76,8 @@ export const AiChatDemo = () => {
             {[0, 1, 2].map((i) => (
               <div
                 key={`dot-${i}`}
-                className="w-[7px] h-[7px] rounded-full bg-primary-300"
-                style={{ animation: `hp-bounce 1s ${i * 0.2}s infinite` }}
+                className="w-[7px] h-[7px] rounded-full bg-primary-300 animate-hp-dot-bounce"
+                style={{ animationDelay: `${i * 0.2}s` }}
               />
             ))}
           </div>
@@ -91,8 +87,7 @@ export const AiChatDemo = () => {
 
       {step === 2 && (
         <div
-          className="hp-reply-in rounded-[4px_14px_14px_14px] px-3.5 py-3"
-          style={{ background: 'rgba(255,255,255,0.1)' }}
+          className="animate-hp-fade-up rounded-[4px_14px_14px_14px] px-3.5 py-3 bg-white/10"
           role="status"
           aria-label="AI response"
         >
@@ -105,15 +100,11 @@ export const AiChatDemo = () => {
               <div key={stop} className="flex items-center gap-1.5">
                 <div className="flex flex-col items-center gap-0.5">
                   <div
-                    className="w-2 h-2 rounded-full border-[1.5px] border-white/40"
-                    style={{
-                      background:
-                        i === 0
-                          ? 'var(--atlas-color-primary-500)'
-                          : i === CHAT_ROUTE_STOPS.length - 1
-                            ? 'var(--atlas-color-auxiliary-500)'
-                            : 'rgba(255,255,255,0.5)',
-                    }}
+                    className={cn(
+                      'w-2 h-2 rounded-full border-[1.5px] border-white/40',
+                      i === 0 ? 'bg-primary-500' :
+                      i === CHAT_ROUTE_STOPS.length - 1 ? 'bg-auxiliary-500' : 'bg-white/50',
+                    )}
                   />
                   <span className="text-[10px] text-white/85 font-semibold whitespace-nowrap">
                     {stop}
@@ -121,8 +112,7 @@ export const AiChatDemo = () => {
                 </div>
                 {i < CHAT_ROUTE_STOPS.length - 1 && (
                   <div
-                    className="w-4 h-px mb-3 shrink-0"
-                    style={{ background: 'rgba(255,255,255,0.25)' }}
+                    className="w-4 h-px mb-3 shrink-0 bg-white/25"
                     aria-hidden="true"
                   />
                 )}
@@ -134,8 +124,7 @@ export const AiChatDemo = () => {
             {CHAT_TAGS.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full px-2 py-[3px] text-[10px] text-white/80 font-medium"
-                style={{ background: 'rgba(255,255,255,0.12)' }}
+                className="rounded-full px-2 py-[3px] text-[10px] text-white/80 font-medium bg-white/12"
               >
                 {tag}
               </span>

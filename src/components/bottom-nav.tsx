@@ -40,8 +40,7 @@ export const BottomNav = () => {
   return (
     <nav
       aria-label="Mobile navigation"
-      className="bottom-nav fixed bottom-0 left-0 right-0 z-20 flex bg-neutral-100 border-t border-neutral-200 shadow-[0_-8px_28px_rgba(0,0,0,0.45)] md:hidden"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      className="bottom-nav fixed bottom-0 left-0 right-0 z-20 flex bg-neutral-100 border-t border-neutral-200 shadow-[0_-8px_28px_rgba(0,0,0,0.45)] pb-[env(safe-area-inset-bottom,0px)] md:hidden"
     >
       {ITEMS.map((item) =>
         item.disabled ? (

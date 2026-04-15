@@ -81,7 +81,7 @@ export const PrecisionSection = () => {
                     Iceland · Solo · September
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="size-1.5 rounded-full bg-(--atlas-color-success-500) hp-pulse-soft" />
+                    <span className="size-1.5 rounded-full bg-success-500 animate-hp-pulse-soft" />
                     <span className="font-sans text-[10px] font-bold text-neutral-400">Live</span>
                   </div>
                 </div>

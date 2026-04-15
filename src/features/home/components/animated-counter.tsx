@@ -10,7 +10,7 @@ type AnimatedCounterProps = {
 
 export const AnimatedCounter = ({ to, suffix = '', duration = 1800 }: AnimatedCounterProps) => {
   const [val, setVal] = React.useState(0);
-  const [ref, inView] = useInView(0.3);
+  const { ref, inView } = useInView(0.3);
 
   React.useEffect(() => {
     if (!inView) return;

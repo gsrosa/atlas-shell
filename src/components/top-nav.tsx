@@ -182,7 +182,7 @@ const TopNavAuth = () => {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
-          <DropdownMenuLabel className="text-xs font-semibold text-(--atlas-surface-muted-foreground)">
+          <DropdownMenuLabel className="text-xs font-semibold text-neutral-500">
             {profileDisplayName(profile)}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -202,7 +202,7 @@ const TopNavAuth = () => {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="text-(--atlas-color-danger-500) focus:text-(--atlas-color-danger-500)"
+            className="text-danger-500 focus:text-danger-500"
             disabled={signOut.isPending}
             onClick={() => signOut.mutate()}
           >

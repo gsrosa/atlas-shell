@@ -20,3 +20,70 @@ body {
   height: 100%;
   isolation: isolate;
 }
+
+/* ─── Custom keyframes registered via @theme ──────────────────────────────── */
+@theme {
+  --animate-hp-blink: hp-blink 1s infinite;
+  --animate-hp-bounce: hp-bounce 1s infinite;
+  --animate-hp-fade-up: hp-fade-up 0.4s ease;
+  --animate-hp-dot-bounce: hp-dot-bounce 1s ease-in-out infinite;
+  --animate-hp-bob: hp-bob 1.8s ease infinite;
+  --animate-hp-pulse-soft: hp-pulse-soft 2s ease-in-out infinite;
+  --animate-hp-fade-in: hp-fade-in 0.45s ease forwards;
+  --animate-hp-fade-in-up: hp-fade-in-up 0.4s ease forwards;
+
+  @keyframes hp-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @keyframes hp-bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+  }
+
+  @keyframes hp-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes hp-dot-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @keyframes hp-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  @keyframes hp-pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+
+  @keyframes hp-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes hp-fade-in-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* ─── Scrollbar utility ───────────────────────────────────────────────────── */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ─── Bottom nav active indicator (pseudo-element not expressible in Tailwind) */
+.bottom-nav-active::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-primary-500);
+  margin-top: 1px;
+}
