@@ -14,6 +14,7 @@ import {
   CreditCardIcon,
   LogOutIcon,
   MapIcon,
+  MenuIcon,
   SlidersIcon,
   SparklesIcon,
   UserIcon,
@@ -27,6 +28,7 @@ import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { trpc } from '@/lib/trpc';
 import { CreditChip } from './credit-chip';
+import { MobileDrawer } from './mobile-drawer';
 
 type NavItem = {
   to: string;
@@ -88,7 +90,7 @@ const TopNavNav = () => {
   const openLogin = useAuthUiStore((s) => s.openLogin);
 
   return (
-    <nav aria-label="Main navigation" className="flex items-center gap-1">
+    <nav aria-label="Main navigation" className="hidden items-center gap-1 md:flex">
       {NAV_ITEMS.map((item) => {
         const Icon = item.icon;
 
@@ -242,18 +244,36 @@ const TopNavAuth = () => {
 };
 
 export const TopNav = React.memo(() => {
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
   return (
-    <header
-      role="banner"
-      className="sticky top-0 z-30 shrink-0 border-b border-white/6 bg-neutral-900 backdrop-blur-xl"
-    >
-      <div className="flex min-h-[52px] w-full items-center justify-between gap-4 px-4 md:min-h-[60px] md:px-6 lg:min-h-16 lg:px-10">
-        <TopNavBrand />
-        <div className="flex items-center gap-2">
-          <TopNavNav />
-          <TopNavAuth />
+    <>
+      <header
+        role="banner"
+        className="sticky top-0 z-30 shrink-0 border-b border-white/6 bg-neutral-900 backdrop-blur-xl"
+      >
+        <div className="flex min-h-[52px] w-full items-center justify-between gap-4 px-4 md:min-h-[60px] md:px-6 lg:min-h-16 lg:px-10">
+          <div className="flex items-center gap-3">
+            {/* Hamburger — mobile only */}
+            <button
+              type="button"
+              aria-label="Open navigation menu"
+              aria-expanded={drawerOpen}
+              aria-controls="mobile-drawer"
+              onClick={() => setDrawerOpen(true)}
+              className="flex size-8 items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-white/8 hover:text-neutral-100 md:hidden"
+            >
+              <MenuIcon className="size-5" aria-hidden />
+            </button>
+            <TopNavBrand />
+          </div>
+          <div className="flex items-center gap-2">
+            <TopNavNav />
+            <TopNavAuth />
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      <MobileDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+    </>
   );
 });

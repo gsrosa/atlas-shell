@@ -76,7 +76,7 @@ const buildFallback = (
 
 export const RemoteRoute = ({
   name,
-  remoteName,
+  remoteName: _remoteName,
   module: Module,
   skeleton,
   requireAuth,
