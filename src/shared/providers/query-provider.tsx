@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import type { ReactNode } from 'react';
 
@@ -10,7 +12,7 @@ import { trpc } from '@/lib/trpc';
 const defaultApi = 'http://127.0.0.1:4000';
 
 const trpcUrl = (): string => {
-  const base = (import.meta.env.VITE_API_URL ?? defaultApi).replace(/\/$/, '');
+  const base = (process.env.NEXT_PUBLIC_API_URL ?? defaultApi).replace(/\/$/, '');
   return `${base}/trpc`;
 };
 

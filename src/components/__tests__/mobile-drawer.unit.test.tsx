@@ -6,30 +6,32 @@ import { describe, expect, it, vi } from 'vitest';
 
 // ── Mocks ──────────────────────────────────────────────────────────────────
 
-vi.mock('react-router-dom', () => ({
-  NavLink: ({
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/',
+}));
+
+vi.mock('next/link', () => ({
+  default: ({
+    href,
     children,
-    className,
     onClick,
-    to,
+    className,
+    ...props
   }: {
+    href: string;
     children: React.ReactNode;
-    className: (({ isActive }: { isActive: boolean }) => string) | string;
     onClick?: React.MouseEventHandler;
-    to: string;
+    className?: string;
+    [key: string]: unknown;
   }) => (
-    <a
-      href={to}
-      onClick={onClick}
-      className={typeof className === 'function' ? className({ isActive: false }) : className}
-    >
+    <a href={href} onClick={onClick} className={className} {...props}>
       {children}
     </a>
   ),
 }));
 
 vi.mock('@/config/feature-flags', () => ({
-  isFeatureEnabled: (flag: string) => flag !== 'enableSearchApp',
+  isFeatureEnabled: () => true,
 }));
 
 vi.mock('@/features/auth/use-session', () => ({
@@ -42,6 +44,7 @@ vi.mock('@/features/auth/auth-ui-store', () => ({
 }));
 
 vi.mock('@gsrosa/atlas-ui', async (importOriginal) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@gsrosa/atlas-ui')>();
   return { ...actual, cn: (...args: unknown[]) => args.filter(Boolean).join(' ') };
 });
@@ -81,7 +84,6 @@ describe('MobileDrawer', () => {
     const onClose = vi.fn();
     render(<MobileDrawer isOpen={true} onClose={onClose} />);
 
-    // Backdrop is aria-hidden; find it by its position (first div sibling of the panel)
     const backdrop = document.querySelector('[aria-hidden="true"]') as HTMLElement;
     await user.click(backdrop);
 
@@ -111,7 +113,7 @@ describe('MobileDrawer', () => {
   it('renders nav items: Explore, Plan Trip, My Trips', () => {
     render(<MobileDrawer isOpen={true} onClose={vi.fn()} />);
 
-    const nav = screen.getByRole('navigation', { name: /mobile navigation/i });
+    const nav = screen.getByRole('navigation', { name: /drawer navigation/i });
     expect(nav).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /explore/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /plan trip/i })).toBeInTheDocument();

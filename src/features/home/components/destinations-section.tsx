@@ -1,7 +1,11 @@
+'use client';
+
 import React, { type MouseEvent } from 'react';
 
 import { cn } from '@gsrosa/atlas-ui';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+
+import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
@@ -17,6 +21,7 @@ type DestinationCardProps = {
 };
 
 const DestinationCard = ({ d, onPlan }: DestinationCardProps) => {
+  const { t } = useTranslation('home');
   return (
     <button
       type="button"
@@ -51,7 +56,7 @@ const DestinationCard = ({ d, onPlan }: DestinationCardProps) => {
         <div className="mb-2 font-sans text-[10px] uppercase tracking-[0.1em] text-neutral-400">{d.country}</div>
         <div className="mb-3 font-display text-xs italic leading-relaxed text-neutral-300/90">&ldquo;{d.hook}&rdquo;</div>
         <div className="translate-y-1 font-sans text-[11px] font-bold tracking-wide text-primary-600 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
-          Plan this trip →
+          {t('destinations.planThis')}
         </div>
       </div>
     </button>
@@ -59,7 +64,8 @@ const DestinationCard = ({ d, onPlan }: DestinationCardProps) => {
 };
 
 export const DestinationsSection = () => {
-  const navigate = useNavigate();
+  const { t } = useTranslation('home');
+  const router = useRouter();
   const openLogin = useAuthUiStore((s) => s.openLogin);
   const { isAuthenticated, isLoading } = useSession();
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -75,7 +81,7 @@ export const DestinationsSection = () => {
     const path = destination
       ? `${ROUTES.ASSISTANT}?destination=${encodeURIComponent(destination)}`
       : ROUTES.ASSISTANT;
-    navigate(path);
+    router.push(path);
   };
 
   const handleMouseDown = React.useCallback((e: MouseEvent) => {
@@ -105,27 +111,27 @@ export const DestinationsSection = () => {
           <div className="mx-auto flex max-w-[1200px] flex-wrap items-end justify-between gap-4">
             <div>
               <p className="mb-3 font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-primary-600">
-                Explore
+                {t('destinations.label')}
               </p>
               <h2
                 id="dest-heading"
                 className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-100"
               >
-                Where travelers go{' '}
+                {t('destinations.heading1')}{' '}
                 <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
-                  next
+                  {t('destinations.heading2')}
                 </span>
                 .
               </h2>
             </div>
-            <span className="font-sans text-xs tracking-wide text-neutral-400">Drag to explore →</span>
+            <span className="font-sans text-xs tracking-wide text-neutral-400">{t('destinations.dragHint')}</span>
           </div>
         </div>
       </FadeUp>
       <div
         ref={scrollRef}
         role="list"
-        aria-label="Destination ideas"
+        aria-label={t('destinations.ariaLabel', 'Destination ideas')}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

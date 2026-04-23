@@ -1,9 +1,19 @@
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { axe } from 'vitest-axe';
 import { describe, it, expect, vi } from 'vitest';
 
 import { DestinationsSection } from '@/features/home/components/destinations-section';
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn(), refresh: vi.fn() }),
+  usePathname: () => '/',
+}));
+
+vi.mock('next/link', () => ({
+  default: ({ href, children, ...props }: { href: string; children: React.ReactNode; [key: string]: unknown }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
+}));
 
 vi.mock('@/features/auth/use-session', () => ({
   useSession: () => ({
@@ -22,11 +32,7 @@ vi.mock('@/features/auth/auth-ui-store', () => ({
 
 describe('DestinationsSection', () => {
   it('should have no serious accessibility violations when the visitor is logged out', async () => {
-    const { container } = render(
-      <MemoryRouter>
-        <DestinationsSection />
-      </MemoryRouter>,
-    );
+    const { container } = render(<DestinationsSection />);
     expect((await axe(container)).violations).toEqual([]);
   });
 });

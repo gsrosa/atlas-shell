@@ -4,9 +4,11 @@ type ErrorContext = {
   metadata?: Record<string, unknown>;
 };
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 export const monitoring = {
   captureException(error: unknown, context?: ErrorContext): void {
-    if (import.meta.env.DEV) {
+    if (isDev) {
       console.error('[Monitoring] Exception:', error, context);
     }
   },
@@ -15,13 +17,13 @@ export const monitoring = {
     message: string,
     level: 'info' | 'warning' | 'error' = 'info',
   ): void {
-    if (import.meta.env.DEV) {
+    if (isDev) {
       console.debug(`[Monitoring] ${level}:`, message);
     }
   },
 
   setUser(userId: string): void {
-    if (import.meta.env.DEV) {
+    if (isDev) {
       console.debug('[Monitoring] Set user:', userId);
     }
   },

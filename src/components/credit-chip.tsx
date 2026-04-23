@@ -1,12 +1,16 @@
+'use client';
+
 import React from 'react';
 
 import { cn } from '@gsrosa/atlas-ui';
 import { CoinsIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { useCreditsStore } from '@/features/credits/credits-store';
 import { CREDIT_THRESHOLDS } from '@/shared/constants/credits';
 
 export const CreditChip = () => {
+  const { t } = useTranslation('common');
   const balance = useCreditsStore((s) => s.balance);
   const lastDeduction = useCreditsStore((s) => s.lastDeduction);
   const openPurchaseModal = useCreditsStore((s) => s.openPurchaseModal);
@@ -44,7 +48,7 @@ export const CreditChip = () => {
     <button
       type="button"
       onClick={openPurchaseModal}
-      aria-label={`${balance} credits — click to top up`}
+      aria-label={t('credits.ariaLabel', { count: balance ?? 0 })}
       className={cn(
         'flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-colors',
         isEmpty
@@ -57,7 +61,7 @@ export const CreditChip = () => {
     >
       <CoinsIcon className="size-3 shrink-0" aria-hidden />
       {isEmpty ? (
-        <span>Top up</span>
+        <span>{t('credits.topUp')}</span>
       ) : (
         <span>{displayed ?? balance}</span>
       )}

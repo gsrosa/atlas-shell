@@ -1,4 +1,8 @@
+'use client';
+
 import React from 'react';
+
+import { useTranslation } from 'react-i18next';
 
 import { HOME_METRICS } from '../data/home-metrics';
 import { useAnimatedMetric } from '../hooks/use-animated-metric';
@@ -31,6 +35,7 @@ const MetricCell = ({ to, suffix, label, decimals, active, delay }: MetricCellPr
 };
 
 export const HomeMetricStrip = () => {
+  const { t } = useTranslation('home');
   const ref = React.useRef<HTMLElement>(null);
   const [active, setActive] = React.useState(false);
 
@@ -66,10 +71,10 @@ export const HomeMetricStrip = () => {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {HOME_METRICS.map((m, i) => (
             <MetricCell
-              key={m.label}
+              key={m.labelKey}
               to={m.to}
               suffix={m.suffix}
-              label={m.label}
+              label={t(m.labelKey)}
               decimals={m.decimals}
               active={active}
               delay={i * 100}

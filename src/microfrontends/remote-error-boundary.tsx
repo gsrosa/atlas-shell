@@ -1,5 +1,8 @@
+'use client';
+
 import { TriangleAlert } from 'lucide-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { monitoring } from '@/shared/services/monitoring';
 
@@ -12,6 +15,33 @@ type State = {
   hasError: boolean;
   error: Error | null;
 };
+
+function RemoteErrorContent({ onRetry }: { onRetry: () => void }) {
+  const { t } = useTranslation('common');
+  return (
+    <div
+      className="min-h-[calc(100vh-50px)] flex flex-col items-center justify-center gap-5 px-6 py-12 text-center bg-neutral-900 text-neutral-100"
+      role="alert"
+    >
+      <div className="flex items-center justify-center w-14 h-14 rounded-full bg-neutral-800 text-primary-400">
+        <TriangleAlert size={28} strokeWidth={1.5} />
+      </div>
+      <div className="flex flex-col gap-2">
+        <h2 className="text-base font-semibold m-0">{t('error.remoteTitle')}</h2>
+        <p className="text-sm text-neutral-400 max-w-xs m-0">
+          {t('error.remoteBody')}
+        </p>
+      </div>
+      <button
+        type="button"
+        onClick={onRetry}
+        className="rounded-xl bg-primary-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-600 cursor-pointer border-none"
+      >
+        {t('error.tryAgain')}
+      </button>
+    </div>
+  );
+}
 
 /** React requires class components for error boundaries — this is the one allowed exception. */
 export class RemoteErrorBoundary extends React.Component<Props, State> {
@@ -38,29 +68,7 @@ export class RemoteErrorBoundary extends React.Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div
-          className="min-h-[calc(100vh-50px)] flex flex-col items-center justify-center gap-5 px-6 py-12 text-center bg-neutral-900 text-neutral-100"
-          role="alert"
-        >
-          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-neutral-800 text-primary-400">
-            <TriangleAlert size={28} strokeWidth={1.5} />
-          </div>
-          <div className="flex flex-col gap-2">
-            <h2 className="text-base font-semibold m-0">Something went wrong</h2>
-            <p className="text-sm text-neutral-400 max-w-xs m-0">
-              This section is temporarily unavailable. Please try again later.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={this.handleRetry}
-            className="rounded-xl bg-primary-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-600 cursor-pointer border-none"
-          >
-            Try again
-          </button>
-        </div>
-      );
+      return <RemoteErrorContent onRetry={this.handleRetry} />;
     }
 
     return this.props.children;

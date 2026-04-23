@@ -1,48 +1,35 @@
+/**
+ * Shell routing smoke tests.
+ *
+ * With Next.js App Router, routing is file-system–based and not testable via
+ * `createMemoryRouter`. Instead we test that the key page-level components
+ * render without crashing and produce the expected landmark content.
+ */
 import { AtlasProvider } from '@gsrosa/atlas-ui';
-import { render, screen, waitFor } from '@testing-library/react';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { describe, it, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
-import { buildShellRoutes } from '@/app/router/build-shell-routes';
+import { ShellLayout } from '@/components/shell-layout';
 
-vi.mock('@/shared/services/monitoring', () => ({
-  monitoring: { captureException: vi.fn() },
+// ── Mocks ──────────────────────────────────────────────────────────────────
+
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/',
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn(), refresh: vi.fn() }),
 }));
 
-vi.mock('@/microfrontends/load-remote-module', async () => {
-  const ReactMod = await import('react');
-  const { Outlet } = await import('react-router-dom');
+vi.mock('next/link', () => ({
+  default: ({ href, children, ...props }: { href: string; children: React.ReactNode; [key: string]: unknown }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
+}));
 
-  const ProfileLayoutStub = () => (
-    <div>
-      <p>profile-layout-marker</p>
-      <Outlet />
-    </div>
-  );
-
-  return {
-    loadRemoteModule: vi.fn((remoteName: string, exposedModule: string) => {
-      if (remoteName === 'userApp' && exposedModule === 'ProfileLayout') {
-        return ReactMod.lazy(() =>
-          Promise.resolve({
-            default: ProfileLayoutStub,
-          }),
-        );
-      }
-      const Page = () => (
-        <main>
-          <h1>Remote stub</h1>
-          <p>{`${remoteName} ${exposedModule}`}</p>
-        </main>
-      );
-      return ReactMod.lazy(() =>
-        Promise.resolve({
-          default: Page,
-        }),
-      );
-    }),
-  };
-});
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { language: 'en-US', changeLanguage: vi.fn() },
+  }),
+}));
 
 vi.mock('@/features/traveler-profile/traveler-profile-sync', () => ({
   TravelerProfileSync: () => null,
@@ -50,6 +37,10 @@ vi.mock('@/features/traveler-profile/traveler-profile-sync', () => ({
 
 vi.mock('@/components/purchase-modal', () => ({
   PurchaseModal: () => null,
+}));
+
+vi.mock('@/components/footer', () => ({
+  Footer: () => <footer><span>Footer</span></footer>,
 }));
 
 vi.mock('@/features/auth/use-session', () => ({
@@ -87,45 +78,33 @@ vi.mock('@/lib/trpc', () => ({
   },
 }));
 
-const renderAt = (initialPath: string) => {
-  const router = createMemoryRouter(buildShellRoutes(), {
-    initialEntries: [initialPath],
-  });
-  render(
-    <AtlasProvider>
-      <RouterProvider router={router} />
-    </AtlasProvider>,
-  );
-  return { router };
-};
+// ── Tests ──────────────────────────────────────────────────────────────────
 
-describe('shell routing', () => {
-  it(
-    'should render the home hero when the pathname is /',
-    async () => {
-      renderAt('/');
-      expect(
-        await screen.findByRole('heading', {
-          name: /Your trips, planned by artificial intelligence that understands you/i,
-        }),
-      ).toBeInTheDocument();
-    },
-    15_000,
-  );
+describe('ShellLayout', () => {
+  it('renders the shell chrome (header, main, nav) around page content', () => {
+    render(
+      <AtlasProvider>
+        <ShellLayout>
+          <div data-testid="page-content">Page content</div>
+        </ShellLayout>
+      </AtlasProvider>,
+    );
 
-  it('should redirect /profile to /profile/about', async () => {
-    const { router } = renderAt('/profile');
-    await waitFor(() => expect(router.state.location.pathname).toBe('/profile/about'));
-    expect(await screen.findByText(/userApp ProfileAboutPage/)).toBeInTheDocument();
+    expect(screen.getByRole('banner')).toBeInTheDocument(); // <header>
+    expect(screen.getByRole('main')).toBeInTheDocument();
+    expect(screen.getByTestId('page-content')).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: /main navigation/i })).toBeInTheDocument();
   });
 
-  it('should render the assistant remote stub when the user visits /assistant', async () => {
-    renderAt('/assistant');
-    expect(await screen.findByText(/aiAssistant App/)).toBeInTheDocument();
-  });
+  it('renders the mobile nav bar', () => {
+    render(
+      <AtlasProvider>
+        <ShellLayout>
+          <div>content</div>
+        </ShellLayout>
+      </AtlasProvider>,
+    );
 
-  it('should render the My Trips remote stub when the user visits /my-trips', async () => {
-    renderAt('/my-trips');
-    expect(await screen.findByText(/aiAssistant MyTripsApp/)).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: /mobile navigation/i })).toBeInTheDocument();
   });
 });

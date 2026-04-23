@@ -1,5 +1,4 @@
 type FeatureFlags = {
-  enableSearchApp: boolean;
   enableAIAssistant: boolean;
   /** atlas-user MFE (Module Federation `userApp`) */
   enableUserApp: boolean;
@@ -10,7 +9,6 @@ type FeatureFlags = {
 export type FeatureFlagKey = keyof FeatureFlags;
 
 const flags: FeatureFlags = {
-  enableSearchApp: true,
   enableAIAssistant: true,
   enableUserApp: true,
   enablePaymentApp: true,

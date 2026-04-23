@@ -2,7 +2,6 @@
 
 interface ImportMetaEnv {
   readonly VITE_API_URL?: string;
-  readonly VITE_REMOTE_SEARCH_APP_URL?: string;
   readonly VITE_REMOTE_AI_ASSISTANT_URL?: string;
   readonly VITE_REMOTE_USER_APP_URL?: string;
   readonly VITE_REMOTE_PAYMENT_APP_URL?: string;
@@ -15,18 +14,6 @@ interface ImportMeta {
 declare module '@gsrosa/atlas-ui/styles';
 declare module '@gsrosa/atlas-ui/tokens';
 declare module '@gsrosa/atlas-ui/theme';
-
-declare module 'searchApp/App' {
-  import type { ComponentType } from 'react';
-  const Component: ComponentType;
-  export default Component;
-}
-
-declare module 'searchApp/SearchWidget' {
-  import type { ComponentType } from 'react';
-  const Component: ComponentType;
-  export default Component;
-}
 
 declare module 'aiAssistant/App' {
   import type { ComponentType } from 'react';

@@ -1,7 +1,12 @@
+'use client';
+
+import { useTranslation } from 'react-i18next';
+
 import { HOME_TESTIMONIALS_MARKETING } from '../data/home-testimonials-marketing';
 import { FadeUp } from './fade-up';
 
 export const SocialProofSection = () => {
+  const { t } = useTranslation('home');
   return (
     <section
       aria-labelledby="social-heading"
@@ -11,15 +16,15 @@ export const SocialProofSection = () => {
         <FadeUp>
           <div className="mb-16 text-center">
             <p className="mb-4 font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-primary-600">
-              Early access
+              {t('socialProof.label')}
             </p>
             <h2
               id="social-heading"
               className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-100"
             >
-              Trusted by travelers who plan{' '}
+              {t('socialProof.heading1')}{' '}
               <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
-                differently
+                {t('socialProof.heading2')}
               </span>
               .
             </h2>

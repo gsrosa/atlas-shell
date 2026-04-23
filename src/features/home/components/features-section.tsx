@@ -1,9 +1,13 @@
+'use client';
+
 import { cn } from '@gsrosa/atlas-ui';
+import { useTranslation } from 'react-i18next';
 
 import { HOME_FEATURE_BLOCKS } from '../data/home-features';
 import { FadeUp } from './fade-up';
 
 export const FeaturesSection = () => {
+  const { t } = useTranslation('home');
   return (
     <section
       aria-labelledby="features-heading"
@@ -14,21 +18,20 @@ export const FeaturesSection = () => {
           <div className="mb-16 flex flex-wrap items-end justify-between gap-6 md:mb-20">
             <div className="max-w-[560px]">
               <p className="mb-4 font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-primary-600">
-                The advantage
+                {t('features.label')}
               </p>
               <h2
                 id="features-heading"
                 className="mb-4 font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic leading-[1.12] text-neutral-100"
               >
-                Not another trip planner.
+                {t('features.heading1')}
                 <br />
                 <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
-                  A trip intelligence engine.
+                  {t('features.heading2')}
                 </span>
               </h2>
               <p className="font-sans text-[15px] font-light leading-[1.75] text-neutral-300">
-                Atlas processes terrain, weather, local safety data, and your personal travel profile to build
-                plans that actually work on the ground.
+                {t('features.body')}
               </p>
             </div>
           </div>
@@ -36,7 +39,7 @@ export const FeaturesSection = () => {
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {HOME_FEATURE_BLOCKS.map((f, i) => (
-            <FadeUp key={f.title} delay={i * 80}>
+            <FadeUp key={`feature-${i + 1}`} delay={i * 80}>
               <div
                 className={cn(
                   'group relative h-full overflow-hidden rounded-2xl border border-neutral-700/80 bg-neutral-800/80 p-8 transition-all duration-300 md:p-10',
@@ -67,9 +70,9 @@ export const FeaturesSection = () => {
                   />
                 </div>
                 <h3 className="mb-3 font-display text-lg font-semibold leading-tight text-neutral-100">
-                  {f.title}
+                  {t(`feature.${i + 1}.title`)}
                 </h3>
-                <p className="font-sans text-[14px] font-light leading-[1.7] text-neutral-300">{f.body}</p>
+                <p className="font-sans text-[14px] font-light leading-[1.7] text-neutral-300">{t(`feature.${i + 1}.body`)}</p>
               </div>
             </FadeUp>
           ))}

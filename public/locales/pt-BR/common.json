@@ -1,0 +1,68 @@
+{
+  "nav.explore": "Explorar",
+  "nav.planTrip": "Planejar Viagem",
+  "nav.myTrips": "Minhas Viagens",
+  "nav.soon": "Em breve",
+  "nav.signIn": "Entrar",
+  "nav.signUp": "Cadastrar",
+  "nav.signOut": "Sair",
+  "nav.profile": "Perfil",
+  "nav.billing": "Pagamentos",
+  "nav.preferences": "Preferências",
+  "nav.home": "Início",
+
+  "action.cancel": "Cancelar",
+  "action.continue": "Continuar",
+  "action.back": "Voltar",
+  "action.save": "Salvar",
+  "action.close": "Fechar",
+  "action.maybeLater": "Talvez depois",
+  "action.getCredits": "Obter créditos",
+  "action.addCredits": "Adicionar créditos",
+
+  "error.generic": "Algo deu errado. Tente novamente.",
+  "error.remoteTitle": "Algo deu errado",
+  "error.remoteBody": "Esta seção está temporariamente indisponível. Tente novamente mais tarde.",
+  "error.tryAgain": "Tentar novamente",
+  "error.appTitle": "Algo deu errado",
+  "error.appBody": "Ocorreu um erro inesperado. Volte à página inicial para continuar.",
+  "error.goHome": "Ir para o início",
+
+  "loading": "Carregando…",
+
+  "footer.tagline": "Planejamento inteligente de viagens",
+  "footer.privacy": "Privacidade",
+  "footer.terms": "Termos",
+  "footer.docs": "Docs",
+  "footer.support": "Suporte",
+
+  "auth.signInTitle": "Entrar no Atlas",
+  "auth.signInDescription": "Use o e-mail e a senha da sua conta Atlas. Sua sessão é armazenada com segurança no navegador.",
+  "auth.emailLabel": "E-mail",
+  "auth.passwordLabel": "Senha",
+  "auth.signingIn": "Entrando…",
+  "auth.signInFailed": "Falha ao entrar",
+  "auth.couldNotSignIn": "Não foi possível entrar",
+  "auth.backToHome": "Voltar ao início",
+  "auth.checkingSession": "Verificando sua sessão…",
+  "auth.accessDenied": "Acesso negado",
+  "auth.accessDeniedDescription": "Você precisa estar autenticado para acessar {{name}}. Esta área está disponível apenas com uma sessão Atlas ativa.",
+  "auth.sessionError": "Erro de sessão",
+  "auth.sessionErrorDescription": "Não conseguimos verificar sua conta. Tente entrar novamente ou volte à página inicial.",
+  "auth.authErrorFooter": "Erro · autenticação necessária",
+
+  "credits.topUp": "Recarregar",
+  "credits.ariaLabel": "{{count}} créditos — clique para recarregar",
+
+  "purchase.title": "Você precisa de mais créditos",
+  "purchase.currentBalance": "Saldo atual: {{count}} créditos",
+  "purchase.body": "Créditos alimentam o planejamento de viagens com IA. Sem assinatura — pague apenas pelo que usar.",
+
+  "notFound.badge": "404 — Não Encontrado",
+  "notFound.title": "Esta página não existe",
+  "notFound.body": "{{path}} não foi encontrado. Pode ter sido movido ou o link pode estar quebrado.",
+  "notFound.backToHome": "Voltar ao início",
+  "notFound.planTrip": "Planejar uma viagem",
+
+  "locale.switchTo": "Mudar para {{lang}}"
+}

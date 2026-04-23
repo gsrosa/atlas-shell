@@ -1,12 +1,22 @@
+'use client';
+
 import React from 'react';
 
 import { cn } from '@gsrosa/atlas-ui';
+import { useTranslation } from 'react-i18next';
 
 const currentYear = new Date().getFullYear();
 
-const LINKS = ['Privacy', 'Terms', 'Docs', 'Support'] as const;
-
 export const Footer = React.memo(() => {
+  const { t } = useTranslation('common');
+
+  const LINKS: { key: string; href: string; hiddenMobile?: boolean }[] = [
+    { key: 'footer.privacy', href: '#privacy' },
+    { key: 'footer.terms', href: '#terms' },
+    { key: 'footer.docs', href: '#docs', hiddenMobile: true },
+    { key: 'footer.support', href: '#support', hiddenMobile: true },
+  ];
+
   return (
     <footer
       role="contentinfo"
@@ -22,12 +32,14 @@ export const Footer = React.memo(() => {
             className="h-8 w-auto max-w-[min(42vw,140px)] object-contain object-left md:h-9 md:max-w-none"
             decoding="async"
           />
-          <span className="text-xs text-neutral-500 font-sans">
-            © {currentYear} · Intelligent travel planning
+          {/* suppressHydrationWarning: year is a module-level constant that may
+              differ if the server module was cached across a year boundary. */}
+          <span suppressHydrationWarning className="text-xs text-neutral-500 font-sans">
+            © {currentYear} · {t('footer.tagline')}
           </span>
         </div>
 
-        <span className="md:hidden text-[11px] text-neutral-500 font-sans">
+        <span suppressHydrationWarning className="md:hidden text-[11px] text-neutral-500 font-sans">
           © {currentYear} Atlas AI
         </span>
 
@@ -35,16 +47,16 @@ export const Footer = React.memo(() => {
           aria-label="Footer links"
           className="flex items-center gap-3 md:gap-4"
         >
-          {LINKS.map((label) => (
+          {LINKS.map((link) => (
             <a
-              key={label}
-              href={`#${label.toLowerCase()}`}
+              key={link.key}
+              href={link.href}
               className={cn(
                 'text-[10px] md:text-[11px] font-sans uppercase tracking-[0.15em] text-neutral-500 transition-colors hover:text-auxiliary-400',
-                (label === 'Docs' || label === 'Support') && 'hidden md:inline',
+                link.hiddenMobile && 'hidden md:inline',
               )}
             >
-              {label}
+              {t(link.key)}
             </a>
           ))}
         </nav>

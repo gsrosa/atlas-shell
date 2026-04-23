@@ -1,0 +1,43 @@
+import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
+
+import '@/styles/global.css';
+
+import { AppProviders } from '@/shared/providers';
+
+const SUPPORTED_LOCALES = ['en-US', 'pt-BR', 'es-ES'] as const;
+type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
+
+function getLocaleFromCookie(cookieStore: Awaited<ReturnType<typeof cookies>>): SupportedLocale {
+  const lang = cookieStore.get('atlas-lang')?.value;
+  return lang && (SUPPORTED_LOCALES as readonly string[]).includes(lang)
+    ? (lang as SupportedLocale)
+    : 'en-US';
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Atlas AI',
+    default: 'Atlas AI — Your trips, planned by AI',
+  },
+  description:
+    'Plan your perfect trip with an AI that understands your style, preferences, and travel goals.',
+};
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const locale = getLocaleFromCookie(cookieStore);
+
+  return (
+    // lang is read by the client-side i18n module to initialise with the same
+    // locale the server used, preventing SSR/client hydration text mismatches.
+    <html lang={locale}>
+      {/* suppressHydrationWarning: browser extensions (e.g. CodeZip) inject attributes
+          like cz-shortcut-listen="true" onto <body> before React hydrates. */}
+      <body suppressHydrationWarning>
+        <AppProviders>{children}</AppProviders>
+      </body>
+    </html>
+  );
+}

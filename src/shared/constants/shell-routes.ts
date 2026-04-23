@@ -3,8 +3,6 @@
  */
 export const ROUTES = {
   HOME: '/',
-  SEARCH: '/search',
-  SEARCH_SPLAT: '/search/*',
   ASSISTANT: '/assistant',
   ASSISTANT_SPLAT: '/assistant/*',
   PROFILE: '/profile',
@@ -20,6 +18,7 @@ export const ROUTES = {
   PROFILE_PREFERENCES: '/profile/preferences',
   PROFILE_BILLING: '/profile/billing',
   PROFILE_BILLING_SPLAT: '/profile/billing/*',
+  ADD_CREDITS: '/add-credits',
 } as const;
 
 export type ShellRoutePath = (typeof ROUTES)[keyof typeof ROUTES];

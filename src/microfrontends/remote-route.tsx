@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 
 import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
 
@@ -9,27 +11,23 @@ import { UserAppRemoteSuspenseFallback } from './user-app-remote-suspense-fallba
 
 type RemoteRouteProps = {
   name: string;
-  /** Federation remote name (e.g. `userApp`) — used for route-aware loading UI. */
+  /** Federation remote name (e.g. `userApp`) — kept for registry compat. */
   remoteName: string;
   module: React.LazyExoticComponent<React.ComponentType>;
   skeleton?: React.LazyExoticComponent<React.ComponentType>;
   requireAuth?: boolean;
 };
 
-const PageShimmer = () => {
-  return (
-    <div className="min-h-[calc(100dvh-60px)] animate-pulse bg-neutral-100 dark:bg-neutral-900 md:min-h-screen" />
-  );
-};
+const PageShimmer = () => (
+  <div className="min-h-[calc(100dvh-60px)] animate-pulse bg-neutral-100 dark:bg-neutral-900 md:min-h-screen" />
+);
 
-const DefaultSpinner = () => {
-  return (
-    <div className="flex min-h-[50vh] flex-col items-center justify-center gap-2 px-6 text-sm text-neutral-500">
-      <span className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-neutral-200 border-t-primary-400" />
-      Loading remote…
-    </div>
-  );
-};
+const DefaultSpinner = () => (
+  <div className="flex min-h-[50vh] flex-col items-center justify-center gap-2 px-6 text-sm text-neutral-500">
+    <span className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-neutral-200 border-t-primary-400" />
+    Loading remote…
+  </div>
+);
 
 /** React requires class components for error boundaries — this is the one allowed exception. */
 class SkeletonErrorBoundary extends React.Component<
@@ -53,7 +51,7 @@ class SkeletonErrorBoundary extends React.Component<
 }
 
 const RemoteRouteSkeletonChunkFallback = () => {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
   if (pathname.startsWith('/my-trips')) {
     return <UserAppRemoteSuspenseFallback />;
   }
@@ -96,7 +94,9 @@ export const RemoteRoute = ({
         <AuthRemoteGate remoteLabel={name} loadingFallback={fallback}>
           {remote}
         </AuthRemoteGate>
-      ) : remote}
+      ) : (
+        remote
+      )}
     </RemoteErrorBoundary>
   );
 };

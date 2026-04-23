@@ -39,7 +39,15 @@ export default defineConfig(({ mode }) => {
       },
     },
     optimizeDeps: {
-      exclude: ['@gsrosa/atlas-ui'],
+      exclude: [
+        '@gsrosa/atlas-ui',
+        'react',
+        'react-dom',
+        'react-router-dom',
+        'lucide-react',
+        '@tanstack/react-query',
+        'zustand',
+      ],
     },
     build: {
       target: 'esnext',

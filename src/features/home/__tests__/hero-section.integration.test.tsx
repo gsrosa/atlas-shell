@@ -1,8 +1,18 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
 import { HeroSection } from '@/features/home/components/hero-section';
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn(), refresh: vi.fn() }),
+  usePathname: () => '/',
+}));
+
+vi.mock('next/link', () => ({
+  default: ({ href, children, ...props }: { href: string; children: React.ReactNode; [key: string]: unknown }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
+}));
 
 vi.mock('@/features/auth/use-session', () => ({
   useSession: () => ({
@@ -21,11 +31,7 @@ vi.mock('@/features/auth/auth-ui-store', () => ({
 
 describe('HeroSection (integration)', () => {
   it('should show the hero headline and primary CTA when the session is idle', () => {
-    render(
-      <MemoryRouter>
-        <HeroSection />
-      </MemoryRouter>,
-    );
+    render(<HeroSection />);
 
     expect(
       screen.getByRole('heading', {

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import { cn } from '@gsrosa/atlas-ui';
@@ -7,7 +9,10 @@ import {
   SparklesIcon,
   XIcon,
 } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { useTranslation } from 'react-i18next';
 
 import { isFeatureEnabled } from '@/config/feature-flags';
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
@@ -19,7 +24,7 @@ type Props = {
   onClose: () => void;
 };
 
-const drawerNavLinkClass = ({ isActive }: { isActive: boolean }) =>
+const drawerNavLinkClass = (isActive: boolean) =>
   cn(
     'flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium no-underline transition-colors',
     isActive
@@ -32,11 +37,15 @@ export const MobileDrawer = ({ isOpen, onClose }: Props) => {
   const openLogin = useAuthUiStore((s) => s.openLogin);
   const aiAssistant = isFeatureEnabled('enableAIAssistant');
   const panelRef = React.useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const { t } = useTranslation('common');
 
   // Close on Escape
   React.useEffect(() => {
     if (!isOpen) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [isOpen, onClose]);
@@ -75,7 +84,7 @@ export const MobileDrawer = ({ isOpen, onClose }: Props) => {
       <div
         ref={panelRef}
         role="dialog"
-        aria-label="Navigation menu"
+        aria-label={t('mobileNav.brand', 'Navigation menu')}
         aria-modal="true"
         className={cn(
           'fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-neutral-900 shadow-xl transition-transform duration-200 ease-out md:hidden',
@@ -89,7 +98,7 @@ export const MobileDrawer = ({ isOpen, onClose }: Props) => {
           </span>
           <button
             type="button"
-            aria-label="Close navigation menu"
+            aria-label={t('mobileNav.close', 'Close navigation menu')}
             onClick={onClose}
             className="flex size-8 items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-white/8 hover:text-neutral-100"
           >
@@ -98,38 +107,42 @@ export const MobileDrawer = ({ isOpen, onClose }: Props) => {
         </div>
 
         {/* Nav items */}
-        <nav aria-label="Mobile navigation" className="flex flex-col gap-1 p-3">
-          <NavLink to={ROUTES.HOME} end className={drawerNavLinkClass} onClick={onClose}>
+        <nav aria-label="Drawer navigation" className="flex flex-col gap-1 p-3">
+          <Link
+            href={ROUTES.HOME}
+            className={drawerNavLinkClass(pathname === ROUTES.HOME)}
+            onClick={onClose}
+          >
             <CompassIcon className="size-4 shrink-0" strokeWidth={2} aria-hidden />
-            Explore
-          </NavLink>
+            {t('nav.explore')}
+          </Link>
 
-          <NavLink
-            to={ROUTES.ASSISTANT}
-            className={drawerNavLinkClass}
+          <Link
+            href={ROUTES.ASSISTANT}
+            className={drawerNavLinkClass(pathname.startsWith(ROUTES.ASSISTANT))}
             onClick={handleAuthNavClick}
           >
             <SparklesIcon className="size-4 shrink-0" strokeWidth={2} aria-hidden />
-            Plan Trip
-          </NavLink>
+            {t('nav.planTrip')}
+          </Link>
 
-          <NavLink
-            to={ROUTES.MY_TRIPS}
+          <Link
+            href={ROUTES.MY_TRIPS}
             className={cn(
-              drawerNavLinkClass({ isActive: false }),
+              drawerNavLinkClass(pathname.startsWith(ROUTES.MY_TRIPS)),
               !aiAssistant && 'cursor-not-allowed opacity-40',
             )}
             onClick={aiAssistant ? handleAuthNavClick : (e) => e.preventDefault()}
             aria-disabled={!aiAssistant}
           >
             <MapIcon className="size-4 shrink-0" strokeWidth={2} aria-hidden />
-            My Trips
+            {t('nav.myTrips')}
             {!aiAssistant && (
               <span className="ml-auto rounded-full bg-neutral-300/10 px-1.5 py-px text-[9px] font-semibold uppercase tracking-widest text-neutral-500">
-                Soon
+                {t('nav.soon')}
               </span>
             )}
-          </NavLink>
+          </Link>
         </nav>
       </div>
     </>

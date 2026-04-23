@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import {
@@ -19,7 +21,10 @@ import {
   SparklesIcon,
   UserIcon,
 } from 'lucide-react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+
+import { useTranslation } from 'react-i18next';
 
 import { isFeatureEnabled } from '@/config/feature-flags';
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
@@ -28,6 +33,7 @@ import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { trpc } from '@/lib/trpc';
 import { CreditChip } from './credit-chip';
+import { LocaleSwitcher } from './locale-switcher';
 import { MobileDrawer } from './mobile-drawer';
 
 type NavItem = {
@@ -39,19 +45,21 @@ type NavItem = {
   requiresAuth?: boolean;
 };
 
-const buildNavItems = (): NavItem[] => {
+type TFunction = (key: string) => string;
+
+const buildNavItems = (t: TFunction): NavItem[] => {
   const aiAssistant = isFeatureEnabled('enableAIAssistant');
   return [
-    { to: ROUTES.HOME, label: 'Explore', icon: CompassIcon, end: true },
+    { to: ROUTES.HOME, label: t('nav.explore'), icon: CompassIcon, end: true },
     {
       to: ROUTES.ASSISTANT,
-      label: 'Plan Trip',
+      label: t('nav.planTrip'),
       icon: SparklesIcon,
       requiresAuth: true,
     },
     {
       to: ROUTES.MY_TRIPS,
-      label: 'My Trips',
+      label: t('nav.myTrips'),
       icon: MapIcon,
       requiresAuth: true,
       disabled: !aiAssistant,
@@ -70,7 +78,7 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 const TopNavBrand = React.memo(() => {
   return (
     <Link
-      to="/"
+      href="/"
       aria-label="Atlas home"
       className="flex shrink-0 items-center gap-2 no-underline"
     >
@@ -85,9 +93,11 @@ const TopNavBrand = React.memo(() => {
 });
 
 const TopNavNav = () => {
-  const NAV_ITEMS = buildNavItems();
+  const { t } = useTranslation('common');
+  const NAV_ITEMS = buildNavItems(t);
   const { isAuthenticated, isLoading } = useSession();
   const openLogin = useAuthUiStore((s) => s.openLogin);
+  const pathname = usePathname();
 
   return (
     <nav aria-label="Main navigation" className="hidden items-center gap-1 md:flex">
@@ -104,7 +114,7 @@ const TopNavNav = () => {
               <Icon className="size-4" strokeWidth={2} />
               <span className="hidden sm:inline">{item.label}</span>
               <span className="hidden items-center rounded-full bg-neutral-300/10 px-1.5 py-px text-[9px] font-semibold uppercase tracking-widest text-neutral-600 sm:inline-flex">
-                Soon
+                {t('nav.soon')}
               </span>
             </span>
           );
@@ -137,16 +147,19 @@ const TopNavNav = () => {
           }
         }
 
+        const isActive = item.end
+          ? pathname === item.to
+          : pathname.startsWith(item.to);
+
         return (
-          <NavLink
+          <Link
             key={item.to}
-            to={item.to}
-            end={item.end ?? false}
-            className={navLinkClass}
+            href={item.to}
+            className={navLinkClass({ isActive })}
           >
             <Icon className="size-4" strokeWidth={2} />
             <span className="hidden sm:inline">{item.label}</span>
-          </NavLink>
+          </Link>
         );
       })}
     </nav>
@@ -154,10 +167,11 @@ const TopNavNav = () => {
 };
 
 const TopNavAuth = () => {
+  const { t } = useTranslation('common');
   const userApp = isFeatureEnabled('enableUserApp');
   const { isAuthenticated, isLoading, profile } = useSession();
   const openLogin = useAuthUiStore((s) => s.openLogin);
-  const navigate = useNavigate();
+  const router = useRouter();
   const utils = trpc.useUtils();
 
   const signOut = trpc.auth.signOut.useMutation({
@@ -192,18 +206,18 @@ const TopNavAuth = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             {userApp && (
-              <DropdownMenuItem onClick={() => navigate(ROUTES.PROFILE_ABOUT)}>
+              <DropdownMenuItem onClick={() => router.push(ROUTES.PROFILE_ABOUT)}>
                 <UserIcon strokeWidth={2} />
-                Profile
+                {t('nav.profile')}
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem onClick={() => navigate(ROUTES.PROFILE_BILLING)}>
+            <DropdownMenuItem onClick={() => router.push(ROUTES.PROFILE_BILLING)}>
               <CreditCardIcon strokeWidth={2} />
-              Billing
+              {t('nav.billing')}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate(ROUTES.PROFILE_PREFERENCES)}>
+            <DropdownMenuItem onClick={() => router.push(ROUTES.PROFILE_PREFERENCES)}>
               <SlidersIcon strokeWidth={2} />
-              Preferences
+              {t('nav.preferences')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -211,7 +225,7 @@ const TopNavAuth = () => {
               onClick={() => signOut.mutate()}
             >
               <LogOutIcon strokeWidth={2} />
-              Sign out
+              {t('nav.signOut')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -228,7 +242,7 @@ const TopNavAuth = () => {
         onClick={openLogin}
         className="shrink-0"
       >
-        Sign in
+        {t('nav.signIn')}
       </Button>
       <Button
         type="button"
@@ -237,7 +251,7 @@ const TopNavAuth = () => {
         onClick={openLogin}
         className="shrink-0"
       >
-        Sign up
+        {t('nav.signUp')}
       </Button>
     </div>
   );
@@ -269,6 +283,7 @@ export const TopNav = React.memo(() => {
           </div>
           <div className="flex items-center gap-2">
             <TopNavNav />
+            <LocaleSwitcher />
             <TopNavAuth />
           </div>
         </div>

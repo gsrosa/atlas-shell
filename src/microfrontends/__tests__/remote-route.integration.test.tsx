@@ -1,20 +1,38 @@
 import React from 'react';
 
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 
 import { RemoteRoute } from '@/microfrontends/remote-route';
 
-vi.mock('@/shared/services/monitoring', () => ({
-  monitoring: {
-    captureException: vi.fn(),
-  },
+// ── Mocks ──────────────────────────────────────────────────────────────────
+
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/',
 }));
 
+vi.mock('@/shared/services/monitoring', () => ({
+  monitoring: { captureException: vi.fn() },
+}));
+
+vi.mock('@/features/auth/use-session', () => ({
+  useSession: () => ({ isAuthenticated: true, isLoading: false, isUnauthorized: false }),
+}));
+
+vi.mock('@/features/auth/auth-ui-store', () => ({
+  useAuthUiStore: (selector: (s: { openLogin: () => void }) => unknown) =>
+    selector({ openLogin: vi.fn() }),
+}));
+
+vi.mock('next/link', () => ({
+  default: ({ href, children }: { href: string; children: React.ReactNode }) => (
+    <a href={href}>{children}</a>
+  ),
+}));
+
+// ── Tests ──────────────────────────────────────────────────────────────────
+
 describe('RemoteRoute', () => {
-  // Covers sync render failures after the lazy import resolves. A lazy factory that
-  // rejects (network / chunk load) can surface via Suspense instead of this boundary.
   it('should surface RemoteErrorBoundary UI when the lazy module throws after resolve', async () => {
     const ThrowingLazy = React.lazy(() =>
       Promise.resolve({
@@ -25,27 +43,15 @@ describe('RemoteRoute', () => {
     );
 
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <RemoteRoute
-                name="AI Assistant"
-                remoteName="aiAssistant"
-                module={ThrowingLazy}
-              />
-            }
-          />
-        </Routes>
-      </MemoryRouter>,
+      <RemoteRoute
+        name="AI Assistant"
+        remoteName="aiAssistant"
+        module={ThrowingLazy}
+      />,
     );
 
     expect(await screen.findByRole('alert')).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: /Failed to load AI Assistant/i }),
-    ).toBeInTheDocument();
-    expect(screen.getByText(/Simulated remote crash/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Something went wrong/i })).toBeInTheDocument();
   });
 
   it('should render the remote module when the lazy import resolves cleanly', async () => {
@@ -56,20 +62,11 @@ describe('RemoteRoute', () => {
     );
 
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <RemoteRoute
-                name="AI Assistant"
-                remoteName="aiAssistant"
-                module={HealthyLazy}
-              />
-            }
-          />
-        </Routes>
-      </MemoryRouter>,
+      <RemoteRoute
+        name="AI Assistant"
+        remoteName="aiAssistant"
+        module={HealthyLazy}
+      />,
     );
 
     expect(await screen.findByText(/Healthy remote content/)).toBeInTheDocument();

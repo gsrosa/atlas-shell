@@ -1,6 +1,10 @@
+'use client';
+
 import { Button } from '@gsrosa/atlas-ui';
 import { ArrowRightIcon, SparklesIcon } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+
+import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
@@ -10,7 +14,8 @@ import { HOME_FINAL_CTA_BG } from '../data/home-hero';
 import { FadeUp } from './fade-up';
 
 export const FinalCtaSection = () => {
-  const navigate = useNavigate();
+  const { t } = useTranslation('home');
+  const router = useRouter();
   const openLogin = useAuthUiStore((s) => s.openLogin);
   const { isAuthenticated, isLoading } = useSession();
 
@@ -20,7 +25,7 @@ export const FinalCtaSection = () => {
       openLogin();
       return;
     }
-    navigate(ROUTES.ASSISTANT);
+    router.push(ROUTES.ASSISTANT);
   };
 
   return (
@@ -47,22 +52,22 @@ export const FinalCtaSection = () => {
       <div className="relative z-10 w-full max-w-[600px]">
         <FadeUp>
           <p className="mb-5 font-sans text-[10px] font-bold uppercase tracking-[0.35em] text-primary-600">
-            Start exploring
+            {t('finalCta.label')}
           </p>
           <h2
             id="final-cta-heading"
             className="mb-5 font-display text-[clamp(2rem,5vw,3.4rem)] font-bold italic leading-[1.08] tracking-tight text-neutral-100"
           >
-            Your next trip starts
+            {t('finalCta.heading1')}
             <br />
-            with{' '}
+            {t('finalCta.heading2')}{' '}
             <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
-              one message
+              {t('finalCta.heading3')}
             </span>
             .
           </h2>
           <p className="mb-10 font-sans text-[clamp(15px,1.6vw,17px)] font-light leading-[1.75] text-neutral-300">
-            Describe where you want to go. Atlas handles the rest.
+            {t('finalCta.body')}
           </p>
 
           <div className="mb-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -74,7 +79,7 @@ export const FinalCtaSection = () => {
               onClick={handleGoPlan}
             >
               <SparklesIcon className="size-4" aria-hidden strokeWidth={2} />
-              Start planning free
+              {t('finalCta.ctaStart')}
               <ArrowRightIcon
                 className="size-4 transition-transform group-hover:translate-x-1"
                 aria-hidden
@@ -82,12 +87,12 @@ export const FinalCtaSection = () => {
               />
             </Button>
             <Button variant="secondary" size="lg" asChild>
-              <a href="#how-it-works">See how it works</a>
+              <a href="#how-it-works">{t('finalCta.ctaHowItWorks')}</a>
             </Button>
           </div>
 
           <p className="font-sans text-xs tracking-wide text-neutral-500">
-            Beta access · No credit card · Cancel anytime
+            {t('finalCta.disclaimer')}
           </p>
         </FadeUp>
       </div>

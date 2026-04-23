@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import {
@@ -9,11 +11,13 @@ import {
   Label,
 } from '@gsrosa/atlas-ui';
 import { isTRPCClientError } from '@trpc/client';
+import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { trpc } from '@/lib/trpc';
 
 export const LoginForm = () => {
+  const { t } = useTranslation('common');
   const closeLogin = useAuthUiStore((s) => s.closeLogin);
   const utils = trpc.useUtils();
   const [email, setEmail] = React.useState('');
@@ -31,7 +35,7 @@ export const LoginForm = () => {
     signIn.isError && isTRPCClientError(signIn.error)
       ? signIn.error.message
       : signIn.isError
-        ? 'Sign in failed'
+        ? t('auth.signInFailed')
         : null;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -43,13 +47,13 @@ export const LoginForm = () => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       {errorMessage ? (
         <Alert variant="danger">
-          <AlertTitle>Could not sign in</AlertTitle>
+          <AlertTitle>{t('auth.couldNotSignIn')}</AlertTitle>
           <AlertDescription>{errorMessage}</AlertDescription>
         </Alert>
       ) : null}
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="atlas-login-email">Email</Label>
+        <Label htmlFor="atlas-login-email">{t('auth.emailLabel')}</Label>
         <Input
           id="atlas-login-email"
           name="email"
@@ -63,7 +67,7 @@ export const LoginForm = () => {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="atlas-login-password">Password</Label>
+        <Label htmlFor="atlas-login-password">{t('auth.passwordLabel')}</Label>
         <Input
           id="atlas-login-password"
           name="password"
@@ -82,7 +86,7 @@ export const LoginForm = () => {
         className="w-full"
         disabled={signIn.isPending}
       >
-        {signIn.isPending ? 'Signing in…' : 'Sign in'}
+        {signIn.isPending ? t('auth.signingIn') : t('nav.signIn')}
       </Button>
     </form>
   );

@@ -1,8 +1,12 @@
+'use client';
+
 import React from 'react';
 
 import { Alert, AlertDescription, AlertTitle, Button } from '@gsrosa/atlas-ui';
 import { AlertTriangleIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+
+import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
@@ -21,6 +25,7 @@ const AuthErrorScreen = ({
   title: string;
   description: string;
 }) => {
+  const { t } = useTranslation('common');
   const openLogin = useAuthUiStore((s) => s.openLogin);
 
   return (
@@ -40,19 +45,19 @@ const AuthErrorScreen = ({
             <AlertTitle className="text-base text-danger-800">{title}</AlertTitle>
             <AlertDescription className="text-danger-700">{description}</AlertDescription>
             <p className="m-0 pt-1 font-mono text-xs text-danger-600 opacity-90">
-              Error · authentication required
+              {t('auth.authErrorFooter')}
             </p>
           </div>
         </Alert>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
           <Button type="button" variant="secondary" className="w-full sm:w-auto" asChild>
-            <Link to={ROUTES.HOME} className="no-underline">
-              Back to home
+            <Link href={ROUTES.HOME} className="no-underline">
+              {t('auth.backToHome')}
             </Link>
           </Button>
           <Button type="button" variant="ghost" className="w-full sm:w-auto" onClick={openLogin}>
-            Sign in
+            {t('nav.signIn')}
           </Button>
         </div>
       </div>
@@ -61,13 +66,14 @@ const AuthErrorScreen = ({
 };
 
 export const AuthRemoteGate = ({ remoteLabel, children, loadingFallback }: Props) => {
+  const { t } = useTranslation('common');
   const { isAuthenticated, isLoading, isUnauthorized } = useSession();
 
   if (isLoading) {
     return loadingFallback ?? (
       <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3 px-6 text-sm text-neutral-500">
         <span className="inline-block size-8 animate-spin rounded-full border-2 border-neutral-200 border-t-primary-400" />
-        Checking your session…
+        {t('auth.checkingSession')}
       </div>
     );
   }
@@ -75,8 +81,8 @@ export const AuthRemoteGate = ({ remoteLabel, children, loadingFallback }: Props
   if (!isAuthenticated && isUnauthorized) {
     return (
       <AuthErrorScreen
-        title="Access denied"
-        description={`You must be signed in to open ${remoteLabel}. This area is only available with an active Atlas session.`}
+        title={t('auth.accessDenied')}
+        description={t('auth.accessDeniedDescription', { name: remoteLabel })}
       />
     );
   }
@@ -84,8 +90,8 @@ export const AuthRemoteGate = ({ remoteLabel, children, loadingFallback }: Props
   if (!isAuthenticated) {
     return (
       <AuthErrorScreen
-        title="Session error"
-        description="We could not verify your account. Try signing in again, or return to the home page."
+        title={t('auth.sessionError')}
+        description={t('auth.sessionErrorDescription')}
       />
     );
   }

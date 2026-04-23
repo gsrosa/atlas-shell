@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 
 import { Button } from '@gsrosa/atlas-ui';
 import { SparklesIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { HOME_CHAT_AI_LINES, HOME_CHAT_USER_MSG } from '../data/home-chat-demo-copy';
 
@@ -10,6 +13,7 @@ type HomeChatDemoProps = {
 };
 
 export const HomeChatDemo = ({ onViewFullItinerary }: HomeChatDemoProps) => {
+  const { t } = useTranslation('home');
   const [typed, setTyped] = React.useState('');
   const [thinking, setThinking] = React.useState(false);
   const [reply, setReply] = React.useState(false);
@@ -55,7 +59,7 @@ export const HomeChatDemo = ({ onViewFullItinerary }: HomeChatDemoProps) => {
           <div className="font-sans text-xs font-bold text-neutral-100">Atlas AI</div>
           <div className="flex items-center gap-1.5">
             <span className="size-1.5 rounded-full bg-success-500 animate-hp-pulse-soft" />
-            <span className="font-sans text-[10px] text-neutral-400">Active</span>
+            <span className="font-sans text-[10px] text-neutral-400">{t('hero.demo.active')}</span>
           </div>
         </div>
       </div>
@@ -78,7 +82,7 @@ export const HomeChatDemo = ({ onViewFullItinerary }: HomeChatDemoProps) => {
               style={{ animationDelay: `${i * 180}ms` }}
             />
           ))}
-          <span className="ml-2 font-sans text-[11px] text-neutral-400">Atlas is planning…</span>
+          <span className="ml-2 font-sans text-[11px] text-neutral-400">{t('hero.thinking')}</span>
         </div>
       )}
 
@@ -86,7 +90,7 @@ export const HomeChatDemo = ({ onViewFullItinerary }: HomeChatDemoProps) => {
         <div className="animate-hp-fade-in">
           <div className="rounded-2xl rounded-tl-sm border border-neutral-600/25 bg-neutral-700/60 p-3.5">
             <div className="mb-3 font-sans text-[9px] font-bold uppercase tracking-[0.12em] text-primary-600">
-              Iceland · 10 days · September
+              {t('hero.demo.tag')}
             </div>
             {HOME_CHAT_AI_LINES.map((line, i) =>
               i < visLines ? (
@@ -104,7 +108,7 @@ export const HomeChatDemo = ({ onViewFullItinerary }: HomeChatDemoProps) => {
                 className="mt-3 w-full"
                 onClick={onViewFullItinerary}
               >
-                View full itinerary →
+                {t('hero.demo.viewItinerary')}
               </Button>
             )}
           </div>

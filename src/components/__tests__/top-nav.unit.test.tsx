@@ -1,10 +1,22 @@
 import { AtlasProvider } from '@gsrosa/atlas-ui';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { axe } from 'vitest-axe';
 import { describe, it, expect, vi } from 'vitest';
 
 import { TopNav } from '@/components/top-nav';
+
+// ── Mocks ──────────────────────────────────────────────────────────────────
+
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/',
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn(), refresh: vi.fn() }),
+}));
+
+vi.mock('next/link', () => ({
+  default: ({ href, children, ...props }: { href: string; children: React.ReactNode; [key: string]: unknown }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
+}));
 
 type SessionValue = {
   isAuthenticated: boolean;
@@ -53,14 +65,14 @@ vi.mock('@/lib/trpc', () => ({
   },
 }));
 
-const renderTopNav = () =>
-  render(
-    <AtlasProvider>
-      <MemoryRouter>
-        <TopNav />
-      </MemoryRouter>
-    </AtlasProvider>,
-  );
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { language: 'en-US', changeLanguage: vi.fn() },
+  }),
+}));
+
+// ── Tests ──────────────────────────────────────────────────────────────────
 
 describe('TopNav', () => {
   it('should have no serious accessibility violations when the visitor is logged out', async () => {
@@ -71,7 +83,11 @@ describe('TopNav', () => {
       isUnauthorized: false,
       refetch: vi.fn(),
     };
-    const { container } = renderTopNav();
+    const { container } = render(
+      <AtlasProvider>
+        <TopNav />
+      </AtlasProvider>,
+    );
     expect((await axe(container)).violations).toEqual([]);
   });
 
@@ -89,7 +105,11 @@ describe('TopNav', () => {
       isUnauthorized: false,
       refetch: vi.fn(),
     };
-    const { container } = renderTopNav();
+    const { container } = render(
+      <AtlasProvider>
+        <TopNav />
+      </AtlasProvider>,
+    );
     expect((await axe(container)).violations).toEqual([]);
   });
 });

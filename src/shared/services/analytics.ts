@@ -3,21 +3,23 @@ type AnalyticsEvent = {
   properties?: Record<string, unknown>;
 };
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 export const analytics = {
   track(event: AnalyticsEvent): void {
-    if (import.meta.env.DEV) {
+    if (isDev) {
       console.debug('[Analytics]', event.name, event.properties);
     }
   },
 
   page(path: string): void {
-    if (import.meta.env.DEV) {
+    if (isDev) {
       console.debug('[Analytics] Page view:', path);
     }
   },
 
   identify(userId: string, traits?: Record<string, unknown>): void {
-    if (import.meta.env.DEV) {
+    if (isDev) {
       console.debug('[Analytics] Identify:', userId, traits);
     }
   },

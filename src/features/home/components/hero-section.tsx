@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@gsrosa/atlas-ui';
 import {
   ArrowRightIcon,
@@ -6,7 +8,10 @@ import {
   SparklesIcon,
   ZapIcon,
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
@@ -18,7 +23,8 @@ import { GridBackground } from './grid-background';
 import { HomeChatDemo } from './home-chat-demo';
 
 export const HeroSection = () => {
-  const navigate = useNavigate();
+  const { t } = useTranslation('home');
+  const router = useRouter();
   const openLogin = useAuthUiStore((s) => s.openLogin);
   const { isAuthenticated, isLoading } = useSession();
 
@@ -28,7 +34,7 @@ export const HeroSection = () => {
       openLogin();
       return;
     }
-    navigate(ROUTES.ASSISTANT);
+    router.push(ROUTES.ASSISTANT);
   };
 
   return (
@@ -50,7 +56,7 @@ export const HeroSection = () => {
           <FadeUp>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-400/25 bg-primary-500/10 px-3.5 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-primary-600">
               <ZapIcon className="size-3" aria-hidden strokeWidth={2.5} />
-              AI-powered trip intelligence
+              {t('hero.badge')}
             </div>
           </FadeUp>
 
@@ -69,9 +75,7 @@ export const HeroSection = () => {
 
           <FadeUp delay={160}>
             <p className="mb-8 max-w-[480px] font-sans text-[clamp(15px,1.5vw,17px)] font-light leading-[1.75] text-neutral-300">
-              Atlas does not generate generic templates. It builds complete,
-              day-by-day itineraries tailored to your pace, budget, and travel
-              personality — powered by deep contextual AI.
+              {t('hero.body')}
             </p>
           </FadeUp>
 
@@ -85,7 +89,7 @@ export const HeroSection = () => {
                 onClick={handleGoPlan}
               >
                 <SparklesIcon className="size-4" aria-hidden strokeWidth={2} />
-                Start planning free
+                {t('hero.ctaStart')}
                 <ArrowRightIcon
                   className="size-4 transition-transform group-hover:translate-x-1"
                   aria-hidden
@@ -104,7 +108,7 @@ export const HeroSection = () => {
                     aria-hidden
                     strokeWidth={2}
                   />
-                  How it works
+                  {t('hero.ctaHowItWorks')}
                 </a>
               </Button>
             </div>
@@ -113,11 +117,10 @@ export const HeroSection = () => {
           <FadeUp delay={320}>
             <div className="flex flex-wrap items-center gap-6 font-sans text-[11px] text-neutral-400">
               <span className="flex items-center gap-1.5">
-                <span className="size-1.5 rounded-full bg-success-500" /> 1,200+
-                travelers
+                <span className="size-1.5 rounded-full bg-success-500" /> {t('hero.stat.travelers')}
               </span>
-              <span>47 countries</span>
-              <span>Free beta</span>
+              <span>{t('hero.stat.countries')}</span>
+              <span>{t('hero.stat.beta')}</span>
             </div>
           </FadeUp>
         </div>
@@ -132,7 +135,7 @@ export const HeroSection = () => {
 
       <div className="pointer-events-none absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1.5 opacity-35">
         <span className="font-sans text-[9px] uppercase tracking-[0.25em] text-neutral-200">
-          Scroll
+          {t('hero.scroll')}
         </span>
         <ChevronDownIcon
           className="size-4 text-neutral-200 animate-hp-bob"
@@ -141,8 +144,8 @@ export const HeroSection = () => {
         />
       </div>
 
-      <Link to={ROUTES.ASSISTANT} className="sr-only">
-        Skip to trip planner
+      <Link href={ROUTES.ASSISTANT} className="sr-only">
+        {t('hero.skipLink')}
       </Link>
     </section>
   );

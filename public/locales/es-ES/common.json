@@ -1,0 +1,68 @@
+{
+  "nav.explore": "Explorar",
+  "nav.planTrip": "Planear Viaje",
+  "nav.myTrips": "Mis Viajes",
+  "nav.soon": "Próximamente",
+  "nav.signIn": "Iniciar sesión",
+  "nav.signUp": "Registrarse",
+  "nav.signOut": "Cerrar sesión",
+  "nav.profile": "Perfil",
+  "nav.billing": "Facturación",
+  "nav.preferences": "Preferencias",
+  "nav.home": "Inicio",
+
+  "action.cancel": "Cancelar",
+  "action.continue": "Continuar",
+  "action.back": "Volver",
+  "action.save": "Guardar",
+  "action.close": "Cerrar",
+  "action.maybeLater": "Quizás después",
+  "action.getCredits": "Obtener créditos",
+  "action.addCredits": "Añadir créditos",
+
+  "error.generic": "Algo salió mal. Inténtalo de nuevo.",
+  "error.remoteTitle": "Algo salió mal",
+  "error.remoteBody": "Esta sección no está disponible temporalmente. Inténtalo de nuevo más tarde.",
+  "error.tryAgain": "Intentar de nuevo",
+  "error.appTitle": "Algo salió mal",
+  "error.appBody": "Ocurrió un error inesperado. Vuelve a la página de inicio para continuar.",
+  "error.goHome": "Ir al inicio",
+
+  "loading": "Cargando…",
+
+  "footer.tagline": "Planificación inteligente de viajes",
+  "footer.privacy": "Privacidad",
+  "footer.terms": "Términos",
+  "footer.docs": "Docs",
+  "footer.support": "Soporte",
+
+  "auth.signInTitle": "Iniciar sesión en Atlas",
+  "auth.signInDescription": "Usa el correo y la contraseña de tu cuenta Atlas. Tu sesión se almacena de forma segura en el navegador.",
+  "auth.emailLabel": "Correo electrónico",
+  "auth.passwordLabel": "Contraseña",
+  "auth.signingIn": "Iniciando sesión…",
+  "auth.signInFailed": "Error al iniciar sesión",
+  "auth.couldNotSignIn": "No se pudo iniciar sesión",
+  "auth.backToHome": "Volver al inicio",
+  "auth.checkingSession": "Verificando tu sesión…",
+  "auth.accessDenied": "Acceso denegado",
+  "auth.accessDeniedDescription": "Debes iniciar sesión para abrir {{name}}. Esta área solo está disponible con una sesión Atlas activa.",
+  "auth.sessionError": "Error de sesión",
+  "auth.sessionErrorDescription": "No pudimos verificar tu cuenta. Intenta iniciar sesión de nuevo o vuelve a la página de inicio.",
+  "auth.authErrorFooter": "Error · autenticación requerida",
+
+  "credits.topUp": "Recargar",
+  "credits.ariaLabel": "{{count}} créditos — haz clic para recargar",
+
+  "purchase.title": "Necesitas más créditos",
+  "purchase.currentBalance": "Saldo actual: {{count}} créditos",
+  "purchase.body": "Los créditos impulsan la planificación de viajes con IA. Sin suscripción — paga solo por lo que uses.",
+
+  "notFound.badge": "404 — No Encontrado",
+  "notFound.title": "Esta página no existe",
+  "notFound.body": "{{path}} no se pudo encontrar. Puede haberse movido o el enlace puede estar roto.",
+  "notFound.backToHome": "Volver al inicio",
+  "notFound.planTrip": "Planear un viaje",
+
+  "locale.switchTo": "Cambiar a {{lang}}"
+}

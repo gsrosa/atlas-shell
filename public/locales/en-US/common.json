@@ -1,0 +1,68 @@
+{
+  "nav.explore": "Explore",
+  "nav.planTrip": "Plan Trip",
+  "nav.myTrips": "My Trips",
+  "nav.soon": "Soon",
+  "nav.signIn": "Sign in",
+  "nav.signUp": "Sign up",
+  "nav.signOut": "Sign out",
+  "nav.profile": "Profile",
+  "nav.billing": "Billing",
+  "nav.preferences": "Preferences",
+  "nav.home": "Home",
+
+  "action.cancel": "Cancel",
+  "action.continue": "Continue",
+  "action.back": "Back",
+  "action.save": "Save",
+  "action.close": "Close",
+  "action.maybeLater": "Maybe later",
+  "action.getCredits": "Get credits",
+  "action.addCredits": "Add credits",
+
+  "error.generic": "Something went wrong. Please try again.",
+  "error.remoteTitle": "Something went wrong",
+  "error.remoteBody": "This section is temporarily unavailable. Please try again later.",
+  "error.tryAgain": "Try again",
+  "error.appTitle": "Something went wrong",
+  "error.appBody": "An unexpected error occurred. Return to the home page to continue.",
+  "error.goHome": "Go to home",
+
+  "loading": "Loading…",
+
+  "footer.tagline": "Intelligent travel planning",
+  "footer.privacy": "Privacy",
+  "footer.terms": "Terms",
+  "footer.docs": "Docs",
+  "footer.support": "Support",
+
+  "auth.signInTitle": "Sign in to Atlas",
+  "auth.signInDescription": "Use the email and password for your Atlas account. Your session is stored securely in the browser.",
+  "auth.emailLabel": "Email",
+  "auth.passwordLabel": "Password",
+  "auth.signingIn": "Signing in…",
+  "auth.signInFailed": "Sign in failed",
+  "auth.couldNotSignIn": "Could not sign in",
+  "auth.backToHome": "Back to home",
+  "auth.checkingSession": "Checking your session…",
+  "auth.accessDenied": "Access denied",
+  "auth.accessDeniedDescription": "You must be signed in to open {{name}}. This area is only available with an active Atlas session.",
+  "auth.sessionError": "Session error",
+  "auth.sessionErrorDescription": "We could not verify your account. Try signing in again, or return to the home page.",
+  "auth.authErrorFooter": "Error · authentication required",
+
+  "credits.topUp": "Top up",
+  "credits.ariaLabel": "{{count}} credits — click to top up",
+
+  "purchase.title": "You need more credits",
+  "purchase.currentBalance": "Current balance: {{count}} credits",
+  "purchase.body": "Credits power AI trip planning. No subscription — pay only for what you use.",
+
+  "notFound.badge": "404 — Not Found",
+  "notFound.title": "This page doesn't exist",
+  "notFound.body": "{{path}} couldn't be found. It may have moved or the link might be broken.",
+  "notFound.backToHome": "Back to home",
+  "notFound.planTrip": "Plan a trip",
+
+  "locale.switchTo": "Switch to {{lang}}"
+}

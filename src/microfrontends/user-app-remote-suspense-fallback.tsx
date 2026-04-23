@@ -1,4 +1,6 @@
-import { useLocation } from 'react-router-dom';
+'use client';
+
+import { usePathname } from 'next/navigation';
 
 const TripsListPageSkeletonShell = () => (
   <div className="account-user-root relative flex min-h-[calc(100dvh-60px)] w-full min-w-0 flex-col overflow-hidden bg-surface text-neutral-100 md:min-h-screen">
@@ -128,7 +130,7 @@ const TripDetailPageSkeletonShell = () => (
 
 /** Shown inside Suspense while the `aiAssistant/MyTripsSkeleton` chunk loads. */
 export const UserAppRemoteSuspenseFallback = () => {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
   if (/^\/my-trips\/([\w-]+)$/.test(pathname)) return <TripDetailPageSkeletonShell />;
   return <TripsListPageSkeletonShell />;
 };

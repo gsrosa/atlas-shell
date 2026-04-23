@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import { useSession } from '@/features/auth/use-session';

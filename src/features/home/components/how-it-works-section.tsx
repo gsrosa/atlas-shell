@@ -1,9 +1,14 @@
+'use client';
+
 import React from 'react';
+
+import { useTranslation } from 'react-i18next';
 
 import { HOME_HOW_STEPS } from '../data/home-how-steps';
 import { FadeUp } from './fade-up';
 
 export const HowItWorksSection = () => {
+  const { t } = useTranslation('home');
   const lineRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -32,15 +37,15 @@ export const HowItWorksSection = () => {
         <FadeUp>
           <div className="mb-16 text-center md:mb-20">
             <p className="mb-4 font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-primary-600">
-              Getting started
+              {t('howItWorks.label')}
             </p>
             <h2
               id="how-heading"
               className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold italic text-neutral-100"
             >
-              From idea to itinerary in{' '}
+              {t('howItWorks.heading1')}{' '}
               <span className="bg-gradient-to-r from-primary-600 to-primary-300 bg-clip-text font-display font-bold not-italic text-transparent">
-                seconds
+                {t('howItWorks.heading2')}
               </span>
               .
             </h2>
@@ -68,8 +73,8 @@ export const HowItWorksSection = () => {
                       <s.icon className="size-5 text-primary-600" aria-hidden strokeWidth={2} />
                     </div>
                   </div>
-                  <h3 className="mb-3 font-sans text-[15px] font-bold text-neutral-100">{s.title}</h3>
-                  <p className="font-sans text-[13px] font-light leading-[1.7] text-neutral-300">{s.body}</p>
+                  <h3 className="mb-3 font-sans text-[15px] font-bold text-neutral-100">{t(`step.${i + 1}.title`)}</h3>
+                  <p className="font-sans text-[13px] font-light leading-[1.7] text-neutral-300">{t(`step.${i + 1}.body`)}</p>
                 </div>
               </FadeUp>
             ))}
