@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { RemoteRoute } from '@/microfrontends/remote-route';
 

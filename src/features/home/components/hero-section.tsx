@@ -1,5 +1,8 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@gsrosa/nexploring-ui';
 import {
   ArrowRightIcon,
@@ -8,16 +11,15 @@ import {
   SparklesIcon,
   ZapIcon,
 } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-
 import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
+
 import { ROUTES } from '@/shared/constants/shell-routes';
 
 import { HOME_HERO_BG } from '../data/home-hero';
+
 import { FadeUp } from './fade-up';
 import { GridBackground } from './grid-background';
 import { HomeChatDemo } from './home-chat-demo';

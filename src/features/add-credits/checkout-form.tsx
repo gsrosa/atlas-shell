@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
-import { Button, Input, Label, cn } from '@gsrosa/nexploring-ui';
+import { Button, cn, Input, Label } from '@gsrosa/nexploring-ui';
 import {
   CheckCircle2Icon,
   CreditCardIcon,
@@ -12,15 +13,13 @@ import {
   ShieldCheckIcon,
   Trash2Icon,
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import { useSession } from '@/features/auth/use-session';
-import { ROUTES } from '@/shared/constants/shell-routes';
-import type { CreditBundle } from '@/shared/constants/credits';
-import { trpc } from '@/lib/trpc';
 
-// ─── Helpers ───────────────────────────────────────────────────────────────
+import { trpc } from '@/lib/trpc';
+import type { CreditBundle } from '@/shared/constants/credits';
+import { ROUTES } from '@/shared/constants/shell-routes';
 
 type CardBrand = 'visa' | 'mastercard' | 'amex' | 'unknown';
 
@@ -43,30 +42,10 @@ const formatExpiry = (value: string): string => {
   return clean;
 };
 
-/** Luhn algorithm — returns true if the number passes the check. */
-const luhn = (value: string): boolean => {
-  const digits = value.replace(/\D/g, '');
-  if (digits.length < 13) return false;
-  let sum = 0;
-  let double = false;
-  for (let i = digits.length - 1; i >= 0; i--) {
-    let d = parseInt(digits[i], 10);
-    if (double) {
-      d *= 2;
-      if (d > 9) d -= 9;
-    }
-    sum += d;
-    double = !double;
-  }
-  return sum % 10 === 0;
-};
-
 const formatPrice = (cents: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
     cents / 100,
   );
-
-// ─── Card brand badge ──────────────────────────────────────────────────────
 
 const CardBrandBadge = ({ brand }: { brand: CardBrand }) => {
   if (brand === 'visa')
@@ -88,7 +67,9 @@ const CardBrandBadge = ({ brand }: { brand: CardBrand }) => {
         AMEX
       </span>
     );
-  return <CreditCardIcon className="size-4 text-neutral-500" strokeWidth={1.5} />;
+  return (
+    <CreditCardIcon className="size-4 text-neutral-500" strokeWidth={1.5} />
+  );
 };
 
 // ─── Saved cards (mock — would come from payment processor) ───────────────
@@ -102,8 +83,20 @@ type SavedCard = {
 };
 
 const MOCK_SAVED_CARDS: SavedCard[] = [
-  { id: 'card_1', brand: 'visa', last4: '4242', expiry: '12/26', holder: 'Jane Doe' },
-  { id: 'card_2', brand: 'mastercard', last4: '5555', expiry: '08/25', holder: 'Jane Doe' },
+  {
+    id: 'card_1',
+    brand: 'visa',
+    last4: '4242',
+    expiry: '12/26',
+    holder: 'Jane Doe',
+  },
+  {
+    id: 'card_2',
+    brand: 'mastercard',
+    last4: '5555',
+    expiry: '08/25',
+    holder: 'Jane Doe',
+  },
 ];
 
 const SavedCardRow = ({
@@ -134,12 +127,16 @@ const SavedCardRow = ({
         <CardBrandBadge brand={card.brand} />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-neutral-100">•••• {card.last4}</p>
+        <p className="text-sm font-medium text-neutral-100">
+          •••• {card.last4}
+        </p>
         <p className="text-xs text-neutral-500">
           {card.holder} · {card.expiry}
         </p>
       </div>
-      {selected && <div className="size-2 shrink-0 rounded-full bg-primary-500" />}
+      {selected && (
+        <div className="size-2 shrink-0 rounded-full bg-primary-500" />
+      )}
     </button>
     <button
       type="button"
@@ -198,13 +195,17 @@ export const OrderSummary = ({ bundle, className }: OrderSummaryProps) => {
         <div className="my-5 border-t border-white/6" />
 
         <div className="flex items-center justify-between">
-          <span className="text-sm text-neutral-400">{t('checkout.credits')}</span>
+          <span className="text-sm text-neutral-400">
+            {t('checkout.credits')}
+          </span>
           <span className="font-semibold text-neutral-100">
             {bundle.credits} {t('bundle.creditsUnit')}
           </span>
         </div>
         <div className="mt-3 flex items-center justify-between">
-          <span className="text-sm text-neutral-400">{t('checkout.total')}</span>
+          <span className="text-sm text-neutral-400">
+            {t('checkout.total')}
+          </span>
           <span className="text-2xl font-bold tracking-tight text-neutral-50">
             {formatPrice(bundle.priceCents)}
           </span>
@@ -212,15 +213,24 @@ export const OrderSummary = ({ bundle, className }: OrderSummaryProps) => {
 
         <div className="mt-5 flex flex-col gap-1.5">
           <div className="flex items-center gap-2 text-xs text-neutral-500">
-            <ShieldCheckIcon className="size-3.5 shrink-0 text-success-500" strokeWidth={2} />
+            <ShieldCheckIcon
+              className="size-3.5 shrink-0 text-success-500"
+              strokeWidth={2}
+            />
             {t('checkout.trust.noExpiry')}
           </div>
           <div className="flex items-center gap-2 text-xs text-neutral-500">
-            <ShieldCheckIcon className="size-3.5 shrink-0 text-success-500" strokeWidth={2} />
+            <ShieldCheckIcon
+              className="size-3.5 shrink-0 text-success-500"
+              strokeWidth={2}
+            />
             {t('checkout.trust.noSubscription')}
           </div>
           <div className="flex items-center gap-2 text-xs text-neutral-500">
-            <LockIcon className="size-3.5 shrink-0 text-neutral-400" strokeWidth={2} />
+            <LockIcon
+              className="size-3.5 shrink-0 text-neutral-400"
+              strokeWidth={2}
+            />
             {t('checkout.trust.secure')}
           </div>
         </div>
@@ -301,8 +311,12 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
   });
 
   const [paymentType, setPaymentType] = React.useState<PaymentType>('credit');
-  const [selectedSavedCard, setSelectedSavedCard] = React.useState<string | null>(null);
-  const [addingNewCard, setAddingNewCard] = React.useState(MOCK_SAVED_CARDS.length === 0);
+  const [selectedSavedCard, setSelectedSavedCard] = React.useState<
+    string | null
+  >(null);
+  const [addingNewCard, setAddingNewCard] = React.useState(
+    MOCK_SAVED_CARDS.length === 0,
+  );
 
   const [card, setCard] = React.useState<CardForm>({
     cardNumber: '',
@@ -345,8 +359,7 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
       card.cvv.length >= 3);
 
   const isFormValid =
-    billingValid &&
-    (paymentType === 'pix' ? true : cardPaymentValid);
+    billingValid && (paymentType === 'pix' ? true : cardPaymentValid);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -358,7 +371,10 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
     return (
       <div className="flex min-h-[320px] flex-col items-center justify-center gap-5 text-center">
         <div className="flex size-16 items-center justify-center rounded-full bg-success-500/15">
-          <CheckCircle2Icon className="size-8 text-success-400" strokeWidth={1.5} />
+          <CheckCircle2Icon
+            className="size-8 text-success-400"
+            strokeWidth={1.5}
+          />
         </div>
         <div>
           <h2 className="text-xl font-bold text-neutral-50">
@@ -381,17 +397,15 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
   }
 
   const errorMsg = addFunds.isError
-    ? (addFunds.error as unknown as { message?: string })?.message ??
-      t('error.generic', { ns: 'common' })
+    ? ((addFunds.error as unknown as { message?: string })?.message ??
+      t('error.generic', { ns: 'common' }))
     : null;
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
       {/* ── Billing information ──────────────────────────────────────────── */}
       <FormCard title={t('checkout.billingInfo')}>
         <div className="flex flex-col gap-3">
-
           {/* Name + email */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
@@ -451,7 +465,9 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="co-complement">
               {t('checkout.complement')}{' '}
-              <span className="text-neutral-500">({t('checkout.optional')})</span>
+              <span className="text-neutral-500">
+                ({t('checkout.optional')})
+              </span>
             </Label>
             <Input
               id="co-complement"
@@ -527,7 +543,6 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
 
       {/* ── Payment method ───────────────────────────────────────────────── */}
       <FormCard title={t('checkout.paymentMethod')}>
-
         {/* Method type tabs */}
         <div className="mb-4 flex gap-1 rounded-lg bg-neutral-900/60 p-1">
           {(['credit', 'debit', 'pix'] as PaymentType[]).map((type) => (
@@ -554,7 +569,6 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
         {/* ── Credit / Debit card ────────────────────────────────────────── */}
         {(paymentType === 'credit' || paymentType === 'debit') && (
           <div className="flex flex-col gap-3">
-
             {/* Saved cards */}
             {MOCK_SAVED_CARDS.length > 0 && (
               <div className="flex flex-col gap-2">
@@ -693,7 +707,10 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
         {paymentType === 'pix' && (
           <div className="flex flex-col items-center gap-4 py-2">
             <div className="flex size-32 items-center justify-center rounded-xl border border-white/10 bg-neutral-900/60">
-              <QrCodeIcon className="size-16 text-neutral-500" strokeWidth={1} />
+              <QrCodeIcon
+                className="size-16 text-neutral-500"
+                strokeWidth={1}
+              />
             </div>
             <div className="w-full text-center">
               <p className="text-sm text-neutral-300">
@@ -715,7 +732,9 @@ export const CheckoutForm = ({ bundle, onBack }: Props) => {
                   type="button"
                   className="shrink-0 text-xs font-medium text-primary-400 hover:text-primary-300 transition-colors"
                   onClick={() =>
-                    void navigator.clipboard.writeText('atlas-ai@pagamentos.com.br')
+                    void navigator.clipboard.writeText(
+                      'atlas-ai@pagamentos.com.br',
+                    )
                   }
                 >
                   {t('checkout.pix.copy')}

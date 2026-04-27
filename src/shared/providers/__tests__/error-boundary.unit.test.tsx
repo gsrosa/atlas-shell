@@ -31,25 +31,35 @@ describe('ErrorBoundary', () => {
   });
 
   it('should show an alert with a home redirect when a descendant throws', async () => {
-    const assignSpy = vi.spyOn(window.location, 'assign').mockImplementation(() => undefined);
-    const user = userEvent.setup();
-    render(
-      <ErrorBoundary>
-        <AppChildUnderTest />
-      </ErrorBoundary>,
+    const assignMock = vi.fn();
+    vi.stubGlobal(
+      'location',
+      {
+        ...window.location,
+        assign: assignMock,
+      } as Location,
     );
+    try {
+      const user = userEvent.setup();
+      render(
+        <ErrorBoundary>
+          <AppChildUnderTest />
+        </ErrorBoundary>,
+      );
 
-    expect(await screen.findByRole('alert')).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: /Something went wrong/i }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Return to the home page/i),
-    ).toBeInTheDocument();
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: /Something went wrong/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/Return to the home page/i),
+      ).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /Go to home/i }));
+      await user.click(screen.getByRole('button', { name: /Go to home/i }));
 
-    expect(assignSpy).toHaveBeenCalledWith('/');
-    assignSpy.mockRestore();
+      expect(assignMock).toHaveBeenCalledWith('/');
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 });

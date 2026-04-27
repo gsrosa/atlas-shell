@@ -3,6 +3,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { HOME_TESTIMONIALS_MARKETING } from '../data/home-testimonials-marketing';
+
 import { FadeUp } from './fade-up';
 
 export const SocialProofSection = () => {

@@ -19,6 +19,7 @@ import { isTRPCClientError } from '@trpc/client';
 import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
+
 import { trpc } from '@/lib/trpc';
 
 type Step = 'account' | 'profile';

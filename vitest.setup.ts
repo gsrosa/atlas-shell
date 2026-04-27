@@ -1,18 +1,19 @@
 import { cleanup } from '@testing-library/react';
-import '@testing-library/jest-dom/vitest';
-import 'vitest-axe/extend-expect';
-import { afterEach, expect } from 'vitest';
+import { afterEach,  expect } from 'vitest';
 import * as matchers from 'vitest-axe/matchers';
 
-expect.extend(matchers);
+import '@/lib/i18n';
+import '@testing-library/jest-dom/vitest';
+import 'vitest-axe/extend-expect';
 
+expect.extend(matchers);
 class IntersectionObserverStub implements IntersectionObserver {
   readonly root: Element | null = null;
   readonly rootMargin = '';
   readonly thresholds: ReadonlyArray<number> = [];
   private readonly callback: IntersectionObserverCallback;
 
-  constructor(callback: IntersectionObserverCallback, _options?: IntersectionObserverInit) {
+  constructor(callback: IntersectionObserverCallback) {
     this.callback = callback;
   }
 

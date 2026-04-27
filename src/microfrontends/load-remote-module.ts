@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
+
+import * as AtlasUi from '@gsrosa/nexploring-ui';
+import * as ReactQuery from '@tanstack/react-query';
+import * as LucideReact from 'lucide-react';
 import * as ReactDOM from 'react-dom';
 import * as ReactRouterDom from 'react-router-dom';
 import * as Zustand from 'zustand';
-import * as ReactQuery from '@tanstack/react-query';
-import * as LucideReact from 'lucide-react';
-import * as AtlasUi from '@gsrosa/nexploring-ui';
 
 // ── Remote URLs ────────────────────────────────────────────────────────────────
 

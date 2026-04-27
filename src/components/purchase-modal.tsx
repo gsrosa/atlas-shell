@@ -11,6 +11,7 @@ import { CoinsIcon, PlusIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreditsStore } from '@/features/credits/credits-store';
+
 import { ROUTES } from '@/shared/constants/shell-routes';
 
 export const PurchaseModal = () => {

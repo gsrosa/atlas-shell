@@ -4,12 +4,12 @@ import { initReactI18next } from 'react-i18next';
 import commonEn from '../../public/locales/en-US/common.json';
 import homeEn from '../../public/locales/en-US/home.json';
 import paymentEn from '../../public/locales/en-US/payment.json';
-import commonPt from '../../public/locales/pt-BR/common.json';
-import homePt from '../../public/locales/pt-BR/home.json';
-import paymentPt from '../../public/locales/pt-BR/payment.json';
 import commonEs from '../../public/locales/es-ES/common.json';
 import homeEs from '../../public/locales/es-ES/home.json';
 import paymentEs from '../../public/locales/es-ES/payment.json';
+import commonPt from '../../public/locales/pt-BR/common.json';
+import homePt from '../../public/locales/pt-BR/home.json';
+import paymentPt from '../../public/locales/pt-BR/payment.json';
 
 export const SUPPORTED = ['en-US', 'pt-BR', 'es-ES'] as const;
 export type SupportedLocale = (typeof SUPPORTED)[number];

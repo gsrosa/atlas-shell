@@ -1,9 +1,7 @@
 'use client';
 
-import React from 'react';
-
-import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
 import { AddCreditsPage } from '@/features/add-credits/add-credits-page';
+import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
 
 export default function AddCreditsSection() {
   return (

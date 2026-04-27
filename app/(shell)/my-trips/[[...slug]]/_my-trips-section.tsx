@@ -3,9 +3,10 @@
 import React from 'react';
 
 import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
+
+import { loadRemoteModule } from '@/microfrontends/load-remote-module';
 import { RemoteErrorBoundary } from '@/microfrontends/remote-error-boundary';
 import { UserAppRemoteSuspenseFallback } from '@/microfrontends/user-app-remote-suspense-fallback';
-import { loadRemoteModule } from '@/microfrontends/load-remote-module';
 
 const MyTripsApp = loadRemoteModule('aiAssistant', 'MyTripsApp');
 const MyTripsSkeleton = loadRemoteModule('aiAssistant', 'MyTripsSkeleton');

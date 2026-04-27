@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-
 import { usePathname } from 'next/navigation';
 
 import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
@@ -40,10 +39,6 @@ class SkeletonErrorBoundary extends React.Component<
     return { failed: true };
   }
 
-  componentDidCatch(_error: Error, _info: React.ErrorInfo): void {
-    // intentionally silent — skeleton failures are non-critical
-  }
-
   render() {
     if (this.state.failed) return <PageShimmer />;
     return this.props.children;
@@ -74,7 +69,6 @@ const buildFallback = (
 
 export const RemoteRoute = ({
   name,
-  remoteName: _remoteName,
   module: Module,
   skeleton,
   requireAuth,

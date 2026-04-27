@@ -1,15 +1,15 @@
 'use client';
 
-import React from 'react';
+import Link from 'next/link';
 
 import { Alert, AlertDescription, AlertTitle, Button } from '@gsrosa/nexploring-ui';
 import { AlertTriangleIcon } from 'lucide-react';
-import Link from 'next/link';
-
+import type React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
+
 import { ROUTES } from '@/shared/constants/shell-routes';
 
 type Props = {

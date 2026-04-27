@@ -4,6 +4,7 @@ import { cn } from '@gsrosa/nexploring-ui';
 import { useTranslation } from 'react-i18next';
 
 import { HOME_FEATURE_BLOCKS } from '../data/home-features';
+
 import { FadeUp } from './fade-up';
 
 export const FeaturesSection = () => {

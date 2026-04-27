@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { HOME_METRICS } from '../data/home-metrics';
 import { useAnimatedMetric } from '../hooks/use-animated-metric';
+
 import { FadeUp } from './fade-up';
 
 type MetricCellProps = {

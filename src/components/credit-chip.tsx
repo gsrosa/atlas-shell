@@ -7,6 +7,7 @@ import { CoinsIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreditsStore } from '@/features/credits/credits-store';
+
 import { CREDIT_THRESHOLDS } from '@/shared/constants/credits';
 
 export const CreditChip = () => {
@@ -21,6 +22,7 @@ export const CreditChip = () => {
   // Animate number down to new balance when a deduction fires
   React.useEffect(() => {
     if (balance == null) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (displayed == null) { setDisplayed(balance); return; }
     if (balance === displayed) return;
 

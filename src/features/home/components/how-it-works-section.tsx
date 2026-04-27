@@ -5,6 +5,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { HOME_HOW_STEPS } from '../data/home-how-steps';
+
 import { FadeUp } from './fade-up';
 
 export const HowItWorksSection = () => {

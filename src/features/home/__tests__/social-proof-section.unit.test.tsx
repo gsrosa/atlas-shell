@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
+import { describe, expect,it } from 'vitest';
 import { axe } from 'vitest-axe';
-import { describe, it, expect } from 'vitest';
 
 import { SocialProofSection } from '@/features/home/components/social-proof-section';
 

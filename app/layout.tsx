@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 
-import '@/styles/global.css';
-
 import { AppProviders } from '@/shared/providers';
+
+import '@/styles/global.css';
 
 const SUPPORTED_LOCALES = ['en-US', 'pt-BR', 'es-ES'] as const;
 type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];

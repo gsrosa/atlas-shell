@@ -3,9 +3,10 @@
 import { cn } from '@gsrosa/nexploring-ui';
 import { useTranslation } from 'react-i18next';
 
+import { useCreditsStore } from '@/features/credits/credits-store';
+
 import type { CreditBundle } from '@/shared/constants/credits';
 import { CREDIT_BUNDLES } from '@/shared/constants/credits';
-import { useCreditsStore } from '@/features/credits/credits-store';
 
 type Props = {
   selected: CreditBundle | null;

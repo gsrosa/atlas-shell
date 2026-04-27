@@ -1,16 +1,16 @@
 'use client';
 
 import React from 'react';
-
-import { cn } from '@gsrosa/nexploring-ui';
-import { CompassIcon, MapIcon, SparklesIcon, XIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { cn } from '@gsrosa/nexploring-ui';
+import { CompassIcon, MapIcon, SparklesIcon, XIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { isFeatureEnabled } from '@/config/feature-flags';
 import { useSession } from '@/features/auth/use-session';
+
+import { isFeatureEnabled } from '@/config/feature-flags';
 import { ROUTES } from '@/shared/constants/shell-routes';
 
 type Props = {

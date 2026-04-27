@@ -1,7 +1,7 @@
 import { NexploringProvider } from '@gsrosa/nexploring-ui';
 import { render } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { axe } from 'vitest-axe';
-import { describe, it, expect, vi } from 'vitest';
 
 import { TopNav } from '@/components/top-nav';
 

@@ -5,6 +5,7 @@ import React from 'react';
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
 import { useCreditsStore } from '@/features/credits/credits-store';
+
 import { trpc } from '@/lib/trpc';
 
 /** Listens for `atlas:request-login` and eagerly warms the session cache. */

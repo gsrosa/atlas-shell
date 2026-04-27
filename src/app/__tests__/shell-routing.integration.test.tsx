@@ -24,13 +24,6 @@ vi.mock('next/link', () => ({
   ),
 }));
 
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-    i18n: { language: 'en-US', changeLanguage: vi.fn() },
-  }),
-}));
-
 vi.mock('@/features/traveler-profile/traveler-profile-sync', () => ({
   TravelerProfileSync: () => null,
 }));

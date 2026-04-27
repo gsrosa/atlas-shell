@@ -8,6 +8,7 @@ import {
   HOME_PRECISION_BULLETS,
   HOME_PRECISION_DAYS,
 } from '../data/home-precision';
+
 import { FadeUp } from './fade-up';
 
 const MODES = [

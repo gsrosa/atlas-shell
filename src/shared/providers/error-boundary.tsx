@@ -1,7 +1,8 @@
 'use client';
 
-import { TriangleAlert } from 'lucide-react';
 import React from 'react';
+
+import { TriangleAlert } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { monitoring } from '@/shared/services/monitoring';

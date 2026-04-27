@@ -1,8 +1,7 @@
 'use client';
 
-import type { ReactNode } from 'react';
-
 import { cn } from '@gsrosa/nexploring-ui';
+import type { ReactNode } from 'react';
 
 import { useInView } from '../hooks/use-in-view';
 

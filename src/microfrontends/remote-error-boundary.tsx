@@ -1,7 +1,8 @@
 'use client';
 
-import { TriangleAlert } from 'lucide-react';
 import React from 'react';
+
+import { TriangleAlert } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { monitoring } from '@/shared/services/monitoring';
@@ -27,7 +28,9 @@ function RemoteErrorContent({ onRetry }: { onRetry: () => void }) {
         <TriangleAlert size={28} strokeWidth={1.5} />
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold m-0">{t('error.remoteTitle')}</h2>
+        <h2 className="text-base font-semibold m-0">
+          {t('error.remoteTitle')}
+        </h2>
         <p className="text-sm text-neutral-400 max-w-xs m-0">
           {t('error.remoteBody')}
         </p>

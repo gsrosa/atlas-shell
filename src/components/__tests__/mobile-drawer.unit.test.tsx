@@ -1,8 +1,7 @@
-import React from 'react';
-
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import type React from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // ── Mocks ──────────────────────────────────────────────────────────────────
 
@@ -34,8 +33,13 @@ vi.mock('@/config/feature-flags', () => ({
   isFeatureEnabled: () => true,
 }));
 
+const useSessionMock = vi.fn(() => ({
+  isAuthenticated: false,
+  isLoading: false,
+}));
+
 vi.mock('@/features/auth/use-session', () => ({
-  useSession: () => ({ isAuthenticated: false, isLoading: false }),
+  useSession: () => useSessionMock(),
 }));
 
 vi.mock('@/features/auth/auth-ui-store', () => ({
@@ -54,6 +58,10 @@ import { MobileDrawer } from '../mobile-drawer';
 // ── Tests ──────────────────────────────────────────────────────────────────
 
 describe('MobileDrawer', () => {
+  beforeEach(() => {
+    useSessionMock.mockReturnValue({ isAuthenticated: false, isLoading: false });
+  });
+
   it('is hidden when isOpen is false', () => {
     const onClose = vi.fn();
     render(<MobileDrawer isOpen={false} onClose={onClose} />);
@@ -111,6 +119,7 @@ describe('MobileDrawer', () => {
   });
 
   it('renders nav items: Explore, Plan Trip, My Trips', () => {
+    useSessionMock.mockReturnValue({ isAuthenticated: true, isLoading: false });
     render(<MobileDrawer isOpen={true} onClose={vi.fn()} />);
 
     const nav = screen.getByRole('navigation', { name: /drawer navigation/i });

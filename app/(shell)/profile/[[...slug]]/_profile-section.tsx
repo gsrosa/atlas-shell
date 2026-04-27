@@ -2,9 +2,10 @@
 
 import React from 'react';
 
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter,Navigate, RouterProvider } from 'react-router-dom';
 
 import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
+
 import { loadRemoteModule } from '@/microfrontends/load-remote-module';
 
 const ProfileLayout = loadRemoteModule('userApp', 'ProfileLayout');

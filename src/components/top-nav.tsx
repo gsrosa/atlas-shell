@@ -1,15 +1,17 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 import {
   Button,
+  cn,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  cn,
 } from '@gsrosa/nexploring-ui';
 import {
   CompassIcon,
@@ -20,17 +22,16 @@ import {
   SparklesIcon,
   UserIcon,
 } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-
 import { useTranslation } from 'react-i18next';
 
-import { isFeatureEnabled } from '@/config/feature-flags';
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { profileDisplayName } from '@/features/auth/profile-display-name';
 import { useSession } from '@/features/auth/use-session';
-import { ROUTES } from '@/shared/constants/shell-routes';
+
+import { isFeatureEnabled } from '@/config/feature-flags';
 import { trpc } from '@/lib/trpc';
+import { ROUTES } from '@/shared/constants/shell-routes';
+
 import { CreditChip } from './credit-chip';
 
 type NavItem = {

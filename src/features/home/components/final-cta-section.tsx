@@ -1,16 +1,18 @@
 'use client';
 
-import { Button } from '@gsrosa/nexploring-ui';
-import { ArrowRightIcon, SparklesIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import { Button } from '@gsrosa/nexploring-ui';
+import { ArrowRightIcon, SparklesIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
+
 import { ROUTES } from '@/shared/constants/shell-routes';
 
 import { HOME_FINAL_CTA_BG } from '../data/home-hero';
+
 import { FadeUp } from './fade-up';
 
 export const FinalCtaSection = () => {

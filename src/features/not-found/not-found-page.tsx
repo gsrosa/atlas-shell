@@ -1,9 +1,10 @@
 'use client';
 
-import { Button } from '@gsrosa/nexploring-ui';
-import { MapPinOffIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+import { Button } from '@gsrosa/nexploring-ui';
+import { MapPinOffIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export const NotFoundPage = () => {

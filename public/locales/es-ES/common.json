@@ -90,5 +90,9 @@
   "notFound.backToHome": "Volver al inicio",
   "notFound.planTrip": "Planear un viaje",
 
-  "locale.switchTo": "Cambiar a {{lang}}"
+  "locale.switchTo": "Cambiar a {{lang}}",
+
+  "mobileNav.label": "Navegación móvil",
+  "mobileNav.brand": "Menú de navegación",
+  "mobileNav.close": "Cerrar menú de navegación"
 }

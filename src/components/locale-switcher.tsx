@@ -4,9 +4,10 @@ import { cn } from '@gsrosa/nexploring-ui';
 import { useTranslation } from 'react-i18next';
 
 import { useSession } from '@/features/auth/use-session';
-import { trpc } from '@/lib/trpc';
-import { SUPPORTED, persistLocale } from '@/lib/i18n';
+
 import type { SupportedLocale } from '@/lib/i18n';
+import { persistLocale,SUPPORTED } from '@/lib/i18n';
+import { trpc } from '@/lib/trpc';
 
 const LOCALES: { value: SupportedLocale; label: string }[] = [
   { value: 'en-US', label: 'EN' },

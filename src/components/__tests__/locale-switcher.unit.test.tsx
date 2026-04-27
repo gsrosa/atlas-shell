@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -12,7 +10,9 @@ let currentLang = 'en-US';
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     i18n: {
-      get language() { return currentLang; },
+      get language() {
+        return currentLang;
+      },
       changeLanguage: mockChangeLanguage,
     },
   }),
@@ -21,7 +21,10 @@ vi.mock('react-i18next', () => ({
 vi.mock('@gsrosa/nexploring-ui', async (importOriginal) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@gsrosa/nexploring-ui')>();
-  return { ...actual, cn: (...args: unknown[]) => args.filter(Boolean).join(' ') };
+  return {
+    ...actual,
+    cn: (...args: unknown[]) => args.filter(Boolean).join(' '),
+  };
 });
 
 const mockMutate = vi.fn();
@@ -56,16 +59,26 @@ describe('LocaleSwitcher', () => {
 
   it('renders EN, PT, ES buttons', () => {
     render(<LocaleSwitcher />);
-    expect(screen.getByRole('button', { name: /switch to en/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /switch to pt/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /switch to es/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /switch to en/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /switch to pt/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /switch to es/i }),
+    ).toBeInTheDocument();
   });
 
   it('marks current locale as pressed', () => {
     currentLang = 'en-US';
     render(<LocaleSwitcher />);
-    expect(screen.getByRole('button', { name: /switch to en/i })).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByRole('button', { name: /switch to pt/i })).toHaveAttribute('aria-pressed', 'false');
+    expect(
+      screen.getByRole('button', { name: /switch to en/i }),
+    ).toHaveAttribute('aria-pressed', 'true');
+    expect(
+      screen.getByRole('button', { name: /switch to pt/i }),
+    ).toHaveAttribute('aria-pressed', 'false');
   });
 
   it('calls i18n.changeLanguage and persists locale when PT is clicked', async () => {
@@ -82,7 +95,9 @@ describe('LocaleSwitcher', () => {
     const user = userEvent.setup();
     currentLang = 'en-US';
     const dispatched: CustomEvent[] = [];
-    window.addEventListener('atlas:locale-changed', (e) => dispatched.push(e as CustomEvent));
+    window.addEventListener('atlas:locale-changed', (e) =>
+      dispatched.push(e as CustomEvent),
+    );
     render(<LocaleSwitcher />);
 
     await user.click(screen.getByRole('button', { name: /switch to es/i }));

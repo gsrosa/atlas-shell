@@ -1,18 +1,19 @@
 'use client';
 
 import React, { type MouseEvent } from 'react';
-
-import { cn } from '@gsrosa/nexploring-ui';
 import { useRouter } from 'next/navigation';
 
+import { cn } from '@gsrosa/nexploring-ui';
 import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
+
 import { ROUTES } from '@/shared/constants/shell-routes';
 
 import type { HomeCarouselDestination } from '../data/home-destinations-carousel';
 import { HOME_DESTINATIONS_CAROUSEL } from '../data/home-destinations-carousel';
+
 import { FadeUp } from './fade-up';
 
 type DestinationCardProps = {

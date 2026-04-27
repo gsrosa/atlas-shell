@@ -1,20 +1,19 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
 import { Button } from '@gsrosa/nexploring-ui';
 import { ArrowLeftIcon, CoinsIcon } from 'lucide-react';
-import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
 import type { CreditBundle } from '@/shared/constants/credits';
 import { ROUTES } from '@/shared/constants/shell-routes';
+
 import { BundlePicker } from './bundle-picker';
 import { CheckoutForm, OrderSummary } from './checkout-form';
 
 type Step = 'pick' | 'checkout';
-
-// ─── Step indicator ────────────────────────────────────────────────────────
 
 const StepIndicator = ({ step }: { step: Step }) => {
   const { t } = useTranslation('payment');
@@ -50,7 +49,11 @@ const StepIndicator = ({ step }: { step: Step }) => {
               </div>
               <span
                 className={`hidden text-xs font-medium transition-colors sm:inline ${
-                  isActive ? 'text-neutral-200' : isPast ? 'text-neutral-400' : 'text-neutral-600'
+                  isActive
+                    ? 'text-neutral-200'
+                    : isPast
+                      ? 'text-neutral-400'
+                      : 'text-neutral-600'
                 }`}
               >
                 {s.label}
@@ -62,8 +65,6 @@ const StepIndicator = ({ step }: { step: Step }) => {
     </div>
   );
 };
-
-// ─── Main page ─────────────────────────────────────────────────────────────
 
 export const AddCreditsPage = () => {
   const { t } = useTranslation('payment');
@@ -96,7 +97,10 @@ export const AddCreditsPage = () => {
             {/* Heading */}
             <div className="mb-8 text-center">
               <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-primary-500/15 ring-1 ring-primary-500/20">
-                <CoinsIcon className="size-7 text-primary-400" strokeWidth={1.5} />
+                <CoinsIcon
+                  className="size-7 text-primary-400"
+                  strokeWidth={1.5}
+                />
               </div>
               <h1 className="text-2xl font-bold tracking-tight text-neutral-50 sm:text-3xl">
                 {t('addCredits.title')}
@@ -131,11 +135,12 @@ export const AddCreditsPage = () => {
               <h1 className="text-2xl font-bold tracking-tight text-neutral-50">
                 {t('checkout.title')}
               </h1>
-              <p className="mt-1 text-sm text-neutral-400">{t('checkout.subtitle')}</p>
+              <p className="mt-1 text-sm text-neutral-400">
+                {t('checkout.subtitle')}
+              </p>
             </div>
 
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
-              {/* ── Left: forms ──────────────────────────────────────── */}
               <div className="flex-1">
                 <CheckoutForm
                   bundle={selected}
@@ -143,7 +148,6 @@ export const AddCreditsPage = () => {
                 />
               </div>
 
-              {/* ── Right (desktop) / Top (mobile, shown above via order) ── */}
               <div className="order-first lg:order-last lg:w-80 lg:shrink-0">
                 <OrderSummary bundle={selected} />
               </div>

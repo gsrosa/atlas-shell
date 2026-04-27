@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { cn } from '@gsrosa/nexploring-ui';
 import { BookmarkIcon, HomeIcon, MapIcon, UserIcon } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import type React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { isFeatureEnabled } from '@/config/feature-flags';

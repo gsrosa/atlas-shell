@@ -1,4 +1,5 @@
 import type { HomeDestination } from '../types';
+
 import {
   STITCH_DESTINATION_COSTA_RICA,
   STITCH_DESTINATION_DOLOMITES,
