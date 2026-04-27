@@ -2,20 +2,14 @@
 
 import React from 'react';
 
-import { cn } from '@gsrosa/atlas-ui';
-import {
-  CompassIcon,
-  MapIcon,
-  SparklesIcon,
-  XIcon,
-} from 'lucide-react';
+import { cn } from '@gsrosa/nexploring-ui';
+import { CompassIcon, MapIcon, SparklesIcon, XIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
 
 import { isFeatureEnabled } from '@/config/feature-flags';
-import { useAuthUiStore } from '@/features/auth/auth-ui-store';
 import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 
@@ -33,8 +27,7 @@ const drawerNavLinkClass = (isActive: boolean) =>
   );
 
 export const MobileDrawer = ({ isOpen, onClose }: Props) => {
-  const { isAuthenticated, isLoading } = useSession();
-  const openLogin = useAuthUiStore((s) => s.openLogin);
+  const { isAuthenticated } = useSession();
   const aiAssistant = isFeatureEnabled('enableAIAssistant');
   const panelRef = React.useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -57,16 +50,6 @@ export const MobileDrawer = ({ isOpen, onClose }: Props) => {
       first?.focus();
     }
   }, [isOpen]);
-
-  const handleAuthNavClick = (e: React.MouseEvent) => {
-    if (!isAuthenticated && !isLoading) {
-      e.preventDefault();
-      onClose();
-      openLogin();
-    } else {
-      onClose();
-    }
-  };
 
   return (
     <>
@@ -117,32 +100,36 @@ export const MobileDrawer = ({ isOpen, onClose }: Props) => {
             {t('nav.explore')}
           </Link>
 
-          <Link
-            href={ROUTES.ASSISTANT}
-            className={drawerNavLinkClass(pathname.startsWith(ROUTES.ASSISTANT))}
-            onClick={handleAuthNavClick}
-          >
-            <SparklesIcon className="size-4 shrink-0" strokeWidth={2} aria-hidden />
-            {t('nav.planTrip')}
-          </Link>
+          {isAuthenticated && (
+            <Link
+              href={ROUTES.ASSISTANT}
+              className={drawerNavLinkClass(pathname.startsWith(ROUTES.ASSISTANT))}
+              onClick={onClose}
+            >
+              <SparklesIcon className="size-4 shrink-0" strokeWidth={2} aria-hidden />
+              {t('nav.planTrip')}
+            </Link>
+          )}
 
-          <Link
-            href={ROUTES.MY_TRIPS}
-            className={cn(
-              drawerNavLinkClass(pathname.startsWith(ROUTES.MY_TRIPS)),
-              !aiAssistant && 'cursor-not-allowed opacity-40',
-            )}
-            onClick={aiAssistant ? handleAuthNavClick : (e) => e.preventDefault()}
-            aria-disabled={!aiAssistant}
-          >
-            <MapIcon className="size-4 shrink-0" strokeWidth={2} aria-hidden />
-            {t('nav.myTrips')}
-            {!aiAssistant && (
-              <span className="ml-auto rounded-full bg-neutral-300/10 px-1.5 py-px text-[9px] font-semibold uppercase tracking-widest text-neutral-500">
-                {t('nav.soon')}
-              </span>
-            )}
-          </Link>
+          {isAuthenticated && (
+            <Link
+              href={ROUTES.MY_TRIPS}
+              className={cn(
+                drawerNavLinkClass(pathname.startsWith(ROUTES.MY_TRIPS)),
+                !aiAssistant && 'cursor-not-allowed opacity-40',
+              )}
+              onClick={aiAssistant ? onClose : (e) => e.preventDefault()}
+              aria-disabled={!aiAssistant}
+            >
+              <MapIcon className="size-4 shrink-0" strokeWidth={2} aria-hidden />
+              {t('nav.myTrips')}
+              {!aiAssistant && (
+                <span className="ml-auto rounded-full bg-neutral-300/10 px-1.5 py-px text-[9px] font-semibold uppercase tracking-widest text-neutral-500">
+                  {t('nav.soon')}
+                </span>
+              )}
+            </Link>
+          )}
         </nav>
       </div>
     </>

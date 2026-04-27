@@ -1,4 +1,4 @@
-import type { RouterOutputs } from 'atlas-bff/trpc';
+import type { RouterOutputs } from 'nexploring-bff/trpc';
 
 type ProfileRow = RouterOutputs['users']['me']['profile'];
 

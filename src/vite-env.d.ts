@@ -11,9 +11,9 @@ interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
 
-declare module '@gsrosa/atlas-ui/styles';
-declare module '@gsrosa/atlas-ui/tokens';
-declare module '@gsrosa/atlas-ui/theme';
+declare module '@gsrosa/nexploring-ui/styles';
+declare module '@gsrosa/nexploring-ui/tokens';
+declare module '@gsrosa/nexploring-ui/theme';
 
 declare module 'aiAssistant/App' {
   import type { ComponentType } from 'react';

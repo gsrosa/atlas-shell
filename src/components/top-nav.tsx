@@ -10,13 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   cn,
-} from '@gsrosa/atlas-ui';
+} from '@gsrosa/nexploring-ui';
 import {
   CompassIcon,
   CreditCardIcon,
   LogOutIcon,
   MapIcon,
-  MenuIcon,
   SlidersIcon,
   SparklesIcon,
   UserIcon,
@@ -33,8 +32,6 @@ import { useSession } from '@/features/auth/use-session';
 import { ROUTES } from '@/shared/constants/shell-routes';
 import { trpc } from '@/lib/trpc';
 import { CreditChip } from './credit-chip';
-import { LocaleSwitcher } from './locale-switcher';
-import { MobileDrawer } from './mobile-drawer';
 
 type NavItem = {
   to: string;
@@ -96,7 +93,6 @@ const TopNavNav = () => {
   const { t } = useTranslation('common');
   const NAV_ITEMS = buildNavItems(t);
   const { isAuthenticated, isLoading } = useSession();
-  const openLogin = useAuthUiStore((s) => s.openLogin);
   const pathname = usePathname();
 
   return (
@@ -124,30 +120,7 @@ const TopNavNav = () => {
         }
 
         if (item.requiresAuth) {
-          if (isLoading) {
-            return (
-              <span
-                key={item.to}
-                className="inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap text-neutral-400 opacity-50"
-              >
-                <Icon className="size-4" strokeWidth={2} />
-                <span className="hidden sm:inline">{item.label}</span>
-              </span>
-            );
-          }
-          if (!isAuthenticated) {
-            return (
-              <button
-                key={item.to}
-                type="button"
-                onClick={openLogin}
-                className="inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-full border-none bg-transparent px-4 py-2 text-sm font-medium whitespace-nowrap text-neutral-400 transition-all hover:bg-white/6 hover:text-neutral-600"
-              >
-                <Icon className="size-4" strokeWidth={2} />
-                <span className="hidden sm:inline">{item.label}</span>
-              </button>
-            );
-          }
+          if (isLoading || !isAuthenticated) return null;
         }
 
         const isActive = item.end
@@ -174,6 +147,7 @@ const TopNavAuth = () => {
   const userApp = isFeatureEnabled('enableUserApp');
   const { isAuthenticated, isLoading, profile } = useSession();
   const openLogin = useAuthUiStore((s) => s.openLogin);
+  const openSignUp = useAuthUiStore((s) => s.openSignUp);
   const router = useRouter();
   const utils = trpc.useUtils();
 
@@ -257,7 +231,7 @@ const TopNavAuth = () => {
         type="button"
         variant="primary"
         size="sm"
-        onClick={openLogin}
+        onClick={openSignUp}
         className="shrink-0"
       >
         {t('nav.signUp')}

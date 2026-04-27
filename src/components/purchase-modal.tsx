@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@gsrosa/atlas-ui';
+} from '@gsrosa/nexploring-ui';
 import { CoinsIcon, PlusIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 

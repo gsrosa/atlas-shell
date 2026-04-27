@@ -10,35 +10,35 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { useAuthUiStore } from '@/features/auth/auth-ui-store';
-import { LoginForm } from '@/features/auth/login-form';
+import { SignUpForm } from '@/features/auth/signup-form';
 
-export const LoginModal = () => {
+export const SignUpModal = () => {
   const { t } = useTranslation('common');
-  const open = useAuthUiStore((s) => s.loginOpen);
-  const closeLogin = useAuthUiStore((s) => s.closeLogin);
-  const openSignUp = useAuthUiStore((s) => s.openSignUp);
+  const open = useAuthUiStore((s) => s.signUpOpen);
+  const closeSignUp = useAuthUiStore((s) => s.closeSignUp);
+  const openLogin = useAuthUiStore((s) => s.openLogin);
 
   return (
     <Dialog
       open={open}
       onOpenChange={(next) => {
-        if (!next) closeLogin();
+        if (!next) closeSignUp();
       }}
     >
-      <DialogContent className="max-w-[420px]">
+      <DialogContent className="max-w-[460px]">
         <DialogHeader>
-          <DialogTitle>{t('auth.signInTitle')}</DialogTitle>
-          <DialogDescription>{t('auth.signInDescription')}</DialogDescription>
+          <DialogTitle>{t('auth.signUpTitle')}</DialogTitle>
+          <DialogDescription>{t('auth.signUpDescription')}</DialogDescription>
         </DialogHeader>
-        <LoginForm />
+        <SignUpForm />
         <p className="text-center text-sm text-neutral-400">
-          {t('auth.noAccount')}{' '}
+          {t('auth.alreadyHaveAccount')}{' '}
           <button
             type="button"
-            onClick={openSignUp}
+            onClick={openLogin}
             className="font-medium text-primary-400 hover:text-primary-300 transition-colors"
           >
-            {t('nav.signUp')}
+            {t('nav.signIn')}
           </button>
         </p>
       </DialogContent>

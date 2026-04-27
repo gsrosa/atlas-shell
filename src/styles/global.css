@@ -1,20 +1,20 @@
 /* Single Tailwind pass for the entire app: base tokens + @theme + utilities.
    The shell compiles ALL class names (shell + remotes + DS components). */
-@import "@gsrosa/atlas-ui/styles/base";
-@import "@gsrosa/atlas-ui/theme";
+@import "@gsrosa/nexploring-ui/styles/base";
+@import "@gsrosa/nexploring-ui/theme";
 @import "tailwindcss";
 
 @source "../**/*.{js,ts,jsx,tsx}";
 @source "../../app/**/*.{js,ts,jsx,tsx}";
-@source "../../node_modules/@gsrosa/atlas-ui/src/**/*.{js,ts,jsx,tsx}";
-@source "../../../atlas-ai-assistant/src/**/*.{js,ts,jsx,tsx}";
-@source "../../../atlas-user/src/**/*.{js,ts,jsx,tsx}";
+@source "../../node_modules/@gsrosa/nexploring-ui/src/**/*.{js,ts,jsx,tsx}";
+@source "../../../nexploring-ai-assistant/src/**/*.{js,ts,jsx,tsx}";
+@source "../../../nexploring-user/src/**/*.{js,ts,jsx,tsx}";
 
 html,
 body {
   height: 100%;
-  background-color: var(--atlas-surface-background);
-  color: var(--atlas-surface-foreground);
+  background-color: var(--surface-background);
+  color: var(--surface-foreground);
   isolation: isolate;
 }
 

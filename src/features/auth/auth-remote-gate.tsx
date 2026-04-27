@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Alert, AlertDescription, AlertTitle, Button } from '@gsrosa/atlas-ui';
+import { Alert, AlertDescription, AlertTitle, Button } from '@gsrosa/nexploring-ui';
 import { AlertTriangleIcon } from 'lucide-react';
 import Link from 'next/link';
 

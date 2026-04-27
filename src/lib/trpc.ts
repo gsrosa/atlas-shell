@@ -1,5 +1,5 @@
 import { createTRPCReact } from '@trpc/react-query';
 
-import type { AppRouter } from 'atlas-bff/trpc';
+import type { AppRouter } from 'nexploring-bff/trpc';
 
 export const trpc = createTRPCReact<AppRouter>();

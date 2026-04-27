@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { cn } from '@gsrosa/atlas-ui';
+import { cn } from '@gsrosa/nexploring-ui';
 import { SparklesIcon } from 'lucide-react';
 
 import {

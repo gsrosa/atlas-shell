@@ -5,7 +5,7 @@
  * `createMemoryRouter`. Instead we test that the key page-level components
  * render without crashing and produce the expected landmark content.
  */
-import { AtlasProvider } from '@gsrosa/atlas-ui';
+import { NexploringProvider } from '@gsrosa/nexploring-ui';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -83,11 +83,11 @@ vi.mock('@/lib/trpc', () => ({
 describe('ShellLayout', () => {
   it('renders the shell chrome (header, main, nav) around page content', () => {
     render(
-      <AtlasProvider>
+      <NexploringProvider>
         <ShellLayout>
           <div data-testid="page-content">Page content</div>
         </ShellLayout>
-      </AtlasProvider>,
+      </NexploringProvider>,
     );
 
     expect(screen.getByRole('banner')).toBeInTheDocument(); // <header>
@@ -98,11 +98,11 @@ describe('ShellLayout', () => {
 
   it('renders the mobile nav bar', () => {
     render(
-      <AtlasProvider>
+      <NexploringProvider>
         <ShellLayout>
           <div>content</div>
         </ShellLayout>
-      </AtlasProvider>,
+      </NexploringProvider>,
     );
 
     expect(screen.getByRole('navigation', { name: /mobile navigation/i })).toBeInTheDocument();

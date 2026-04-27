@@ -9,7 +9,7 @@ import {
   Button,
   Input,
   Label,
-} from '@gsrosa/atlas-ui';
+} from '@gsrosa/nexploring-ui';
 import { isTRPCClientError } from '@trpc/client';
 import { useTranslation } from 'react-i18next';
 

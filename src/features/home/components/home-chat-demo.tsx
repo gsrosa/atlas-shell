@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Button } from '@gsrosa/atlas-ui';
+import { Button } from '@gsrosa/nexploring-ui';
 import { SparklesIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 

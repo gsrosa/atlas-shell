@@ -6,7 +6,7 @@ import * as ReactRouterDom from 'react-router-dom';
 import * as Zustand from 'zustand';
 import * as ReactQuery from '@tanstack/react-query';
 import * as LucideReact from 'lucide-react';
-import * as AtlasUi from '@gsrosa/atlas-ui';
+import * as AtlasUi from '@gsrosa/nexploring-ui';
 
 // ── Remote URLs ────────────────────────────────────────────────────────────────
 
@@ -141,8 +141,8 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
         eager: false,
       },
     },
-    // Share @gsrosa/atlas-ui for the same reason (requiredVersion: false in MFEs).
-    '@gsrosa/atlas-ui': {
+    // Share @gsrosa/nexploring-ui for the same reason (requiredVersion: false in MFEs).
+    '@gsrosa/nexploring-ui': {
       '0.1.0': {
         get: () => Promise.resolve(() => AtlasUi),
         loaded: true,

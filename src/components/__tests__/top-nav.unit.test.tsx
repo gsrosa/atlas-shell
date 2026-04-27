@@ -1,4 +1,4 @@
-import { AtlasProvider } from '@gsrosa/atlas-ui';
+import { NexploringProvider } from '@gsrosa/nexploring-ui';
 import { render } from '@testing-library/react';
 import { axe } from 'vitest-axe';
 import { describe, it, expect, vi } from 'vitest';
@@ -84,9 +84,9 @@ describe('TopNav', () => {
       refetch: vi.fn(),
     };
     const { container } = render(
-      <AtlasProvider>
+      <NexploringProvider>
         <TopNav />
-      </AtlasProvider>,
+      </NexploringProvider>,
     );
     expect((await axe(container)).violations).toEqual([]);
   });
@@ -106,9 +106,9 @@ describe('TopNav', () => {
       refetch: vi.fn(),
     };
     const { container } = render(
-      <AtlasProvider>
+      <NexploringProvider>
         <TopNav />
-      </AtlasProvider>,
+      </NexploringProvider>,
     );
     expect((await axe(container)).violations).toEqual([]);
   });

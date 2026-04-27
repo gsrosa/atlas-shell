@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@gsrosa/atlas-ui';
+import { Button } from '@gsrosa/nexploring-ui';
 import {
   ArrowRightIcon,
   ChevronDownIcon,

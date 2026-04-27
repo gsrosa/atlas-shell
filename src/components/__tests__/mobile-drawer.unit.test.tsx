@@ -43,9 +43,9 @@ vi.mock('@/features/auth/auth-ui-store', () => ({
     selector({ openLogin: vi.fn() }),
 }));
 
-vi.mock('@gsrosa/atlas-ui', async (importOriginal) => {
+vi.mock('@gsrosa/nexploring-ui', async (importOriginal) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-  const actual = await importOriginal<typeof import('@gsrosa/atlas-ui')>();
+  const actual = await importOriginal<typeof import('@gsrosa/nexploring-ui')>();
   return { ...actual, cn: (...args: unknown[]) => args.filter(Boolean).join(' ') };
 });
 

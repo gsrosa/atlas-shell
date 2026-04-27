@@ -1,4 +1,4 @@
-import { AtlasProvider } from '@gsrosa/atlas-ui';
+import { NexploringProvider } from '@gsrosa/nexploring-ui';
 import { render } from '@testing-library/react';
 import { axe } from 'vitest-axe';
 import { describe, it, expect, vi } from 'vitest';
@@ -72,11 +72,11 @@ vi.mock('@/lib/trpc', () => ({
 describe('ShellLayout', () => {
   it('should have no serious accessibility violations when the outlet renders placeholder content', async () => {
     const { container } = render(
-      <AtlasProvider>
+      <NexploringProvider>
         <ShellLayout>
           <div>Page content</div>
         </ShellLayout>
-      </AtlasProvider>,
+      </NexploringProvider>,
     );
     expect((await axe(container)).violations).toEqual([]);
   });

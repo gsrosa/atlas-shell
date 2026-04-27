@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@gsrosa/atlas-ui';
+import { Button } from '@gsrosa/nexploring-ui';
 import { MapPinOffIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@gsrosa/atlas-ui';
+import { cn } from '@gsrosa/nexploring-ui';
 import { HeartIcon, UserIcon, UsersIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 

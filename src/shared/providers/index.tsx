@@ -2,12 +2,13 @@
 
 import React, { type ReactNode, useEffect } from 'react';
 
-import { AtlasProvider } from '@gsrosa/atlas-ui';
+import { NexploringProvider } from '@gsrosa/nexploring-ui';
 
 import '@/lib/i18n';
 import i18n, { getPersistedLocale, persistLocale, SUPPORTED, type SupportedLocale } from '@/lib/i18n';
 import { AuthShellEffects } from '@/features/auth/auth-shell-effects';
 import { LoginModal } from '@/features/auth/login-modal';
+import { SignUpModal } from '@/features/auth/signup-modal';
 import { useSession } from '@/features/auth/use-session';
 
 import { ErrorBoundary } from './error-boundary';
@@ -50,16 +51,17 @@ function LocaleProfileSync() {
 
 export const AppProviders = ({ children }: { children: ReactNode }) => {
   return (
-    <AtlasProvider>
+    <NexploringProvider>
       <ErrorBoundary>
         <QueryProvider>
           <LocaleSync />
           <LocaleProfileSync />
           <AuthShellEffects />
           <LoginModal />
+          <SignUpModal />
           {children}
         </QueryProvider>
       </ErrorBoundary>
-    </AtlasProvider>
+    </NexploringProvider>
   );
 };
