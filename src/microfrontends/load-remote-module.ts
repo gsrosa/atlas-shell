@@ -9,12 +9,13 @@ import * as ReactDOM from 'react-dom';
 import * as ReactRouterDom from 'react-router-dom';
 import * as Zustand from 'zustand';
 
-// ── Remote URLs ────────────────────────────────────────────────────────────────
-
-type RemoteKey = 'aiAssistant' | 'userApp' | 'paymentApp';
+import type {
+  ExposedModules,
+  RemoteKey,
+} from '@/shared/constants/module-names';
 
 const REMOTE_ENTRY_URLS: Record<RemoteKey, string> = {
-  aiAssistant:
+  planning:
     process.env.NEXT_PUBLIC_REMOTE_AI_ASSISTANT_URL ??
     'http://localhost:3002/remoteEntry.js',
   userApp:
@@ -32,13 +33,6 @@ type MFContainer = {
   get: (module: string) => Promise<() => { default: React.ComponentType }>;
 };
 
-// ── Runtime loader ─────────────────────────────────────────────────────────────
-//
-// Webpack MF remoteEntry.js is a UMD script that assigns `var <name> = { init, get }`
-// at the top level. When loaded via import() it runs in ES module scope where `var`
-// is module-scoped (not global), so window[name] is never set.
-// Loading via <script> tag runs in global scope, making window[name] available.
-
 const loadedScripts = new Set<string>();
 
 function loadScript(url: string): Promise<void> {
@@ -47,8 +41,12 @@ function loadScript(url: string): Promise<void> {
     const script = document.createElement('script');
     script.src = url;
     script.async = true;
-    script.onload = () => { loadedScripts.add(url); resolve(); };
-    script.onerror = () => reject(new Error(`[loadRemoteModule] Failed to load script: ${url}`));
+    script.onload = () => {
+      loadedScripts.add(url);
+      resolve();
+    };
+    script.onerror = () =>
+      reject(new Error(`[loadRemoteModule] Failed to load script: ${url}`));
     document.head.appendChild(script);
   });
 }
@@ -61,7 +59,6 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
 
   const url = REMOTE_ENTRY_URLS[remoteName];
 
-  // Load remoteEntry.js as a script tag so the UMD container registers on window.
   await loadScript(url);
 
   const win = window as unknown as Record<string, unknown>;
@@ -78,11 +75,6 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
     );
   }
 
-  // Pass the shell's React/ReactDOM to the remote's shared scope so
-  // vite-plugin-federation uses a single React instance instead of the
-  // remote's own bundled copy. Without this, hooks throw "null (reading
-  // 'useState')" because fiber tree and hook dispatcher come from different
-  // React copies.
   const reactVersion = React.version;
   const sharedScope = {
     react: {
@@ -101,9 +93,6 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
         eager: false,
       },
     },
-    // Share react-router-dom so MFEs that use useLocation/NavLink/Outlet receive
-    // the same Router context that the shell's RouterProvider creates.
-    // Version '7.0.0' satisfies the remote's requiredVersion '^7.0.0'.
     'react-router-dom': {
       '7.0.0': {
         get: () => Promise.resolve(() => ReactRouterDom),
@@ -112,9 +101,6 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
         eager: false,
       },
     },
-    // Share zustand so MFEs that declare it singleton don't bundle their own
-    // copy, which would call useSyncExternalStore against a null React reference
-    // before the shared scope is initialised.
     zustand: {
       '5.0.0': {
         get: () => Promise.resolve(() => Zustand),
@@ -123,7 +109,6 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
         eager: false,
       },
     },
-    // Share @tanstack/react-query for the same reason.
     '@tanstack/react-query': {
       '5.0.0': {
         get: () => Promise.resolve(() => ReactQuery),
@@ -132,8 +117,6 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
         eager: false,
       },
     },
-    // Share lucide-react so all MFEs use the same icon module and avoid a
-    // duplicate bundle (each MFE declares it singleton: true).
     'lucide-react': {
       '1.8.0': {
         get: () => Promise.resolve(() => LucideReact),
@@ -142,9 +125,8 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
         eager: false,
       },
     },
-    // Share @gsrosa/nexploring-ui for the same reason (requiredVersion: false in MFEs).
     '@gsrosa/nexploring-ui': {
-      '0.1.0': {
+      '1.0.0': {
         get: () => Promise.resolve(() => NexploringUi),
         loaded: true,
         from: 'shell',
@@ -159,11 +141,14 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
 
 // ── Public API ─────────────────────────────────────────────────────────────────
 
-const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>();
+const lazyCache = new Map<
+  string,
+  React.LazyExoticComponent<React.ComponentType>
+>();
 
 export function loadRemoteModule(
   remoteName: RemoteKey,
-  exposedModule: string,
+  exposedModule: ExposedModules,
 ): React.LazyExoticComponent<React.ComponentType> {
   const key = `${remoteName}/${exposedModule}`;
   const cached = lazyCache.get(key);
@@ -172,9 +157,9 @@ export function loadRemoteModule(
   const component = React.lazy(async () => {
     const container = await getContainer(remoteName);
     const factory = await container.get(`./${exposedModule}`);
-    // Webpack MF factory() returns the module. React.lazy needs { default: ComponentType },
-    // so normalise both shapes (direct component or { default: component }).
-    const mod = factory() as React.ComponentType | { default: React.ComponentType };
+    const mod = factory() as
+      | React.ComponentType
+      | { default: React.ComponentType };
     if (mod !== null && typeof mod === 'object' && 'default' in mod) {
       return mod as { default: React.ComponentType };
     }

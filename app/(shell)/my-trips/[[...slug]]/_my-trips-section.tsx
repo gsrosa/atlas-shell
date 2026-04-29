@@ -8,8 +8,8 @@ import { loadRemoteModule } from '@/microfrontends/load-remote-module';
 import { RemoteErrorBoundary } from '@/microfrontends/remote-error-boundary';
 import { UserAppRemoteSuspenseFallback } from '@/microfrontends/user-app-remote-suspense-fallback';
 
-const MyTripsApp = loadRemoteModule('aiAssistant', 'MyTripsApp');
-const MyTripsSkeleton = loadRemoteModule('aiAssistant', 'MyTripsSkeleton');
+const MyTripsApp = loadRemoteModule('planning', 'TripListPage');
+const MyTripsSkeleton = loadRemoteModule('planning', 'TripListSkeleton');
 
 const SkeletonFallback = () => (
   <React.Suspense fallback={<UserAppRemoteSuspenseFallback />}>
@@ -20,7 +20,10 @@ const SkeletonFallback = () => (
 export default function MyTripsSection() {
   return (
     <RemoteErrorBoundary remoteName="My Trips">
-      <AuthRemoteGate remoteLabel="My Trips" loadingFallback={<SkeletonFallback />}>
+      <AuthRemoteGate
+        remoteLabel="My Trips"
+        loadingFallback={<SkeletonFallback />}
+      >
         <React.Suspense fallback={<SkeletonFallback />}>
           <MyTripsApp />
         </React.Suspense>
