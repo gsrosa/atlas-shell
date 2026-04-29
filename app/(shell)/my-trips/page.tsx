@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-const MyTripsSection = dynamic(() => import('./_trip-detail-section'), {
+const MyTripsSection = dynamic(() => import('./_my-trips-section'), {
   ssr: false,
   loading: () => (
     <div className="min-h-[calc(100dvh-60px)] animate-pulse bg-neutral-800/40 md:min-h-screen" />
