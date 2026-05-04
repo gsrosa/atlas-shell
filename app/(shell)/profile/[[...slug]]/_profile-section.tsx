@@ -2,17 +2,17 @@
 
 import React from 'react';
 
-import { createBrowserRouter,Navigate, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import { AuthRemoteGate } from '@/features/auth/auth-remote-gate';
 
 import { loadRemoteModule } from '@/microfrontends/load-remote-module';
 
 const ProfileLayout = loadRemoteModule('userApp', 'ProfileLayout');
-const ProfileAboutPage = loadRemoteModule('userApp', 'ProfileAboutPage');
-const ProfilePasswordPage = loadRemoteModule('userApp', 'ProfilePasswordPage');
-const ProfilePreferencesPage = loadRemoteModule('userApp', 'ProfilePreferencesPage');
-const BillingPage = loadRemoteModule('paymentApp', 'BillingPage');
+const ProfilePage = loadRemoteModule('userApp', 'ProfilePage');
+const PasswordPage = loadRemoteModule('userApp', 'PasswordPage');
+const UserPreferencesPage = loadRemoteModule('userApp', 'UserPreferencesPage');
+const UserPaymentsPage = loadRemoteModule('paymentApp', 'UserPaymentsPage');
 
 const profileLayoutSkeleton = (
   <div className="flex min-h-[calc(100dvh-60px)] w-full animate-pulse flex-col gap-0 bg-neutral-800/40 md:flex-row">
@@ -40,7 +40,7 @@ const profileRouter = createBrowserRouter([
         path: 'about',
         element: (
           <React.Suspense fallback={null}>
-            <ProfileAboutPage />
+            <ProfilePage />
           </React.Suspense>
         ),
       },
@@ -48,7 +48,7 @@ const profileRouter = createBrowserRouter([
         path: 'password',
         element: (
           <React.Suspense fallback={null}>
-            <ProfilePasswordPage />
+            <PasswordPage />
           </React.Suspense>
         ),
       },
@@ -56,7 +56,7 @@ const profileRouter = createBrowserRouter([
         path: 'billing',
         element: (
           <React.Suspense fallback={null}>
-            <BillingPage />
+            <UserPaymentsPage />
           </React.Suspense>
         ),
       },
@@ -64,7 +64,7 @@ const profileRouter = createBrowserRouter([
         path: 'preferences',
         element: (
           <React.Suspense fallback={null}>
-            <ProfilePreferencesPage />
+            <UserPreferencesPage />
           </React.Suspense>
         ),
       },

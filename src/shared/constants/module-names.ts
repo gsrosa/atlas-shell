@@ -9,13 +9,13 @@ type ExposedByPlanning =
   | 'TripDetailPage'
   | 'TripDetailSkeleton';
 
-type ExposeByPayment = 'BillingPage' | 'AddCreditsPage';
+type ExposeByPayment = 'UserPaymentsPage' | 'AddCreditsPage';
 
 type ExposedByUser =
   | 'ProfileLayout'
-  | 'ProfileAboutPage'
-  | 'ProfilePasswordPage'
-  | 'ProfilePreferencesPage';
+  | 'ProfilePage'
+  | 'PasswordPage'
+  | 'UserPreferencesPage';
 
 export type ExposedModules =
   | ExposedByPlanning

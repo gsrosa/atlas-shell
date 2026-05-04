@@ -1,14 +1,12 @@
-/* Single Tailwind pass for the entire app: base tokens + @theme + utilities.
-   The shell compiles ALL class names (shell + remotes + DS components). */
+/* Shell Tailwind pass: document base + shell classes.
+   Federated remotes ship their own utility CSS from their exposed entries. */
 @import "@gsrosa/nexploring-ui/styles/base";
 @import "@gsrosa/nexploring-ui/theme";
 @import "tailwindcss";
 
 @source "../**/*.{js,ts,jsx,tsx}";
 @source "../../app/**/*.{js,ts,jsx,tsx}";
-@source "../../node_modules/@gsrosa/nexploring-ui/src/**/*.{js,ts,jsx,tsx}";
-@source "../../../nexploring-ai-assistant/src/**/*.{js,ts,jsx,tsx}";
-@source "../../../nexploring-user/src/**/*.{js,ts,jsx,tsx}";
+@source "../../node_modules/@gsrosa/nexploring-ui/dist/nexploring-ui.js";
 
 html,
 body {
