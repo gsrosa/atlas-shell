@@ -29,3 +29,6 @@ dist-ssr
 
 #nextjs
 .next
+
+# MFE sources fetched at build time
+.mfe-sources/

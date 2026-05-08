@@ -1,3 +1,4 @@
 {
-  "installCommand": "printf '//npm.pkg.github.com/:_authToken=%s\\n' \"$NPM_TOKEN\" >> .npmrc && pnpm install --frozen-lockfile"
+  "installCommand": "printf '//npm.pkg.github.com/:_authToken=%s\\n' \"$NPM_TOKEN\" >> .npmrc && pnpm install --frozen-lockfile",
+  "buildCommand": "bash scripts/fetch-mfe-sources.sh && next build"
 }

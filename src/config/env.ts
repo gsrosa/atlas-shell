@@ -16,14 +16,14 @@ export const env: EnvConfig = {
   API_URL: get('NEXT_PUBLIC_API_URL', 'http://localhost:4000'),
   REMOTE_AI_ASSISTANT_URL: get(
     'NEXT_PUBLIC_REMOTE_AI_ASSISTANT_URL',
-    'http://localhost:3002/remoteEntry.js',
+    'http://localhost:3002/_next/static/chunks/remoteEntry.js',
   ),
   REMOTE_USER_APP_URL: get(
     'NEXT_PUBLIC_REMOTE_USER_APP_URL',
-    'http://localhost:3003/remoteEntry.js',
+    'http://localhost:3003/_next/static/chunks/remoteEntry.js',
   ),
   REMOTE_PAYMENT_APP_URL: get(
     'NEXT_PUBLIC_REMOTE_PAYMENT_APP_URL',
-    'http://localhost:3004/remoteEntry.js',
+    'http://localhost:3004/_next/static/chunks/remoteEntry.js',
   ),
 };

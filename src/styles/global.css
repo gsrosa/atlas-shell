@@ -1,5 +1,4 @@
-/* Shell Tailwind pass: document base + shell classes.
-   Federated remotes ship their own utility CSS from their exposed entries. */
+/* Shell Tailwind pass: owns all utility CSS for shell + all federated MFEs. */
 @import "@gsrosa/nexploring-ui/styles/base";
 @import "@gsrosa/nexploring-ui/theme";
 @import "tailwindcss";
@@ -7,6 +6,15 @@
 @source "../**/*.{js,ts,jsx,tsx}";
 @source "../../app/**/*.{js,ts,jsx,tsx}";
 @source "../../node_modules/@gsrosa/nexploring-ui/dist/nexploring-ui.js";
+/* fetched at build time via scripts/fetch-mfe-sources.sh; symlinked locally via scripts/link-mfe-sources.sh */
+@source "../../.mfe-sources/ai-assistant/src/**/*.{js,ts,jsx,tsx}";
+@source not "../../.mfe-sources/ai-assistant/src/__tests__/**";
+
+@source "../../.mfe-sources/user/src/**/*.{js,ts,jsx,tsx}";
+@source not "../../.mfe-sources/user/src/__tests__/**";
+
+@source "../../.mfe-sources/payment/src/**/*.{js,ts,jsx,tsx}";
+@source not "../../.mfe-sources/payment/src/__tests__/**";
 
 html,
 body {
@@ -26,6 +34,20 @@ body {
   --animate-hp-pulse-soft: hp-pulse-soft 2s ease-in-out infinite;
   --animate-hp-fade-in: hp-fade-in 0.45s ease forwards;
   --animate-hp-fade-in-up: hp-fade-in-up 0.4s ease forwards;
+
+  /* ─── MFE: nexploring-ai-assistant + nexploring-user ─── */
+  --animate-account-fade-in-up: account-fade-in-up 0.45s ease both;
+  --animate-stitch-aurora-drift: stitch-aurora-drift 18s ease-in-out infinite alternate;
+
+  @keyframes account-fade-in-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes stitch-aurora-drift {
+    from { transform: translate3d(-2%, 0, 0) scale(1); opacity: 0.88; }
+    to { transform: translate3d(2%, 0, 0) scale(1.03); opacity: 1; }
+  }
 
   @keyframes hp-blink {
     0%, 100% { opacity: 1; }
@@ -71,6 +93,21 @@ body {
 /* ─── Scrollbar utility ───────────────────────────────────────────────────── */
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ─── MFE: nexploring-ai-assistant animation classes ─────────────────────── */
+@keyframes planner-slide-in-right  { from { opacity: 0; transform: translateX(48px);  } to { opacity: 1; transform: none; } }
+@keyframes planner-slide-in-left   { from { opacity: 0; transform: translateX(-48px); } to { opacity: 1; transform: none; } }
+@keyframes planner-bounce          { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-7px); } }
+@keyframes planner-pulse-anim      { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.92); } }
+@keyframes planner-fade-up         { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+.slide-in-from-right { animation: planner-slide-in-right 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.slide-in-from-left  { animation: planner-slide-in-left  0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.planner-bounce-dot  { animation: planner-bounce 1s infinite; }
+.planner-pulse       { animation: planner-pulse-anim 1.8s ease-in-out infinite; }
+.plan-fade-up        { animation: planner-fade-up 0.45s ease both; }
+.progress-fill       { transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.stitch-progress-fill { background-color: var(--color-primary-500); }
 
 /* ─── Bottom nav active indicator (pseudo-element not expressible in Tailwind) */
 .bottom-nav-active::after {
