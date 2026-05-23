@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build:nexploring-ui": "npm run build --prefix ../nexploring-ui",
     "prepare": "husky",
     "dev": "next dev --port 3000",
     "dev:setup": "bash scripts/link-mfe-sources.sh && pnpm dev",
@@ -13,8 +12,6 @@
     "start": "next start --port 3000",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"app/**/*.{ts,tsx}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"app/**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
