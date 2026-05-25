@@ -296,7 +296,6 @@ declare const tripItineraryDocumentSchema: z.ZodObject<{
 }>;
 type TripItineraryDocument = z.infer<typeof tripItineraryDocumentSchema>;
 
-/** Wizard + AI answers snapshot (matches atlas-ai-assistant form state). */
 type TripFormSnapshot = {
     baseAnswers?: Record<string, string | string[]>;
     aiQuestions?: unknown[];
@@ -305,48 +304,66 @@ type TripFormSnapshot = {
 };
 type TripPlanDTO = {
     id: string;
-    user_id: string;
+    userId: string;
     title: string | null;
-    ai_suggested_title: string | null;
-    departure_at: string | null;
-    arrival_at: string | null;
-    flight_numbers: string[];
-    days_count: number | null;
+    aiSuggestedTitle: string | null;
+    departureAt: string | null;
+    arrivalAt: string | null;
+    flightNumbers: string[];
+    daysCount: number | null;
     destination: string | null;
-    destination_country: string | null;
-    form_snapshot: TripFormSnapshot;
+    destinationCountry: string | null;
+    formSnapshot: TripFormSnapshot;
     itinerary: TripItineraryDocument | Record<string, unknown>;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
+};
+type TripPlanResponseDTO = {
+    plan: TripPlanDTO;
+};
+type TripPlansResponseDTO = {
+    plans: TripPlanDTO[];
+    total: number;
+    page: number;
+    limit: number;
 };
 
 type CreditTransactionDTO = {
     id: string;
-    user_id: string;
+    userId: string;
     amount: number;
-    balance_after: number;
+    balanceAfter: number;
     reason: string;
-    reference_type: string | null;
-    reference_id: string | null;
+    referenceType: string | null;
+    referenceId: string | null;
     metadata: Record<string, unknown>;
-    created_at: string;
+    createdAt: string;
+};
+type CreditTransactionsResponseDTO = {
+    transactions: CreditTransactionDTO[];
+    total: number;
+    page: number;
+    limit: number;
 };
 
 type ProfileDTO = {
     id: string;
     email: string | null;
-    display_name: string | null;
-    first_name: string | null;
-    last_name: string | null;
+    displayName: string | null;
+    firstName: string | null;
+    lastName: string | null;
     gender: string | null;
     phone: string | null;
     bio: string | null;
     country: string | null;
-    avatar_url: string | null;
-    preferred_locale: string | null;
-    credits_balance: number;
-    created_at: string;
-    updated_at: string;
+    avatarUrl: string | null;
+    preferredLocale: string | null;
+    creditsBalance: number;
+    createdAt: string;
+    updatedAt: string;
+};
+type ProfileResponseDTO = {
+    profile: ProfileDTO | null;
 };
 
 declare const envSchema: z.ZodObject<{
@@ -356,16 +373,16 @@ declare const envSchema: z.ZodObject<{
     SUPABASE_ANON_KEY: z.ZodString;
     SUPABASE_SERVICE_ROLE_KEY: z.ZodString;
     CORS_ORIGINS: z.ZodEffects<z.ZodDefault<z.ZodString>, string[], string | undefined>;
-    /** Empty string in `.env` is treated as unset (POST /plans/stream will fail until set). */
     GEMINI_API_KEY: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, unknown>;
     GEMINI_MODEL: z.ZodDefault<z.ZodString>;
+    OPENAI_API_KEY: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, unknown>;
+    OPENAI_MODEL: z.ZodDefault<z.ZodString>;
+    GOOGLE_PLACES_API_KEY: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, unknown>;
+    GOOGLE_DIRECTIONS_API_KEY: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, unknown>;
     CREDITS_TRIP_PLAN_COST: z.ZodDefault<z.ZodNumber>;
     CREDITS_ALLOW_SELF_TOPUP: z.ZodDefault<z.ZodEffects<z.ZodBoolean, boolean, unknown>>;
-    /** Optional: direct Postgres (`postgres` package). Required only if you import `@/db`. */
     DATABASE_URL: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, unknown>;
-    /** Redis for opaque server-side sessions (httpOnly cookie). Required for cookie-based auth. */
     REDIS_URL: z.ZodString;
-    /** Cookie name for the opaque session id (default atlas_session). */
     SESSION_COOKIE_NAME: z.ZodDefault<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     NODE_ENV: "development" | "production" | "test";
@@ -375,11 +392,15 @@ declare const envSchema: z.ZodObject<{
     SUPABASE_SERVICE_ROLE_KEY: string;
     CORS_ORIGINS: string[];
     GEMINI_MODEL: string;
+    OPENAI_MODEL: string;
     CREDITS_TRIP_PLAN_COST: number;
     CREDITS_ALLOW_SELF_TOPUP: boolean;
     REDIS_URL: string;
     SESSION_COOKIE_NAME: string;
     GEMINI_API_KEY?: string | undefined;
+    OPENAI_API_KEY?: string | undefined;
+    GOOGLE_PLACES_API_KEY?: string | undefined;
+    GOOGLE_DIRECTIONS_API_KEY?: string | undefined;
     DATABASE_URL?: string | undefined;
 }, {
     SUPABASE_URL: string;
@@ -391,6 +412,10 @@ declare const envSchema: z.ZodObject<{
     CORS_ORIGINS?: string | undefined;
     GEMINI_API_KEY?: unknown;
     GEMINI_MODEL?: string | undefined;
+    OPENAI_API_KEY?: unknown;
+    OPENAI_MODEL?: string | undefined;
+    GOOGLE_PLACES_API_KEY?: unknown;
+    GOOGLE_DIRECTIONS_API_KEY?: unknown;
     CREDITS_TRIP_PLAN_COST?: number | undefined;
     CREDITS_ALLOW_SELF_TOPUP?: unknown;
     DATABASE_URL?: unknown;
@@ -442,18 +467,18 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
     }, _trpc_server.TRPCDecorateCreateRouterOptions<{
         signUp: _trpc_server.TRPCMutationProcedure<{
             input: {
-                gender: "male" | "female" | "other" | "prefer_not_to_say";
-                country: string;
                 email: string;
                 password: string;
+                gender: "male" | "female" | "other" | "prefer_not_to_say";
+                country: string;
                 firstName: string;
                 lastName: string;
                 phone?: string | undefined;
                 bio?: string | undefined;
             };
             output: {
-                user: _supabase_supabase_js.AuthUser;
-                session: _supabase_supabase_js.AuthSession;
+                user: _supabase_supabase_js.AuthUser | null;
+                session: _supabase_supabase_js.AuthSession | null;
                 needsEmailConfirmation: boolean;
                 resumedAsSignIn: true;
             } | {
@@ -470,8 +495,8 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
                 password: string;
             };
             output: {
-                user: _supabase_supabase_js.AuthUser;
-                session: _supabase_supabase_js.AuthSession;
+                user: _supabase_supabase_js.AuthUser | null;
+                session: _supabase_supabase_js.AuthSession | null;
             };
             meta: object;
         }>;
@@ -521,18 +546,16 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
     }, _trpc_server.TRPCDecorateCreateRouterOptions<{
         me: _trpc_server.TRPCQueryProcedure<{
             input: void;
-            output: {
-                profile: ProfileDTO | null;
-            };
+            output: ProfileResponseDTO;
             meta: object;
         }>;
         updateMe: _trpc_server.TRPCMutationProcedure<{
             input: {
+                phone?: string | undefined;
                 display_name?: string | undefined;
                 first_name?: string | undefined;
                 last_name?: string | undefined;
                 gender?: "male" | "female" | "other" | "prefer_not_to_say" | undefined;
-                phone?: string | undefined;
                 bio?: string | undefined;
                 country?: string | undefined;
                 avatar_url?: string | undefined;
@@ -569,15 +592,10 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
         }>;
         list: _trpc_server.TRPCQueryProcedure<{
             input: {
-                page?: number | undefined;
                 limit?: number | undefined;
+                page?: number | undefined;
             };
-            output: {
-                transactions: CreditTransactionDTO[];
-                total: number;
-                page: number;
-                limit: number;
-            };
+            output: CreditTransactionsResponseDTO;
             meta: object;
         }>;
         addFunds: _trpc_server.TRPCMutationProcedure<{
@@ -609,15 +627,10 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
     }, _trpc_server.TRPCDecorateCreateRouterOptions<{
         list: _trpc_server.TRPCQueryProcedure<{
             input: {
-                page?: number | undefined;
                 limit?: number | undefined;
+                page?: number | undefined;
             };
-            output: {
-                plans: TripPlanDTO[];
-                total: number;
-                page: number;
-                limit: number;
-            };
+            output: TripPlansResponseDTO;
             meta: object;
         }>;
         create: _trpc_server.TRPCMutationProcedure<{
@@ -638,18 +651,14 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
                 formSnapshot?: Record<string, unknown> | undefined;
                 itinerary?: Record<string, unknown> | undefined;
             };
-            output: {
-                plan: TripPlanDTO;
-            };
+            output: TripPlanResponseDTO;
             meta: object;
         }>;
         getById: _trpc_server.TRPCQueryProcedure<{
             input: {
                 id: string;
             };
-            output: {
-                plan: TripPlanDTO;
-            };
+            output: TripPlanResponseDTO;
             meta: object;
         }>;
         update: _trpc_server.TRPCMutationProcedure<{
@@ -671,9 +680,7 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
                 formSnapshot?: Record<string, unknown> | undefined;
                 itinerary?: Record<string, unknown> | undefined;
             };
-            output: {
-                plan: TripPlanDTO;
-            };
+            output: TripPlanResponseDTO;
             meta: object;
         }>;
         delete: _trpc_server.TRPCMutationProcedure<{
@@ -682,6 +689,247 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
             };
             output: {
                 ok: true;
+            };
+            meta: object;
+        }>;
+        generateChecklist: _trpc_server.TRPCMutationProcedure<{
+            input: {
+                answers: Record<string, string | string[]>;
+                tripDetails?: {
+                    flights?: {
+                        flightNumber: string;
+                        departureDate?: string | undefined;
+                        arrivalDate?: string | undefined;
+                    }[] | undefined;
+                    hotels?: {
+                        name: string;
+                        address?: string | undefined;
+                        checkinDate?: string | undefined;
+                        checkoutDate?: string | undefined;
+                    }[] | undefined;
+                } | undefined;
+            };
+            output: {
+                questions: {
+                    type: "number" | "text" | "single" | "multi" | "date-range";
+                    id: string;
+                    question: string;
+                    options?: string[] | undefined;
+                    required?: boolean | undefined;
+                }[];
+            };
+            meta: object;
+        }>;
+        generateTrip: _trpc_server.TRPCMutationProcedure<{
+            input: {
+                answers: Record<string, string | string[]>;
+                aiQuestions: {
+                    type: "number" | "text" | "single" | "multi" | "date-range";
+                    id: string;
+                    question: string;
+                    options?: string[] | undefined;
+                    required?: boolean | undefined;
+                }[];
+                aiAnswers: Record<string, string | string[]>;
+                tripDetails?: {
+                    flights?: {
+                        flightNumber: string;
+                        departureDate?: string | undefined;
+                        arrivalDate?: string | undefined;
+                    }[] | undefined;
+                    hotels?: {
+                        name: string;
+                        address?: string | undefined;
+                        checkinDate?: string | undefined;
+                        checkoutDate?: string | undefined;
+                    }[] | undefined;
+                } | undefined;
+            };
+            output: {
+                country: string;
+                destination: string;
+                weather: {
+                    summary: string;
+                    bestMonth: string;
+                    temperatureRangeCelsius: string;
+                };
+                days: {
+                    dayNumber: number;
+                    city: string;
+                    attractions: {
+                        name: string;
+                        address?: string | undefined;
+                        category?: string | undefined;
+                        notes?: string | undefined;
+                        price?: {
+                            amount: number;
+                            currency: string;
+                        } | undefined;
+                        averageMinutesSpent?: number | undefined;
+                        openingHours?: string | undefined;
+                        websiteUrl?: string | undefined;
+                    }[];
+                    country?: string | undefined;
+                    dayTitle?: string | undefined;
+                    region?: string | undefined;
+                    summary?: string | undefined;
+                    meals?: {
+                        type: "breakfast" | "lunch" | "dinner" | "snack";
+                        name: string;
+                        notes?: string | undefined;
+                    }[] | undefined;
+                    transportation?: {
+                        from: string;
+                        to: string;
+                        mode: string;
+                        notes?: string | undefined;
+                        durationMinutes?: number | undefined;
+                    }[] | undefined;
+                    lodging?: string | undefined;
+                }[];
+                paidAttractions: {
+                    name: string;
+                    category: string;
+                    estimatedPriceUsd: string;
+                    notes?: string | undefined;
+                }[];
+                meta?: Record<string, unknown> | undefined;
+                bestTravelMonth?: string | undefined;
+            };
+            meta: object;
+        }>;
+        modifyPlan: _trpc_server.TRPCMutationProcedure<{
+            input: {
+                itinerary: Record<string, unknown>;
+                request: string;
+            };
+            output: {
+                country: string;
+                destination: string;
+                weather: {
+                    summary: string;
+                    bestMonth: string;
+                    temperatureRangeCelsius: string;
+                };
+                days: {
+                    dayNumber: number;
+                    city: string;
+                    attractions: {
+                        name: string;
+                        address?: string | undefined;
+                        category?: string | undefined;
+                        notes?: string | undefined;
+                        price?: {
+                            amount: number;
+                            currency: string;
+                        } | undefined;
+                        averageMinutesSpent?: number | undefined;
+                        openingHours?: string | undefined;
+                        websiteUrl?: string | undefined;
+                    }[];
+                    country?: string | undefined;
+                    dayTitle?: string | undefined;
+                    region?: string | undefined;
+                    summary?: string | undefined;
+                    meals?: {
+                        type: "breakfast" | "lunch" | "dinner" | "snack";
+                        name: string;
+                        notes?: string | undefined;
+                    }[] | undefined;
+                    transportation?: {
+                        from: string;
+                        to: string;
+                        mode: string;
+                        notes?: string | undefined;
+                        durationMinutes?: number | undefined;
+                    }[] | undefined;
+                    lodging?: string | undefined;
+                }[];
+                paidAttractions: {
+                    name: string;
+                    category: string;
+                    estimatedPriceUsd: string;
+                    notes?: string | undefined;
+                }[];
+                meta?: Record<string, unknown> | undefined;
+                bestTravelMonth?: string | undefined;
+            };
+            meta: object;
+        }>;
+        editPlan: _trpc_server.TRPCMutationProcedure<{
+            input: {
+                userPrompt: string;
+                maxOutputTokens?: number | undefined;
+                temperature?: number | undefined;
+            };
+            output: {
+                country: string;
+                destination: string;
+                weather: {
+                    summary: string;
+                    bestMonth: string;
+                    temperatureRangeCelsius: string;
+                };
+                days: {
+                    dayNumber: number;
+                    city: string;
+                    attractions: {
+                        name: string;
+                        address?: string | undefined;
+                        category?: string | undefined;
+                        notes?: string | undefined;
+                        price?: {
+                            amount: number;
+                            currency: string;
+                        } | undefined;
+                        averageMinutesSpent?: number | undefined;
+                        openingHours?: string | undefined;
+                        websiteUrl?: string | undefined;
+                    }[];
+                    country?: string | undefined;
+                    dayTitle?: string | undefined;
+                    region?: string | undefined;
+                    summary?: string | undefined;
+                    meals?: {
+                        type: "breakfast" | "lunch" | "dinner" | "snack";
+                        name: string;
+                        notes?: string | undefined;
+                    }[] | undefined;
+                    transportation?: {
+                        from: string;
+                        to: string;
+                        mode: string;
+                        notes?: string | undefined;
+                        durationMinutes?: number | undefined;
+                    }[] | undefined;
+                    lodging?: string | undefined;
+                }[];
+                paidAttractions: {
+                    name: string;
+                    category: string;
+                    estimatedPriceUsd: string;
+                    notes?: string | undefined;
+                }[];
+                meta?: Record<string, unknown> | undefined;
+                bestTravelMonth?: string | undefined;
+            };
+            meta: object;
+        }>;
+        enrichHotel: _trpc_server.TRPCMutationProcedure<{
+            input: {
+                name: string;
+                destination?: string | undefined;
+                checkinDate?: string | undefined;
+                checkoutDate?: string | undefined;
+            };
+            output: {
+                name: string;
+                address?: string | undefined;
+                notes?: string | undefined;
+                neighborhood?: string | undefined;
+                starRating?: number | undefined;
+                priceRangePerNightUsd?: string | undefined;
+                amenities?: string[] | undefined;
             };
             meta: object;
         }>;
@@ -731,7 +979,7 @@ declare const appRouter: _trpc_server.TRPCBuiltRouter<{
                 interests?: string[] | undefined;
                 photographyImportance?: 3 | 1 | 2 | 4 | 5 | undefined;
                 budgetStyle?: "value" | "budget" | "comfort" | "luxury" | undefined;
-                accommodationStyles?: ("luxury" | "hostel" | "budget-hotel" | "mid-hotel" | "boutique" | "airbnb" | "camping")[] | undefined;
+                accommodationStyles?: ("airbnb" | "hostel" | "luxury" | "budget-hotel" | "mid-hotel" | "boutique" | "camping")[] | undefined;
                 accommodationMustHaves?: string[] | undefined;
                 ecoConsciousness?: "priority" | "when-convenient" | "not-a-factor" | undefined;
                 ethicalLimits?: string[] | undefined;

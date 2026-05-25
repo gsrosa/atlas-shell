@@ -32,3 +32,4 @@ dist-ssr
 
 # MFE sources fetched at build time
 .mfe-sources/
+.vercel
