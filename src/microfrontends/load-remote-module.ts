@@ -4,9 +4,14 @@ import React from 'react';
 
 import * as NexploringUi from '@gsrosa/nexploring-ui';
 import * as ReactQuery from '@tanstack/react-query';
+import * as TrpcClient from '@trpc/client';
+import * as TrpcReactQuery from '@trpc/react-query';
 import * as LucideReact from 'lucide-react';
 import * as ReactDOM from 'react-dom';
 import * as ReactRouterDom from 'react-router-dom';
+import * as Sonner from 'sonner';
+import * as Superjson from 'superjson';
+import * as Zod from 'zod';
 import * as Zustand from 'zustand';
 
 import type {
@@ -117,9 +122,49 @@ async function getContainer(remoteName: RemoteKey): Promise<MFContainer> {
         eager: false,
       },
     },
+    '@trpc/client': {
+      '11.0.0': {
+        get: () => Promise.resolve(() => TrpcClient),
+        loaded: true,
+        from: 'shell',
+        eager: false,
+      },
+    },
+    '@trpc/react-query': {
+      '11.0.0': {
+        get: () => Promise.resolve(() => TrpcReactQuery),
+        loaded: true,
+        from: 'shell',
+        eager: false,
+      },
+    },
     'lucide-react': {
       '1.8.0': {
         get: () => Promise.resolve(() => LucideReact),
+        loaded: true,
+        from: 'shell',
+        eager: false,
+      },
+    },
+    sonner: {
+      '2.0.0': {
+        get: () => Promise.resolve(() => Sonner),
+        loaded: true,
+        from: 'shell',
+        eager: false,
+      },
+    },
+    superjson: {
+      '2.0.0': {
+        get: () => Promise.resolve(() => Superjson),
+        loaded: true,
+        from: 'shell',
+        eager: false,
+      },
+    },
+    zod: {
+      '4.0.0': {
+        get: () => Promise.resolve(() => Zod),
         loaded: true,
         from: 'shell',
         eager: false,
